@@ -1,0 +1,179 @@
+/*GENERAL*/
+html, body{
+	height: 100%;
+}
+
+body{
+	font-family: 'Open Sans', arial, sans-serif;
+}
+
+.height100{
+	height: 100%;
+}
+
+.height80{
+	height: 80%;
+}
+
+input:-webkit-autofill{
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+}
+
+.navbar-brand small{
+	color: #E88895;
+}
+
+.clickable{
+	cursor: pointer;
+}
+
+
+
+/*TABLE LAYOUT*/
+.table-parent{
+	display: table;
+	width: 100%;
+}
+
+.table-cell{
+	display: table-cell;
+	width: 100%;
+}
+
+.table-cell-vcenter{
+	vertical-align: middle;
+}
+
+
+
+/*LOG IN*/
+.login-form{
+}
+
+
+
+/*BOOTSTRAP*/
+.inline{
+	display: inline-block;
+}
+
+.header-margin{
+	margin-bottom: 24px;
+}
+
+
+
+/*NAVBAR ENDING*/
+.navbar-right-button-end{
+	margin-right: 0px;
+}
+
+.preview-header{
+}
+
+.btn-default.link-dropdown{
+	color: #777;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.navbar-right .dropdown-menu{
+	top: 88%;
+}
+
+
+
+/*PAGES*/
+.item-functions .panel-btn{
+	margin-left: 16px;
+	cursor: pointer;
+}
+
+.item-functions a:link, .item-functions a:visited, .item-functions a:hover, .item-functions a:active{
+	color: #333;
+}
+
+.reorder-badge{
+	display: none;
+}
+
+
+
+/*settings*/
+.fa.profile-icon{
+	font-size: 124px;
+	color: #adadad;
+	margin-bottom: 48px;
+}
+
+
+
+/*DOC*/
+/*custom styles*/
+body.custom {
+	/*background: #F5F5F5;*/
+}
+
+.bs-docs-nav .custom.navbar-brand, .bs-docs-nav .custom.navbar-nav>li>a{
+	color: #1f85a9;
+}
+
+.bs-docs-nav .custom.navbar-nav>.active>a, .bs-docs-nav .custom.navbar-nav>.active>a:hover, .bs-docs-nav .custom.navbar-nav>li>a:hover{
+	color: #1f85a9;
+}
+
+/*banner*/
+.bs-docs-header.custom{
+	background-image: linear-gradient(to bottom right,#1a80af 0,#359c8f 100%);
+	color: rgba(255, 255, 255, 0.72);
+}
+
+.bs-docs-header.custom p{
+	margin-right:0px;
+}
+
+.component{}
+
+.component-content{
+	font-family: 'Open Sans', sans-serif;
+	color: #2A2C30;
+	margin-bottom: 48px;
+}
+
+img.component-placeholder{
+	max-height: 100%;
+	max-width: 100%;
+}
+
+.nav-pills.custom{
+	margin-bottom: 12px;
+}
+
+/*code.language-html{
+	background: #f5f5f5;
+}*/
+
+pre.pre-scrollable{
+	background: #fff;
+    -moz-tab-size: 4; /* Firefox 4+ */
+    -o-tab-size: 4; /* Opera 11.5 & 12.1 only */
+    tab-size: 4; /* Chrome 21+, Safari 6.1+, Opera 15+ */
+}
+
+
+
+/*media queries*/
+@media(max-width:767px){
+	.navbar-right-button-end{
+		margin: 0px;
+		margin-right: 15px;
+	}
+}
+@media(min-width:768px){
+}
+@media(min-width:992px){
+}
+@media(min-width:1200px){
+}
+
+/*special queries*/
