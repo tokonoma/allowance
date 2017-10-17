@@ -34,9 +34,9 @@ if(!empty($_SESSION['firstuser'])){
     $_SESSION['admin'] = true;
 
     $_SESSION['expire'] = time()+60*360;
+    unset($_SESSION['firstuser']);
 }
 
-unset($_SESSION['firstuser']);
 $_SESSION['sessionalert'] = "usercreated";
 header("Location: ".$baseurl);
 

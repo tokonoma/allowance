@@ -6,7 +6,7 @@
     <meta content="IE=edge" http-equiv=X-UA-Compatible>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name=viewport>
     <meta content="Description" name=description>
-    <title><?php echo $listtitle; ?></title>
+    <title><?php echo "title"; //$listtitle; ?></title>
     <base href="<?php echo $baseurl; ?>" />
     
     <!--bootstrap CDN-->

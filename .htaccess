@@ -1,1 +1,7 @@
 #FallbackResource index.php
+RewriteEngine on
+RewriteCond %{THE_REQUEST} ^(GET|POST|HEAD)\ /search\.php\?term=([^&]+)&cat=([^&\ ]+)
+RewriteRule ^ /search/%2/%3/? [L,R=301]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^/?search/([^/]+)/([^/]+)/?$ /search.php?term=$1&cat=$2 [L]

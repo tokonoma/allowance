@@ -14,9 +14,14 @@ include('../system/db_connect.php');
 // $baseurl .= htmlspecialchars($cleanuri[0]);
 
 $baseurl = $_SERVER['HTTP_HOST'];
-echo $baseurl."<br>";
-//$baseurl = $_SERVER['DOCUMENT_ROOT'];
-echo "<a href='".$baseurl."'>clickhere</a>";
+$cleanuri = explode('?', $_SERVER['REQUEST_URI'], 2);
+$baseurl .= htmlspecialchars($cleanuri[0]);
+$requesturi = htmlentities($_SERVER['REQUEST_URI']);
+
+echo "baseurl is ".$baseurl."<br>";
+echo "<a href='".$baseurl."'>baseurl</a><br>";
+echo "full uri is ".htmlentities($_SERVER['REQUEST_URI'])."<br>";
+echo "<a href='".htmlentities($_SERVER['REQUEST_URI'])."'>full uri</a><br>";
 
 //include alerts logic and messages
 include('../system/alerts.php');
@@ -82,12 +87,12 @@ if(isset($_POST['action'])){
             //save procedure
             break;
         case 'createuser':
-            //an attempt at added security logged in or first user
-            if(!isset($_SESSION['email']) || !empty($_SESSION['firstuser'])){
+            //an attempt at added security admin user or first user
+            if(!empty($_SESSION['admin']) || !empty($_SESSION['firstuser'])){
                 include('../system/createuser.php');
             }
             else{
-                $_SESSION['sessionalert'] = "loginfail";
+                $_SESSION['sessionalert'] = "generalerror";
                 header("Location: ".$baseurl);
                 exit();
             }
