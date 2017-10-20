@@ -5,21 +5,41 @@ include('system/db_connect.php');
 
 //routes for multiple pages
 $request_uri = explode('?', $_SERVER['REQUEST_URI'], 2);
-switch ($request_uri[0]){
-    // Home page
-    case '/':
-        require 'views/base.php';
-        break;
-    case '/cms':
-        header("Location:/cms");
-        exit();
-        break;
-    // Everything else
-    default:
-        header('HTTP/1.0 404 Not Found');
-        require 'views/404.php';
-        break;
+echo $request_uri[0] . "<br>";
+var_dump($request_uri);
+echo "<br>";
+
+
+//looks like this isn't working right in valet...
+$baseurl  = isset($_SERVER['HTTPS']) ? 'https://' : 'http://';
+$baseurl .= $_SERVER['SERVER_NAME'];
+if (strpos($baseurl, 'localhost') !== false) {
+    $baseurl .= ":".$_SERVER['SERVER_PORT'];
 }
+//$baseurl .= htmlspecialchars($_SERVER['REQUEST_URI']);
+$cleanuri = explode('?', $_SERVER['REQUEST_URI'], 2);
+$baseurl .= htmlspecialchars($cleanuri[0]);
+
+echo $baseurl."<br>";
+echo $cleanuri[0]."<br>";
+echo htmlentities($_SERVER['REQUEST_URI']);
+
+//routing
+// switch ($request_uri[0]){
+//     // Home page
+//     case '/':
+//         require 'views/base.php';
+//         break;
+//     case '/cms':
+//         header("Location:/cms");
+//         exit();
+//         break;
+//     // Everything else
+//     default:
+//         header('HTTP/1.0 404 Not Found');
+//         require 'views/404.php';
+//         break;
+// }
 
 //for testing
 // if(!isset($_SESSION['user'])){
