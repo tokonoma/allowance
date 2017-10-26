@@ -1,4 +1,4 @@
-<?php include('partials/header.php');?>
+<?php include('views/header.php');?>
 
 <div class="container height100">
     <div class="row height100">
@@ -35,6 +35,6 @@
     </div> <!--/row-->
 </div> <!--/container-->
 
-<?php include('partials/commonjs.php');?>
+<?php include('views/commonjs.php');?>
 
-<?php include('partials/ender.php');?>
+<?php include('views/ender.php');?>

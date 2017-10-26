@@ -1,6 +1,24 @@
 <?php
+
+//localhost ips
+$localips = array(
+	'127.0.0.1',
+	'::1'
+);
+
+//this is for developing locally, for example, with MAMP...
+//You may need to add your projects directory to the path to the database.
+if(in_array($_SERVER['REMOTE_ADDR'], $localips)){
+	//add your projects directory name here...
+	$projectdirectory = "zero";
+	$dbrelativepath = "/".$projectdirectory."/system/data/database.sqlite";
+}
+else{
+	$dbrelativepath = "/system/data/database.sqlite";
+}
+
 //sqlite DB
-define('DB_PATH', $_SERVER['DOCUMENT_ROOT'].'/system/data/database.sqlite');
+define('DB_PATH', $_SERVER['DOCUMENT_ROOT'].$dbrelativepath);
 $dsn = "sqlite:".DB_PATH;
 
 //postgres DB

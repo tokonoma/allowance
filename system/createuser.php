@@ -20,14 +20,15 @@ try{
     $db = NULL;
 }
 catch(PDOException $e){
-    //$statusMessage = $e->getMessage();
-    $_SESSION['sessionalert'] = "loginfail";
-    header("Location: ".$baseurl);
-    exit();
+    $statusMessage = $e->getMessage();
+    echo $statusMessage;
+    //$_SESSION['sessionalert'] = "loginfail";
+    //header("Location: ".$baseurl);
+    //exit();
 }
 
 
-//is this the first user of all time
+//is this the first user of all time, log user in
 if(!empty($_SESSION['firstuser'])){
     $_SESSION['firstname'] = $input_fname;
     $_SESSION['email'] = $input_email;

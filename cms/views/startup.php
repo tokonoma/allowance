@@ -4,19 +4,14 @@
     <div class="row height100">
         <div class="col-sm-4 col-sm-offset-4 height100">
             <div class="table-parent height80"><div class="table-cell table-cell-vcenter">
-                <?php
-                    if (!empty($statusMessage)){
-                        echo "<div id='' class='alert alert-" . $statusType . " notif-alert' role='alert'>";
-                        echo $statusMessage;
-                        echo "</div>";
-                    }
-                ?>
+                
+                <?php include('views/alerts.php');?>
+                
                 <h3>Let's Get started</h3>
                 <h4>Create an admin user</h4>
                 <div class="panel panel-default">
                     <div class="panel-body">
-
-                        <form id="js-submit-form" method="POST" action="">
+                        <form id="js-submit-form" method="POST" action="<?php echo $baseurl; ?>">
                             <div class="form-group">
                                 <label for="newuseremail">Email address</label>
                                 <input type="email" name="newuseremail" class="form-control" id="newemail" placeholder="Email">
@@ -35,7 +30,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="newuserlastname">Last Name</label>
-                                <input type="text" name="newuserlastname" class="form-control" id="newuserlastname" placeholder="First Name">
+                                <input type="text" name="newuserlastname" class="form-control" id="newuserlastname" placeholder="Last Name">
                             </div>
                             <input type="hidden" name="newuseradmin" value="1">
                             <input type="hidden" name="action" value="createuser">

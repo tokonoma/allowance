@@ -33,8 +33,9 @@
     });
 
     //when additonal checks are required prior to submission
-    function submitJSForm(){
-        document.getElementById("js-submit-form").submit();
+    function submitJSForm(formid){
+        formid = formid || "js-submit-form";
+        document.getElementById(formid).submit();
     }
 </script>
 

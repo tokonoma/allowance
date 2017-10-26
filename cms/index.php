@@ -1,27 +1,18 @@
 <?php
+session_name('zerocms');
 session_start();
 include('../system/config.php');
 include('../system/db_connect.php');
 
-//looks like this isn't working right in valet...
-// $baseurl  = isset($_SERVER['HTTPS']) ? 'https://' : 'http://';
-// $baseurl .= $_SERVER['SERVER_NAME'];
-// if (strpos($baseurl, 'localhost') !== false) {
-//     $baseurl .= ":".$_SERVER['SERVER_PORT'];
-// }
-// //$baseurl .= htmlspecialchars($_SERVER['REQUEST_URI']);
-// $cleanuri = explode('?', $_SERVER['REQUEST_URI'], 2);
-// $baseurl .= htmlspecialchars($cleanuri[0]);
-
-$baseurl = $_SERVER['HTTP_HOST'];
+//this is for getting baseurl to work locally, 
+$baseurl  = isset($_SERVER['HTTPS']) ? 'https://' : 'http://';
+$baseurl .= $_SERVER['SERVER_NAME'];
+if (strpos($baseurl, 'localhost') !== false) {
+    $baseurl .= ":".$_SERVER['SERVER_PORT'];
+}
+//$baseurl .= htmlspecialchars($_SERVER['REQUEST_URI']);
 $cleanuri = explode('?', $_SERVER['REQUEST_URI'], 2);
 $baseurl .= htmlspecialchars($cleanuri[0]);
-$requesturi = htmlentities($_SERVER['REQUEST_URI']);
-
-echo "baseurl is ".$baseurl."<br>";
-echo "<a href='".$baseurl."'>baseurl</a><br>";
-echo "full uri is ".htmlentities($_SERVER['REQUEST_URI'])."<br>";
-echo "<a href='".htmlentities($_SERVER['REQUEST_URI'])."'>full uri</a><br>";
 
 //include alerts logic and messages
 include('../system/alerts.php');
