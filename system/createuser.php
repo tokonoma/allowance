@@ -5,14 +5,14 @@ try{
     $db = new PDO($dsn);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $input_email = $_POST['newusername'];
+    $input_email = $_POST['newuseremail'];
     $input_password = $_POST['newuserpassword'];
     $password_store = password_hash($input_password, PASSWORD_BCRYPT);
     $input_fname = $_POST['newuserfirstname'];
     $input_lname = $_POST['newuserlastname'];
     $input_admin = $_POST['newuseradmin'];
 
-    $insert = $db->prepare("INSERT INTO [table] (email, password, fname, lname, admin) VALUES (?, ?, ?, ?, ?, ?)");
+    $insert = $db->prepare("INSERT INTO users (email, password, fname, lname, admin) VALUES (?, ?, ?, ?, ?)");
     $insertarray = array($input_email, $password_store, $input_fname, $input_lname, $input_admin);
     $insert->execute($insertarray);
 
@@ -20,11 +20,11 @@ try{
     $db = NULL;
 }
 catch(PDOException $e){
-    $statusMessage = $e->getMessage();
-    echo $statusMessage;
-    //$_SESSION['sessionalert'] = "loginfail";
-    //header("Location: ".$baseurl);
-    //exit();
+    // $statusMessage = $e->getMessage();
+    // $statusType = "danger";
+    $_SESSION['sessionalert'] = "loginfail";
+    header("Location: ".$baseurl);
+    exit();
 }
 
 

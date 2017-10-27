@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<?php echo $baseurl; ?>">MARIAN CMS</a>
+            <a class="navbar-brand" href="<?php echo $baseurl; ?>">ZERO CMS</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -24,7 +24,15 @@
                             <li><a href="?mode=settings">Settings</a></li>
                             <li><a href="../">Back to Library</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="?session=logout">Logout</a></li>
+                            <li>
+                                <form id="login-form" method="POST" action="<?php echo $baseurl; ?>">
+                                    <input type="hidden" name="action" value="logout">
+                                    <button type="submit" name="submit" class="btn btn-link">
+                                        Logout
+                                    </button>
+                                </form> 
+
+                            </li>
                         </ul>
                     </div>
                 </li>

@@ -22,21 +22,8 @@
     })(window.jQuery);
 </script>
 
-<script>
-    $(function() {
-
-        //for generic forms with no checks required
-        $(".js-submit-btn").click(function() {
-            submitJSForm();
-        });
-        
-    });
-
-    //when additonal checks are required prior to submission
-    function submitJSForm(formid){
-        formid = formid || "js-submit-form";
-        document.getElementById(formid).submit();
-    }
-</script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="../assets/js/sortable.js"></script>
+<script src="../assets/js/marian.js"></script>
 
 <script src="https://maxcdn.bootstrapcdn.com/js/ie10-viewport-bug-workaround.js"></script>

@@ -28,7 +28,7 @@
                 $insert->execute($insertarray);
 
                 $uid = $db->lastInsertId();
-                //this is changed from slite - pgsl requres [table]_[column]_seq as a parameter for calling lastInsertId
+                //this is changed from slite - pgsl requires [table]_[column]_seq as a parameter for calling lastInsertId
                 //$uid = $db->lastInsertId(content_uid_seq);
             }
             // if we're editing

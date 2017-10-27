@@ -6,6 +6,8 @@ $localips = array(
 	'::1'
 );
 
+//also, try putting ../ in the middle of a path like get to ROOT, get CURRENT, then ../ to system
+
 //this is for developing locally, for example, with MAMP...
 //You may need to add your projects directory to the path to the database.
 if(in_array($_SERVER['REMOTE_ADDR'], $localips)){

@@ -2,13 +2,12 @@
 
 <?php include('views/alerts.php');?>
 
-<p>hello <?php echo $firstname; ?>this is the overpage</p>
+<?php include('views/nav.php'); ?>
 
-<form id="login-form" method="POST" action="<?php echo $baseurl; ?>">
-    <input type="hidden" name="action" value="logout">
-    <button type="submit" name="submit" class="btn btn-primary pull-right">Logout</button>
-</form> 
+<?php //include('views/wireframe.php'); ?>
 
-<?php include('views/commonjs.php');?>
+<!--BOTTOM-->
 
-<?php include('views/ender.php');?>
+<?php include('views/commonjs.php'); ?>
+
+<?php include('views/ender.php'); ?>
