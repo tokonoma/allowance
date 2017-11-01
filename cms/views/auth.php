@@ -4,13 +4,9 @@
     <div class="row height100">
         <div class="col-sm-4 col-sm-offset-4 height100">
             <div class="table-parent height80"><div class="table-cell table-cell-vcenter">
-                <?php
-                    if (!empty($statusMessage)){
-                        echo "<div id='' class='alert alert-" . $statusType . " notif-alert' role='alert'>";
-                        echo $statusMessage;
-                        echo "</div>";
-                    }
-                ?>
+                
+                <?php include('views/alerts.php');?>
+                
                 <h3>Sign In</h3>
                 <div class="panel panel-default">
                     <div class="panel-body">

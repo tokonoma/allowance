@@ -22,7 +22,6 @@
                         </button>
                         <ul class="dropdown-menu">
                             <li><a href="?mode=settings">Settings</a></li>
-                            <li><a href="../">Back to Library</a></li>
                             <li role="separator" class="divider"></li>
                             <li>
                                 <form id="login-form" method="POST" action="<?php echo $baseurl; ?>">

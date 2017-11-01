@@ -55,6 +55,8 @@ if(isset($_POST['action'])){
                     if($admin == true){
                         $_SESSION['admin'] = true;
                     }
+                    header("Location: ".$baseurl);
+                    exit();
                 }
                 else{
                     $_SESSION['sessionalert'] = "loginfail";

@@ -63,7 +63,7 @@ input:-webkit-autofill{
 
 
 
-/*NAVBAR ENDING*/
+/*NAVBAR*/
 .navbar-right-button-end{
 	margin-right: 0px;
 }
@@ -79,6 +79,16 @@ input:-webkit-autofill{
 
 .navbar-right .dropdown-menu{
 	top: 88%;
+}
+
+.dropdown-menu>li button.btn-link{
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: 400;
+    line-height: 1.42857143;
+    color: #333;
+    white-space: nowrap;
 }
 
 
@@ -99,7 +109,7 @@ input:-webkit-autofill{
 
 
 
-/*settings*/
+/*SETTINGS*/
 .fa.profile-icon{
 	font-size: 124px;
 	color: #adadad;
@@ -107,58 +117,14 @@ input:-webkit-autofill{
 }
 
 
-
-/*DOC*/
-/*custom styles*/
-body.custom {
-	/*background: #F5F5F5;*/
+/*OVERVIEW*/
+.overview-container{
+	height: 360px;
+	border: dashed 1px #04384A;
+	background: #0B90AA;
+	border-radius: 4px;
 }
 
-.bs-docs-nav .custom.navbar-brand, .bs-docs-nav .custom.navbar-nav>li>a{
-	color: #1f85a9;
-}
-
-.bs-docs-nav .custom.navbar-nav>.active>a, .bs-docs-nav .custom.navbar-nav>.active>a:hover, .bs-docs-nav .custom.navbar-nav>li>a:hover{
-	color: #1f85a9;
-}
-
-/*banner*/
-.bs-docs-header.custom{
-	background-image: linear-gradient(to bottom right,#1a80af 0,#359c8f 100%);
-	color: rgba(255, 255, 255, 0.72);
-}
-
-.bs-docs-header.custom p{
-	margin-right:0px;
-}
-
-.component{}
-
-.component-content{
-	font-family: 'Open Sans', sans-serif;
-	color: #2A2C30;
-	margin-bottom: 48px;
-}
-
-img.component-placeholder{
-	max-height: 100%;
-	max-width: 100%;
-}
-
-.nav-pills.custom{
-	margin-bottom: 12px;
-}
-
-/*code.language-html{
-	background: #f5f5f5;
-}*/
-
-pre.pre-scrollable{
-	background: #fff;
-    -moz-tab-size: 4; /* Firefox 4+ */
-    -o-tab-size: 4; /* Opera 11.5 & 12.1 only */
-    tab-size: 4; /* Chrome 21+, Safari 6.1+, Opera 15+ */
-}
 
 
 
