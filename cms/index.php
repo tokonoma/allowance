@@ -93,6 +93,17 @@ if(isset($_POST['action'])){
     }
 }
 
+//serial data TEST TEST TEST
+if(isset($_POST['serialdata'])){
+    $rawserial = $_POST['serialdata'];
+    echo $rawserial;
+    $parseddata = array();
+    parse_str($rawserial, $parseddata);
+    //foreach($parseddata as $key => $value){
+        //echo "<br>" . $key " is " . $value . "<br>";
+    //this broke}
+}
+
 //session expiration
 if(isset($_SESSION['expire']) && time() > $_SESSION['expire']){
     session_unset();

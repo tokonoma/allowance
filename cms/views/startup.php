@@ -34,7 +34,7 @@
                             </div>
                             <input type="hidden" name="newuseradmin" value="1">
                             <input type="hidden" name="action" value="createuser">
-                            <button type="button" class="btn btn-primary pull-right js-pw-check">
+                            <button id="js-pw-check" type="button" class="btn btn-primary pull-right">
                                 Create User
                             </button>
                         </form>
@@ -49,7 +49,7 @@
 
 <script>
     $(function() {
-        $(".js-pw-check").click(function() {
+        $("#js-pw-check").click(function() {
             if($('input[name=newuserpassword]').val() == $('input[name=passwordconfirm]').val()){
                 submitJSForm();
             }

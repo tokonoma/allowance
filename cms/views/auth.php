@@ -21,7 +21,9 @@
                                 <input type="password" name="password" class="form-control" id="password" placeholder="Password">
                             </div>
                             <input type="hidden" name="action" value="login">
-                            <button type="submit" name="submit" class="btn btn-primary pull-right">Login</button>
+                            <button type="submit" name="submit" class="btn btn-primary pull-right">
+                                Login
+                            </button>
                         </form>
 
                     </div>
