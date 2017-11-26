@@ -59,7 +59,7 @@ try{
     //$db->exec("DROP TABLE [table]");
 
     //row delete tool
-    //$db->exec("DELETE FROM [table] WHERE lname = [val]");
+    //$db->exec("DELETE FROM [table] WHERE email = [value]);
 
     //queries
     $tables = $db->query("SELECT * FROM sqlite_master where type='table';");
