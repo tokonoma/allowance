@@ -1,5 +1,5 @@
 <?php
-session_name('zerocms');
+session_name('allowance');
 session_start();
 include('../system/config.php');
 include('../system/db_connect.php');

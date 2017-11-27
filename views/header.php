@@ -6,14 +6,14 @@
     <meta content="IE=edge" http-equiv=X-UA-Compatible>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name=viewport>
     <meta content="Description" name=description>
-    <title><?php echo $listtitle; ?></title>
+    <title>testing</title>
     <base href="<?php echo $baseurl; ?>" />
     
     <!--bootstrap CDN-->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
     <!--custom css if available-->
-    <link href="assets/css/custom.css" rel="stylesheet">
+    <link href="../assets/css/custom.css" rel="stylesheet">
 
     <!--web font-->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,600i,700,700i" rel="stylesheet">

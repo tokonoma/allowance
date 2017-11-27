@@ -24,30 +24,40 @@ try{
     //$db->exec("DELETE FROM [table] WHERE [col] = [val]");
 
     //table create tool
-    //$db->exec("CREATE TABLE IF NOT EXISTS [table] (email TEXT PRIMARY KEY, password TEXT, fname TEXT, lname TEXT, admin BOOLEAN)");
+    // $db->exec("CREATE TABLE IF NOT EXISTS users (email TEXT PRIMARY KEY, password TEXT, fname TEXT, lname TEXT)");
+
+    // $db->exec("CREATE TABLE IF NOT EXISTS budgets (uid INTEGER PRIMARY KEY, name TEXT, balance INTEGER, autorefill BOOLEAN, refillamount INTEGER, refillfrequency TEXT, nextrefill TEXT, owner TEXT)");
 
     //add row tool
-    // $input_email = "jlatimer@bna.com";
-    // $input_password = "temp4jared";
-    // $password_store = password_hash($input_password, PASSWORD_BCRYPT);
-    // $input_fname = "Jared";
-    // $input_lname = "Latimer";
-    // $input_cms = 1;
-    // $input_admin = 0;
-
-    // $input_email = "treeder@bna.com";
-    // $input_password = "crystalcity";
+    // $input_email = "t.reeder03@gmail.com";
+    // $input_password = "temppass";
     // $password_store = password_hash($input_password, PASSWORD_BCRYPT);
     // $input_fname = "Tim";
     // $input_lname = "Reeder";
-    // $input_cms = 1;
-    // $input_admin = 1;
+
+    // $input_email = "melanie.s.reeder@gmail.com";
+    // $input_password = "temppass";
+    // $password_store = password_hash($input_password, PASSWORD_BCRYPT);
+    // $input_fname = "Melanie";
+    // $input_lname = "Reeder";
 
     //FYI $checkpass = password_verify($inputpass, $storedpass) yields t or f for pw check
 
-    // $insert = $db->prepare("INSERT INTO [table] (email, password, fname, lname, cms, admin) VALUES (?, ?, ?, ?, ?, ?)");
-    // $insertarray = array($input_email, $password_store, $input_fname, $input_lname, $input_cms, $input_admin);
+    // $insert = $db->prepare("INSERT INTO users (email, password, fname, lname) VALUES (?, ?, ?, ?)");
+    // $insertarray = array($input_email, $password_store, $input_fname, $input_lname);
     // $insert->execute($insertarray); 
+
+    // $input_budgetname = "Test Budget";
+    // $input_balance = "100";
+    // $input_autorefill = "1";
+    // $input_refillamount = "500";
+    // $input_refillfreq = "weekly";
+    // $input_nextrefill = "20171201";
+    // $input_owner = "t.reeder03@gmail.com";
+
+    // $insert = $db->prepare("INSERT INTO budgets (name, balance, autorefill, refillamount, refillfrequency, nextrefill, owner) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    // $insertarray = array($input_budgetname, $input_balance, $input_autorefill, $input_refillamount, $input_refillfreq, $input_nextrefill, $input_owner);
+    // $insert->execute($insertarray);
 
     //update row tool
     // $update = $db->prepare("UPDATE [table] SET title = :titleinput, body = :bodyinput WHERE uid = $uid");
@@ -56,14 +66,18 @@ try{
     // $update->execute();
 
     //table delete tool
-    //$db->exec("DROP TABLE [table]");
+    //$db->exec("DROP TABLE users");
 
     //row delete tool
-    //$db->exec("DELETE FROM [table] WHERE email = [value]);
+    //$db->exec("DELETE FROM [table] WHERE email = '[value]'");
+
+
 
     //queries
+    // get all tables
     $tables = $db->query("SELECT * FROM sqlite_master where type='table';");
 
+    // loop through all tables and create individual queries
     foreach ($tables as $table) {
         $tablename = $table['name'];
         $tablequery = $tablename . "query";
@@ -71,9 +85,7 @@ try{
         $tablearray[$tablename] = $tablequery;
     }
 
-    $users = $db->query("SELECT * FROM users");
-
-
+    //$users = $db->query("SELECT * FROM users");
 
     // close the database connection
     $db = NULL;
@@ -134,6 +146,8 @@ catch(PDOException $e){
                             echo "</tr>";
                         }
                         $firstrow = false;
+                        unset($columns);
+                        unset($cellvalues);
                     }
                 ?>
                     </tbody>
