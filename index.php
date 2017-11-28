@@ -93,17 +93,6 @@ if(isset($_POST['action'])){
     }
 }
 
-//serial data TEST TEST TEST
-if(isset($_POST['serialdata'])){
-    $rawserial = $_POST['serialdata'];
-    $parseddata = array();
-    parse_str($rawserial, $parseddata);
-    foreach($parseddata as $key => $value){
-        echo $key." is ".$value."<br>";
-
-    }
-}
-
 //session expiration
 if(isset($_SESSION['expire']) && time() > $_SESSION['expire']){
     session_unset();
@@ -142,5 +131,5 @@ else{
     //yes - lets get you where you need to go
     $_SESSION['expire'] = time()+60*360; //reset session expire everytime the user uses the site
     //is mode = list or is nothing set at all? go to list view.
-    include('views/overview.php');
+    include('views/dashboard.php');
 }

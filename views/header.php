@@ -13,7 +13,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
     <!--custom css if available-->
-    <link href="../assets/css/custom.css" rel="stylesheet">
+    <link href="assets/css/custom.css" rel="stylesheet">
 
     <!--web font-->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,600i,700,700i" rel="stylesheet">
