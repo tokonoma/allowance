@@ -26,7 +26,9 @@ try{
     //table create tool
     // $db->exec("CREATE TABLE IF NOT EXISTS users (email TEXT PRIMARY KEY, password TEXT, fname TEXT, lname TEXT)");
 
-    // $db->exec("CREATE TABLE IF NOT EXISTS budgets (uid INTEGER PRIMARY KEY, name TEXT, balance INTEGER, autorefill BOOLEAN, refillamount INTEGER, refillfrequency TEXT, nextrefill TEXT, owner TEXT)");
+    //$db->exec("CREATE TABLE IF NOT EXISTS budgets (uid INTEGER PRIMARY KEY, name TEXT, balance INTEGER, autorefill BOOLEAN, refillamount INTEGER, refillfrequency TEXT, nextrefill TEXT, owner TEXT)");
+
+    //$db->exec("CREATE TABLE IF NOT EXISTS budget2 (uid INTEGER PRIMARY KEY, name TEXT, budgetuid INTEGER, balance INTEGER, modifyamount INTEGER, transactiondate TEXT, user TEXT)");
 
     //add row tool
     // $input_email = "t.reeder03@gmail.com";
@@ -59,6 +61,17 @@ try{
     // $insertarray = array($input_budgetname, $input_balance, $input_autorefill, $input_refillamount, $input_refillfreq, $input_nextrefill, $input_owner);
     // $insert->execute($insertarray);
 
+    // $input_transname = "First Transaction";
+    // $input_budgetuid = "2";
+    // $input_balance = "100";
+    // $input_modifyamount = "100";
+    // $input_trandate = "20171127";
+    // $input_user = "t.reeder03@gmail.com";
+
+    // $insert = $db->prepare("INSERT INTO budget2 (name, budgetuid, balance, modifyamount, transactiondate, user) VALUES (?, ?, ?, ?, ?, ?)");
+    // $insertarray = array($input_transname, $input_budgetuid, $input_balance, $input_modifyamount, $input_trandate, $input_user);
+    // $insert->execute($insertarray);
+
     //update row tool
     // $update = $db->prepare("UPDATE [table] SET title = :titleinput, body = :bodyinput WHERE uid = $uid");
     // $update->bindParam(':titleinput', $titleinput, PDO::PARAM_STR);
@@ -69,8 +82,7 @@ try{
     //$db->exec("DROP TABLE users");
 
     //row delete tool
-    //$db->exec("DELETE FROM [table] WHERE email = '[value]'");
-
+    //$db->exec("DELETE FROM budget1 WHERE user = 't.reeder03@gmail.com'");
 
 
     //queries
