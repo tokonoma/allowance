@@ -20,7 +20,7 @@
                 <li>
                     <div class="btn-group">
                         <button type="button" class="btn btn-default dropdown-toggle navbar-btn link-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Hi <?php if(!empty($_SESSION['username'])): ?> <?php echo $_SESSION['username'] ?> <?php else: ?> There <?php endif ?> <span class="caret"></span>
+                            Hi <?php if(!empty($_SESSION['firstname'])): ?> <?php echo $_SESSION['firstname'] ?> <?php else: ?> There <?php endif ?> <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
                             <li><a href="?mode=settings">Settings</a></li>

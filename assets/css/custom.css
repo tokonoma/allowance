@@ -37,7 +37,6 @@ input:-webkit-autofill{
 
 .table-cell{
 	display: table-cell;
-	width: 100%;
 }
 
 .table-cell-vcenter{
@@ -107,6 +106,8 @@ input:-webkit-autofill{
 	display: none;
 }
 
+/**/
+
 
 
 /*SETTINGS*/
@@ -124,7 +125,6 @@ input:-webkit-autofill{
 	background: #0B90AA;
 	border-radius: 4px;
 }
-
 
 
 
