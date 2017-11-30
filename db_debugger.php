@@ -30,6 +30,8 @@ try{
 
     //$db->exec("CREATE TABLE IF NOT EXISTS budget2 (uid INTEGER PRIMARY KEY, name TEXT, budgetuid INTEGER, balance INTEGER, modifyamount INTEGER, transactiondate TEXT, user TEXT)");
 
+    //$db->exec("CREATE TABLE IF NOT EXISTS shares (uid INTEGER PRIMARY KEY, budgetuid INTEGER, owner TEXT, shareduser TEXT)");
+
     //add row tool
     // $input_email = "t.reeder03@gmail.com";
     // $input_password = "temppass";
@@ -72,11 +74,27 @@ try{
     // $insertarray = array($input_transname, $input_budgetuid, $input_balance, $input_modifyamount, $input_trandate, $input_user);
     // $insert->execute($insertarray);
 
+    // $input_budgetuid = "1";
+    // $input_owner = "melanie.s.reeder@gmail.com";
+    // $input_shareduser = "t.reeder03@gmail.com";
+
+    // $insert = $db->prepare("INSERT INTO shares (budgetuid, owner, shareduser) VALUES ( ?, ?, ?)");
+    // $insertarray = array($input_budgetuid, $input_owner, $input_shareduser);
+    // $insert->execute($insertarray);
+
     //update row tool
     // $update = $db->prepare("UPDATE [table] SET title = :titleinput, body = :bodyinput WHERE uid = $uid");
     // $update->bindParam(':titleinput', $titleinput, PDO::PARAM_STR);
     // $update->bindParam(':bodyinput', $bodyinput, PDO::PARAM_STR);
     // $update->execute();
+
+    // $input_share_num = 0;
+    // $update = $db->prepare("UPDATE budgets SET shares = :shares WHERE uid = 2");
+    // $update->bindParam(':shares', $input_share_num, PDO::PARAM_STR);
+    // $update->execute();
+
+    //add a column
+    //$db->exec("ALTER TABLE budgets ADD COLUMN shares INTEGER");
 
     //table delete tool
     //$db->exec("DROP TABLE users");
