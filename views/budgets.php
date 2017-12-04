@@ -16,7 +16,7 @@
                         <ul class="nav navbar-nav navbar-right navbar-right-button-end">
                             <li>
                                 <button type="button" class="btn allw-success navbar-btn new-item-btn" data-toggle="modal" data-target="#new-budget-modal">
-                                    Add
+                                    New Budget
                                 </button>
                             </li>
                         </ul>
@@ -33,7 +33,7 @@
             <ul id="item-list" class="list-unstyled">
 
                 <?php foreach($budgets as $budget): ?>
-                <li class="budget-table table-parent" data-uid="<?php echo $budget['uid']?>">
+                <li class="budget-table table-parent" data-uid="<?php echo $budget['uid']?>" data-name="<?php echo $budget['name']?>">
                     <a href="<?php echo $baseurl.'?budget='.$budget['uid']?>" class="budget-data table-cell">
                         <div class="budget-data-padding">
                             <div class="budget-details table-cell">

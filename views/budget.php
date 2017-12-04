@@ -1,10 +1,13 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
+
+            <?php include('views/alerts.php');?>
+            
             <ul id="item-list" class="list-unstyled">
 
                 <?php foreach($budget as $budgetinfo): ?>
-                <li class="budget-table table-parent" data-uid="<?php echo $budget['uid']?>">
+                <li class="budget-table table-parent" data-uid="<?php echo $budgetinfo['uid']?>">
                     <?php echo $budgetinfo['name']?><br>
                     <?php echo $budgetinfo['refillfrequency']?><br>
                     <?php echo $budgetinfo['refillamount']?><br>

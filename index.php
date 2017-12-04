@@ -134,7 +134,15 @@ else{
     if(isset($_GET['budget'])){
         include('views/budget_dashboard.php');
     }
+    elseif(isset($_GET['mode'])){ 
+        $mode = $_GET['mode'];
+        switch ($mode){
+            case 'settings':
+                include('views/user_settings.php');
+                break;
+        }
+    }
     else{
-        include('views/dashboard.php');
+        include('views/budgets_dashboard.php');
     }
 }

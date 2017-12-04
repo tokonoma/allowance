@@ -6,6 +6,8 @@
 
 <?php include('views/budgets.php'); ?>
 
+<?php include('views/modals.php'); ?>
+
 
 <!--BOTTOM-->
 

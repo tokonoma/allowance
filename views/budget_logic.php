@@ -8,6 +8,32 @@
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
+        //creating a new budget
+        if(isset($_POST['budgetaction'])){
+                
+            $savetype = $_POST['budgetaction'];
+
+            // if new pos has value and edit uid is empty, add a NEW item to the db
+            switch ($savetype){
+                case 'new':
+                    //add row to table
+                    //create table for budget
+                    break;
+                case 'edit':
+                    //edit item
+                    break;
+                case 'delete':
+                    //delete item and associated items
+                    break;
+            }
+            //$statusMessage = "Error saving item";
+            //$statusType = "danger";
+
+            header("Location: ".$_SERVER['REQUEST_URI']);
+            exit();
+
+        }
+
         
         //new or edited item save
         /*
@@ -72,10 +98,10 @@
 
         //generate content from query db
         $budgetuid = $_GET['budget'];
-        $budgettable = "budget".$budgetuid;
+        $budgettablename = "budget".$budgetuid;
         //$budgets = $db->query("SELECT * FROM budgets WHERE owner = '$_SESSION['email']' AND uid = $budgetuid ORDER BY uid ASC");
         $budget = $db->query("SELECT * FROM budgets WHERE owner = 'melanie.s.reeder@gmail.com' AND uid = $budgetuid ORDER BY 'uid' ASC");
-        $budgettable = $db->query("SELECT * FROM $budgettable ORDER BY 'transactiondate' DESC");
+        $budgettable = $db->query("SELECT * FROM $budgettablename ORDER BY 'transactiondate' DESC");
 
         //reordering save - called via ajax
         /*

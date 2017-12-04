@@ -88,6 +88,29 @@ $(function() {
             $(".preview-header .glyphicon-chevron-up").addClass("hidden");
         }
     });
+
+    //click to call js submit for single/generic form
+    $(".js-submit-btn").click(function() {
+        submitJSForm();
+    });
+
+    //EDIT PAGE modal
+    $(document).on("click", ".send-uid", function(){
+        //send info on item to be edited to modal
+        var budgetuid = $(this).closest(".budget-table").data('uid');
+        var budgetuid = $(this).closest(".budget-table").data('name');
+        var budgetuid = $(this).closest(".budget-table").data('modal');
+        $('input[name="edit-item-uid"]').val(budgetuid);
+
+        //clear any left overs from abandoned new item modals
+        $('input[name="new-item-pos"]').val("");
+    });
+
+    //show, hide auto-refill options
+    $('#budget-refill-input').click(function(){
+        $("#refill-amount-group").toggleClass("hidden");
+        $("#refill-freq-group").toggleClass("hidden");
+    });
     
 })
 
@@ -101,4 +124,11 @@ function updateOrder(uid, pos){
             //$(".reorder-badge").show().delay(500).fadeOut("fast");
         }
     });
+}
+
+
+//js form submit function
+function submitJSForm(formid){
+    formid = formid || "js-submit-form";
+    document.getElementById(formid).submit();
 }

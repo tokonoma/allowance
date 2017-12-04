@@ -23,7 +23,7 @@
                             Hi <?php if(!empty($_SESSION['firstname'])): ?> <?php echo $_SESSION['firstname'] ?> <?php else: ?> There <?php endif ?> <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a href="?mode=settings">Settings</a></li>
+                            <li><a href="<?php echo $baseurl; ?>?mode=settings">Settings</a></li>
                             <li role="separator" class="divider"></li>
                             <li>
                                 <form id="login-form" method="POST" action="<?php echo $baseurl; ?>">
@@ -41,7 +41,3 @@
         </div><!--/.nav-collapse -->
     </div>
 </nav>
-
-<?php if(!empty($_SESSION['adminacc']) && $_GET['mode']!= "settings"): ?> 
-    <?php include('partials/admin_tabs.php'); ?>
-<?php endif ?>

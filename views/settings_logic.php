@@ -8,7 +8,7 @@ try{
     $db = new PDO($dsn);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $user_id = $_SESSION['user_id'];
+    $userid = $_SESSION['email'];
 
     //if the form is submitted
     if(isset($_POST['user-email'])){
@@ -32,7 +32,7 @@ try{
         $uniquecheck->execute();
         //echo $uniquecheck->rowCount();
 
-        if(($input_email == $user_id) || ($uniquecheck->rowCount() <= 0)){
+        if(($input_email == $userid) || ($uniquecheck->rowCount() <= 0)){
 
             //did they try to change their password
             if(!empty($_POST['password-one']) || !empty($_POST['password-two'])){
@@ -60,14 +60,14 @@ try{
             }
 
             //if the email is the same or it's new AND unique, go ahead and save it
-            $update = $db->prepare("UPDATE users SET email = :email, fname = :fname, lname = :lname WHERE email = '$user_id'");
+            $update = $db->prepare("UPDATE users SET email = :email, fname = :fname, lname = :lname WHERE email = '$userid'");
             $update->bindParam(':email', $input_email, PDO::PARAM_STR);
             $update->bindParam(':fname', $_POST['first-name'], PDO::PARAM_STR);
             $update->bindParam(':lname', $_POST['last-name'], PDO::PARAM_STR);
             $update->execute();
 
-            $_SESSION['username'] = $input_fname;
-            $_SESSION['user_id'] = $input_email;
+            $_SESSION['firstname'] = $input_fname;
+            $_SESSION['email'] = $input_email;
             header("Location: ".$_SERVER['REQUEST_URI']);
             exit();
         }
@@ -81,7 +81,7 @@ try{
     }
 
     //populate content on page
-    $results = $db->query("SELECT * FROM users WHERE email = '$user_id'");
+    $results = $db->query("SELECT * FROM users WHERE email = '$userid'");
 
     // close the database connection
     $db = NULL;
