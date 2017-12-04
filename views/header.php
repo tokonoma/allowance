@@ -27,6 +27,6 @@
     <!--<link href="/favicon.ico" rel="icon">-->
 </head>
 
-<body>
+<body class="allowance">
     <!--bootstrap css test-->
     <div id="bootstrapCssTest" class="hidden"></div>

@@ -1,130 +1,6 @@
-<?php
-
-    $dashboarduser = $_SESSION['email'];
-    
-   try{
-        //postgres for prod
-        $db = new PDO($dsn);
-        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        
-        //new or edited item save
-        /*
-        if(isset($_POST['item-title-input']) && isset($_POST['item-desc-input'])){
-                
-            $itemtitle = $_POST['item-title-input'];
-            $itemdesc = $_POST['item-desc-input'];
-            $newitempos = $_POST['new-item-pos'];
-            $edituid = $_POST['edit-item-uid'];
-
-            // if new pos has value and edit uid is empty, add a NEW item to the db
-            if(!empty($newitempos) && empty($edituid)){
-                $insert = $db->prepare("INSERT INTO $insertprep");
-                array_push($insertarray, $newitempos, $itemtitle, $itemdesc);
-                $insert->execute($insertarray);
-                $_SESSION['sessionalert'] = "itemcreated";
-            }
-            // if new pos is empty and edit uid has a value, UPDATE the item based on its UID
-            elseif(!empty($edituid) && empty($newitempos)){
-                $update = $db->prepare("UPDATE $dbtable SET title = :itemtitle, description = :itemdesc WHERE uid = $edituid");
-                $update->bindParam(':itemtitle', $itemtitle, PDO::PARAM_STR);
-                $update->bindParam(':itemdesc', $itemdesc, PDO::PARAM_STR);
-                $update->execute();
-                $_SESSION['sessionalert'] = "itemedited";
-            }
-            else{
-                $statusMessage = "Error saving item";
-                $statusType = "danger";
-            }
-
-            header("Location: ".$_SERVER['REQUEST_URI']);
-            exit();
-
-        }
-        */
-
-        //delete item
-        /*
-        if(isset($_POST['delete-item-uid'])){
-            
-            //always delete the central item
-            $deleteUID = $_POST['delete-item-uid'];
-            $db->exec("DELETE FROM $dbtable WHERE uid = $deleteUID;");
-
-            if(isset($_GET['pid']) && !isset($_GET['sid'])){
-                // PID with NO SID means it's a section
-                $db->exec("DELETE FROM content WHERE sid = $deleteUID;");
-            }
-            elseif(!isset($_GET['pid']) && !isset($_GET['sid'])){
-                // NO PID with NO SID means it's a page
-                $db->exec("DELETE FROM content WHERE pid = $deleteUID;");
-                $db->exec("DELETE FROM sections WHERE pid = $deleteUID;");
-            }
-
-            $_SESSION['sessionalert'] = "itemdeleted";
-
-            header("Location: ".$_SERVER['REQUEST_URI']);
-            exit();
-
-        }
-        */
-
-        //generate content from query db
-        //$budgets = $db->query("SELECT * FROM budgets WHERE owner = '$dashboarduser' ORDER BY uid ASC");
-        $budgets = $db->query("SELECT * FROM budgets WHERE owner = 'melanie.s.reeder@gmail.com' ORDER BY uid ASC");
-
-        //determine page header and breadcrumb
-        /*
-        if(isset($_GET['pid'])){
-            $thispg = $db->query("SELECT title FROM pages WHERE uid = $pid");
-            foreach($thispg as $row){
-                $thispgtitle = $row['title'];
-            }
-            if(isset($_GET['sid'])){
-                $thissec = $db->query("SELECT title FROM sections WHERE uid = $sid");
-                foreach($thissec as $row){
-                    $thissectitle = $row['title'];
-                }
-                $pageheader = "$thissectitle &nbsp; <small>SECTION</small>";
-                $breadcrumb = "<li><a href='".$baseurl."?mode=list&pid=$pid'>$thispgtitle</a></li> <li class='active'>$thissectitle</li>";
-            }
-            else{
-                $pageheader = "$thispgtitle &nbsp; <small>PAGE</small>";
-                $breadcrumb = "<li class='active'>$thispgtitle</li>";
-            }
-        }
-        else{
-            $pageheader = "PAGES";
-        }
-        */
-
-        //reordering save - called via ajax
-        /*
-        if(isset($_POST['moveuid']) && isset($_POST['movepos'])){
-            $moveuid = $_POST['moveuid'];
-            $movepos = $_POST['movepos'];
-
-            $posupdate = $db->prepare("UPDATE $dbtable SET pos = :movepos WHERE uid = $moveuid");
-            $posupdate->bindParam(':movepos', $movepos, PDO::PARAM_STR);
-            $posupdate->execute();
-        }
-        */
-
-        // close the database connection
-        $db = NULL;
-    }
-    catch(PDOException $e){
-        $statusMessage = $e->getMessage();
-        $statusType = "danger";
-    }
-
-    // remove alert variable
-    unset($_SESSION['sessionalert']);
-
-?>
-
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
 
             <?php include('views/alerts.php');?>
 
@@ -139,7 +15,7 @@
                     <div class="navbar-header pull-right">
                         <ul class="nav navbar-nav navbar-right navbar-right-button-end">
                             <li>
-                                <button type="button" class="btn btn-success navbar-btn new-item-btn" data-toggle="modal" data-target="#new-budget-modal">
+                                <button type="button" class="btn allw-success navbar-btn new-item-btn" data-toggle="modal" data-target="#new-budget-modal">
                                     Add
                                 </button>
                             </li>
@@ -149,33 +25,81 @@
             </nav>
         </div>
     </div>
+</div>
 
+<div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
             <ul id="item-list" class="list-unstyled">
+
                 <?php foreach($budgets as $budget): ?>
-                    <li class='panel panel-default' data-uid="<?php echo $budget['uid'] ?>">
-                        <div class='panel-body'>
-                            <div class="budget-list-item">
-                                <div class="budget-information">
+                <li class="budget-table table-parent" data-uid="<?php echo $budget['uid']?>">
+                    <a href="<?php echo $baseurl.'?budget='.$budget['uid']?>" class="budget-data table-cell">
+                        <div class="budget-data-padding">
+                            <div class="budget-details table-cell">
+                                <div class="budget-name">
                                     <?php echo $budget['name']; ?>
+                                </div>
+                                <div class="budget-balance tiny-balance">
                                     <?php
                                         $balance = $budget['balance'];
-                                        echo number_format(($balance/100), 2, '.', ',');
+                                        echo "$".number_format(($balance/100), 2, '.', ',');
                                     ?>
-                                    <span class="badge">
-                                        <?php echo $budget['refillamount']; ?>
-                                        <?php echo $budget['refillfrequency']; ?>
-                                    </span>
+                                </div>
+                                <div class="budget-properties">
+                                    <?php if($budget['refillamount'] > 0): ?>
+                                        <div class="half-badge half-badge-left refill-badge">
+                                            <i class="fa fa-repeat" aria-hidden="true"></i>
+                                        </div><div class="half-badge half-badge-right refill-badge">
+                                            <?php
+                                                $refillamount = $budget['refillamount'];
+                                                echo "$".number_format(($refillamount/100), 2, '.', ',')."/".$budget['refillfrequency'];
+                                            ?>
+                                        </div>
+                                    <?php endif; ?>
                                     <?php if($budget['shares'] > 0): ?>
-                                        <span class="badge">
-                                            <i class="fa fa-user-plus" aria-hidden="true"></i> <?php echo $budget['shares']?>
+                                        <span class="badge shares-badge">
+                                            <i class="fa fa-user-plus" aria-hidden="true"></i><?php echo $budget['shares']?>
                                         </span>
                                     <?php endif; ?>
+                                </div>
+                            </div>
+                            <div class="budget-balance table-cell table-cell-vcenter">
+                                <?php
+                                    echo "$".number_format(($balance/100), 2, '.', ',');
+                                ?>
                             </div>
                         </div>
-                    </li>
+                        <div class="balance-health-bar-container">
+                            <?php
+                                $balancehealth = $balance/$refillamount*100;
+                                if($balancehealth >= 66){
+                                    $balancehealthhex = "#09A387";
+                                }
+                                elseif($balancehealth < 66 && $balancehealth > 33){
+                                    $balancehealthhex = "#C6B40B";
+                                }
+                                else{
+                                    $balancehealthhex = "#C6500B";
+                                }
+                            ?>
+                            <?php if($balance < $refillamount): ?>
+                                <div class="balance-health-bar" style="background: <?php echo $balancehealthhex?>; width: <?php echo $balancehealth."%"?>;"></div>
+                            <?php else: ?>
+                                <div class="balance-health-bar"></div>
+                            <?php endif; ?>
+                                }
+                        </div>
+                    </a>
+                    <div class="budget-spacing-column table-cell"></div>
+                    <div class="budget-deduct-btn table-cell table-cell-vcenter text-center">
+                        <a href="">
+                            <i class="fa fa-chevron-circle-down fa-4x" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </li>
                 <?php endforeach; ?>
+
             </ul>
         </div> <!-- /col -->
     </div> <!-- /row -->

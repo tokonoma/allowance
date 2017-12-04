@@ -131,5 +131,10 @@ else{
     //yes - lets get you where you need to go
     $_SESSION['expire'] = time()+60*360; //reset session expire everytime the user uses the site
     //is mode = list or is nothing set at all? go to list view.
-    include('views/dashboard.php');
+    if(isset($_GET['budget'])){
+        include('views/budget_dashboard.php');
+    }
+    else{
+        include('views/dashboard.php');
+    }
 }
