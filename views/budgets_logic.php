@@ -7,6 +7,30 @@
         $db = new PDO($dsn);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
+        //budget actions
+        if(isset($_POST['budgetaction'])){
+                
+            $savetype = $_POST['budgetaction'];
+
+            // if new pos has value and edit uid is empty, add a NEW item to the db
+            switch ($savetype){
+                case 'new':
+                    //add row to table
+                    //create table for budget
+                    break;
+                case 'deduct':
+                    //deduct from balance item
+                    break;
+            }
+            //$statusMessage = "Error saving item";
+            //$statusType = "danger";
+
+            header("Location: ".$_SERVER['REQUEST_URI']);
+            exit();
+
+        }
+
+
         //new or edited item save
         /*
         if(isset($_POST['item-title-input']) && isset($_POST['item-desc-input'])){

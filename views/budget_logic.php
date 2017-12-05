@@ -7,8 +7,7 @@
         $db = new PDO($dsn);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-
-        //creating a new budget
+        //budget actions
         if(isset($_POST['budgetaction'])){
                 
             $savetype = $_POST['budgetaction'];

@@ -1,5 +1,5 @@
-<!-- REQ marian.js, $listnoun, $new-item-pos, $edit-item-uid, $delete-item-uid-->
-<div class="modal fade" id="new-budget-modal" tabindex="-1" role="dialog">
+<!-- NEW BUDGET MODAL -->
+<div class="modal fade form-modal" id="new-budget-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form id="new-budget-form" method="POST" action="<?php echo htmlentities($_SERVER['REQUEST_URI']); ?>">
@@ -22,13 +22,39 @@
                             <input id="budget-refill-input" type="checkbox" name="budget-refill-input" value="1"> Auto-Refill
                         </label>
                     </div>
-                    <div id="refill-amount-group" class="form-group hidden">
-                        <label for="budget-refill-amount-input">Auto-Refill Amount</label>
-                        <input type="number" class="form-control" name="budget-refill-amount-input" placeholder="Refill Amount" autocomplete='off'>
-                    </div>
-                    <div id="refill-freq-group" class="form-group hidden">
-                        <label for="budget-refill-freq-input">Auto-Refill Frequency</label>
-                        <input type="number" class="form-control" name="budget-refill-freq-input">
+                    <div id="refill-options-group" class="hidden form-hidden">
+                        <div id="refill-amount-group" class="form-group">
+                            <label for="refill-amount-input">Refill Amount</label>
+                            <input type="number" class="form-control" name="refill-amount-input" placeholder="Refill Amount" autocomplete='off'>
+                        </div>
+                        <div id="refill-frequency-group" class="form-group">
+                            <label for="refill-frequency-input">Refill Frequency</label>
+                            <select id="refill-frequency-input"  class="form-control" name="refill-freq-input">
+                                <option>Weekly</option>
+                                <option>Monthly</option>
+                            </select>
+                        </div>
+                        <div id="refill-weekly-group" class="form-group default-show">
+                            <label for="refill-freq-input">Day of the Week</label>
+                            <select class="form-control" name="refill-freq-input">
+                                <option>Sunday</option>
+                                <option>Monday</option>
+                                <option>Tuesday</option>
+                                <option>Wednesday</option>
+                                <option>Thursday</option>
+                                <option>Friday</option>
+                                <option>Saturday</option>
+                                <option>Sunday</option>
+                            </select>
+                        </div>
+                        <div id="refill-monthly-group" class="form-group hidden form-hidden">
+                            <label for="refill-monthly-input">Day of the Month</label>
+                            <select class="form-control" name="refill-monthly-input">
+                                <?php for ($i = 1; $i <= 31; $i++): ?>
+                                    <option><?php echo $i; ?></option>
+                                <?php endfor; ?>
+                            </select>
+                        </div>
                     </div>
                     <input type="hidden" name="budgetaction" value="new">
                 </div>

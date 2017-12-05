@@ -107,10 +107,36 @@ $(function() {
     });
 
     //show, hide auto-refill options
-    $('#budget-refill-input').click(function(){
-        $("#refill-amount-group").toggleClass("hidden");
-        $("#refill-freq-group").toggleClass("hidden");
+    $('#budget-refill-input').change(function(){
+        if(this.checked){
+            $("#refill-options-group").removeClass("hidden");
+        }
+        else{
+            $("#refill-options-group").addClass("hidden");
+        }
     });
+
+    //if weekly or monthly
+    $('#refill-frequency-input').change(function(){
+        if($(this).val() === 'Weekly'){
+            $("#refill-weekly-group").removeClass("hidden");
+            $("#refill-monthly-group").addClass("hidden");
+        }
+        else if($(this).val() === 'Monthly'){
+            $("#refill-weekly-group").addClass("hidden");
+            $("#refill-monthly-group").removeClass("hidden");
+        }
+    });
+
+    //using .on() because we're using a class name... this will clear all forms on a page
+    $(".form-modal").on("hidden.bs.modal", function () {
+        $('form').trigger("reset");
+        //rehide any unhidden form elements or show any default non-hidden classes that GOT hidden
+        $('.form-hidden').addClass("hidden");
+        $(".default-show").removeClass("hidden");
+    });
+
+
     
 })
 
