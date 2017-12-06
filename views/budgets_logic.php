@@ -7,6 +7,21 @@
         $db = new PDO($dsn);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
+        //define current date
+        $currentdate = date("Ymd");
+        $currentday = date("d");
+        $currentmonth = date("m");
+        $currentyear = date("Y");
+
+        //testing
+        // $currentday = date("d");
+        // $currentmonth = "04";
+        // $currentyear = date("Y");
+
+        // echo "current day ".$currentday."<br>";
+        // echo "current month ".$currentmonth."<br>";
+        // echo "current year ".$currentyear."<br>";
+
         //budget actions
         if(isset($_POST['budgetaction'])){
                 
@@ -16,14 +31,63 @@
             switch ($savetype){
                 case 'new':
                     //add row to table
-                    // $input_budgetname = $_POST['budget-title-input'];
-                    // $input_balance = $_POST['budget-balance-input'];
-                    // $input_autorefill = (!empty($_POST['budget-refill-input']) ? $_POST['budget-refill-input'] : 0);
-                    // $input_autorefill = (!empty($_POST['budget-refill-input']) ? $_POST['budget-refill-input'] : 0);
-                    // $input_autorefill = (!empty($_POST['budget-refill-input']) ? $_POST['budget-refill-input'] : 0);
-                    // $input_refillamount = $_POST['budget-title-input'];
-                    // $input_refillfreq = $_POST['budget-title-input'];
-                    // $input_nextrefill = $_POST['budget-title-input'];
+                    $input_budgetname = $_POST['budget-name-input'];
+                    $input_balance = $_POST['budget-balance-input'];
+                    $input_autorefill = (!empty($_POST['budget-refill-input']) ? $_POST['budget-refill-input'] : 0);
+                    $input_refillamount = (!empty($_POST['budget-refill-input']) ? $_POST['refill-amount-input'] : 0);
+                    $input_refillfreq = (!empty($_POST['budget-refill-input']) ? $_POST['refill-frequency-input'] : "none");
+                    $input_refillfreq = strtolower($input_refillfreq);
+                    if($input_refillfreq == "weekly"){
+                        $input_refillon = $_POST['refill-weekly-input'];
+                        $input_refillon = strtolower($input_refillon);
+
+                        //calculate next refill date
+
+                        $input_nextrefill = 0;
+                    }
+                    elseif($input_refillfreq == "monthly"){
+                        $input_refillon = $_POST['refill-monthly-input'];
+                        $input_refillon = sprintf("%02d", $input_refillon);
+
+                        //calculate next refill date
+                        //have we already passed the day for this month?
+                        if($currentday >= $input_refillon){
+                            //do we need to move into 2018?
+                            if($currentmonth == 12){
+                                $refillmonth = "01";
+                                $refillyear = $currentyear + 1;
+                            }
+                            else{
+                                $refillmonth = $currentmonth + 1;
+                                $refillmonth = sprintf("%02d", $refillmonth);
+                                $refillyear = $currentyear;
+                            }
+                        }
+                        else{
+                            $refillmonth = $currentmonth;
+                            $refillyear = $currentyear;
+                        }
+                        $input_nextrefill = $refillyear.$refillmonth.$input_refillon;
+                    }
+                    else{
+                        $input_refillon = "none";
+                        $input_nextrefill = 0;
+                    }
+                    $input_shares = 0;
+
+                    //for testing
+                    echo "next refill ".$input_nextrefill."<br>";
+
+                    //tests
+                    // echo "input_budgetname = ".$input_budgetname."<br>";
+                    // echo "input_balance = ".$input_balance."<br>";
+                    // echo "input_autorefill = ".$input_autorefill."<br>";
+                    // echo "input_refillamount = ".$input_refillamount."<br>";
+                    // echo "input_refillfreq = ".$input_refillfreq."<br>";
+                    // echo "input_refillon = ".$input_refillon."<br>";
+                    // echo "input_shares = ".$input_shares."<br>";
+
+                    //$input_shares
 
                     // $insert = $db->prepare("INSERT INTO budgets (name, balance, autorefill, refillamount, refillfrequency, nextrefill, owner) VALUES (?, ?, ?, ?, ?, ?, ?)");
                     // $insertarray = array($input_budgetname, $input_balance, $input_autorefill, $input_refillamount, $input_refillfreq, $input_nextrefill, $input_owner);
@@ -38,8 +102,8 @@
             //$statusMessage = "Error saving item";
             //$statusType = "danger";
 
-            header("Location: ".$_SERVER['REQUEST_URI']);
-            exit();
+            //header("Location: ".$_SERVER['REQUEST_URI']);
+            //exit();
 
         }
 

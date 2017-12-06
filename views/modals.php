@@ -10,8 +10,8 @@
                 <div class="modal-body">
                     <p>Enter budget details</p>
                     <div class="form-group">
-                        <label for="budget-title-input">Budget Name</label>
-                        <input type="text" class="form-control" id="budget-title-input" name="budget-title-input" placeholder="Budget Title" autocomplete='off' autofocus>
+                        <label for="budget-name-input">Budget Name</label>
+                        <input type="text" class="form-control" id="budget-name-input" name="budget-name-input" placeholder="Budget Title" autocomplete='off' autofocus>
                     </div>
                     <div class="form-group">
                         <label for="budget-balance-input">Initial Balance</label>
@@ -29,14 +29,14 @@
                         </div>
                         <div id="refill-frequency-group" class="form-group">
                             <label for="refill-frequency-input">Refill Frequency</label>
-                            <select id="refill-frequency-input"  class="form-control" name="refill-freq-input">
+                            <select id="refill-frequency-input"  class="form-control" name="refill-frequency-input">
                                 <option>Weekly</option>
                                 <option>Monthly</option>
                             </select>
                         </div>
                         <div id="refill-weekly-group" class="form-group default-show">
-                            <label for="refill-freq-input">Day of the Week</label>
-                            <select class="form-control" name="refill-freq-input">
+                            <label for="refill-weekly-input">Day of the Week</label>
+                            <select class="form-control" name="refill-weekly-input">
                                 <option>Sunday</option>
                                 <option>Monday</option>
                                 <option>Tuesday</option>
@@ -44,7 +44,6 @@
                                 <option>Thursday</option>
                                 <option>Friday</option>
                                 <option>Saturday</option>
-                                <option>Sunday</option>
                             </select>
                         </div>
                         <div id="refill-monthly-group" class="form-group hidden form-hidden">

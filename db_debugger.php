@@ -26,7 +26,7 @@ try{
     //table create tool
     // $db->exec("CREATE TABLE IF NOT EXISTS users (email TEXT PRIMARY KEY, password TEXT, fname TEXT, lname TEXT)");
 
-    //$db->exec("CREATE TABLE IF NOT EXISTS budgets (uid INTEGER PRIMARY KEY, name TEXT, balance INTEGER, autorefill BOOLEAN, refillamount INTEGER, refillfrequency TEXT, nextrefill TEXT, owner TEXT)");
+    // $db->exec("CREATE TABLE IF NOT EXISTS budgets (uid INTEGER PRIMARY KEY, name TEXT, balance INTEGER, autorefill BOOLEAN, refillamount INTEGER, refillfrequency TEXT, refillon TEXT, nextrefill INTEGER, owner TEXT, shares INTEGER)");
 
     //$db->exec("CREATE TABLE IF NOT EXISTS budget2 (uid INTEGER PRIMARY KEY, name TEXT, budgetuid INTEGER, balance INTEGER, modifyamount INTEGER, transactiondate TEXT, user TEXT)");
 
@@ -52,15 +52,18 @@ try{
     // $insert->execute($insertarray); 
 
     // $input_budgetname = "Test Budget";
-    // $input_balance = "100";
-    // $input_autorefill = "1";
-    // $input_refillamount = "500";
+    // $input_balance = 200;
+    // $input_autorefill = 1;
+    // $input_refillamount = 500w;
     // $input_refillfreq = "weekly";
-    // $input_nextrefill = "20171201";
+    // $input_refillon = "friday";
+    // $input_nextrefill = 20171208;
     // $input_owner = "t.reeder03@gmail.com";
+    // $input_shares = 0;
 
-    // $insert = $db->prepare("INSERT INTO budgets (name, balance, autorefill, refillamount, refillfrequency, nextrefill, owner) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    // $insertarray = array($input_budgetname, $input_balance, $input_autorefill, $input_refillamount, $input_refillfreq, $input_nextrefill, $input_owner);
+
+    // $insert = $db->prepare("INSERT INTO budgets (name, balance, autorefill, refillamount, refillfrequency, refillon, nextrefill, owner, shares) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    // $insertarray = array($input_budgetname, $input_balance, $input_autorefill, $input_refillamount, $input_refillfreq, $input_refillon, $input_nextrefill, $input_owner, $input_shares);
     // $insert->execute($insertarray);
 
     // $input_transname = "First Transaction";
@@ -88,19 +91,25 @@ try{
     // $update->bindParam(':bodyinput', $bodyinput, PDO::PARAM_STR);
     // $update->execute();
 
-    // $input_share_num = 0;
-    // $update = $db->prepare("UPDATE budgets SET shares = :shares WHERE uid = 2");
-    // $update->bindParam(':shares', $input_share_num, PDO::PARAM_STR);
+    // $input_refill = 150;
+    // $update = $db->prepare("UPDATE budgets SET refillamount = :amount WHERE uid = 1");
+    // $update->bindParam(':amount', $input_refill, PDO::PARAM_STR);
     // $update->execute();
 
     //add a column
-    //$db->exec("ALTER TABLE budgets ADD COLUMN refillon INTEGER");
+    //$db->exec("ALTER TABLE budgets ADD COLUMN refillon TEXT");
+
+    //then...
+    // $input_new_column_value = Friday;
+    // $update = $db->prepare("UPDATE budgets SET refillon = :shares WHERE uid = 2");
+    // $update->bindParam(':shares', $input_new_column_value, PDO::PARAM_STR);
+    // $update->execute();
 
     //table delete tool
-    //$db->exec("DROP TABLE users");
+    //$db->exec("DROP TABLE tablename");
 
     //row delete tool
-    //$db->exec("DELETE FROM budget1 WHERE user = 't.reeder03@gmail.com'");
+    //$db->exec("DELETE FROM budgets WHERE owner = 't.reeder03@gmail.com'");
 
 
     //queries
