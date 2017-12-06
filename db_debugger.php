@@ -94,7 +94,7 @@ try{
     // $update->execute();
 
     //add a column
-    //$db->exec("ALTER TABLE budgets ADD COLUMN shares INTEGER");
+    //$db->exec("ALTER TABLE budgets ADD COLUMN refillon INTEGER");
 
     //table delete tool
     //$db->exec("DROP TABLE users");

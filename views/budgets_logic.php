@@ -2,7 +2,7 @@
 
     $dashboarduser = $_SESSION['email'];
     
-   try{
+    try{
         //postgres for prod
         $db = new PDO($dsn);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -16,6 +16,19 @@
             switch ($savetype){
                 case 'new':
                     //add row to table
+                    // $input_budgetname = $_POST['budget-title-input'];
+                    // $input_balance = $_POST['budget-balance-input'];
+                    // $input_autorefill = (!empty($_POST['budget-refill-input']) ? $_POST['budget-refill-input'] : 0);
+                    // $input_autorefill = (!empty($_POST['budget-refill-input']) ? $_POST['budget-refill-input'] : 0);
+                    // $input_autorefill = (!empty($_POST['budget-refill-input']) ? $_POST['budget-refill-input'] : 0);
+                    // $input_refillamount = $_POST['budget-title-input'];
+                    // $input_refillfreq = $_POST['budget-title-input'];
+                    // $input_nextrefill = $_POST['budget-title-input'];
+
+                    // $insert = $db->prepare("INSERT INTO budgets (name, balance, autorefill, refillamount, refillfrequency, nextrefill, owner) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                    // $insertarray = array($input_budgetname, $input_balance, $input_autorefill, $input_refillamount, $input_refillfreq, $input_nextrefill, $input_owner);
+                    // $insert->execute($insertarray);
+
                     //create table for budget
                     break;
                 case 'deduct':
@@ -93,8 +106,8 @@
         */
 
         //generate content from query db
-        //$budgets = $db->query("SELECT * FROM budgets WHERE owner = '$_SESSION['email']' ORDER BY uid ASC");
-        $budgets = $db->query("SELECT * FROM budgets WHERE owner = 'melanie.s.reeder@gmail.com' ORDER BY uid ASC");
+        $budgets = $db->query("SELECT * FROM budgets WHERE owner = '$dashboarduser' ORDER BY uid ASC");
+        //$budgets = $db->query("SELECT * FROM budgets WHERE owner = 'melanie.s.reeder@gmail.com' ORDER BY uid ASC");
 
         //reordering save - called via ajax
         /*
