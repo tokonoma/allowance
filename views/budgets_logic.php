@@ -42,6 +42,10 @@
                         $input_refillon = strtolower($input_refillon);
 
                         //calculate next refill date
+                        //https://www.w3schools.com/php/php_looping.asp
+                        //http://php.net/manual/en/control-structures.do.while.php
+                        //http://php.net/strtotime
+                        //https://www.w3schools.com/php/func_date_strtotime.asp
 
                         $input_nextrefill = 0;
                     }
