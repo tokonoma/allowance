@@ -94,17 +94,19 @@ $(function() {
         submitJSForm();
     });
 
-    //EDIT PAGE modal
-    $(document).on("click", ".send-uid", function(){
-        //send info on item to be edited to modal
-        var budgetuid = $(this).closest(".budget-table").data('uid');
-        var budgetuid = $(this).closest(".budget-table").data('name');
-        var budgetuid = $(this).closest(".budget-table").data('modal');
-        $('input[name="edit-item-uid"]').val(budgetuid);
+    //EDIT PAGE modal I don't know what I was doing with this or where I left off...
+    // $(document).on("click", ".send-uid", function(){
+    //     //send info on item to be edited to modal
+    //     var budgetuid = $(this).closest(".budget-table").data('uid');
+    //     var budgetuid = $(this).closest(".budget-table").data('name');
+    //     var budgetuid = $(this).closest(".budget-table").data('modal');
+    //     $('input[name="edit-item-uid"]').val(budgetuid);
 
-        //clear any left overs from abandoned new item modals
-        $('input[name="new-item-pos"]').val("");
-    });
+    //     //clear any left overs from abandoned new item modals
+    //     $('input[name="new-item-pos"]').val("");
+    // });
+
+    //ALLOWANCE CODE
 
     //show, hide auto-refill options
     $('#budget-refill-input').change(function(){
@@ -116,7 +118,7 @@ $(function() {
         }
     });
 
-    //if weekly or monthly
+    //if weekly or monthly, form show/hide
     $('#refill-frequency-input').change(function(){
         if($(this).val() === 'Weekly'){
             $("#refill-weekly-group").removeClass("hidden");
@@ -128,6 +130,7 @@ $(function() {
         }
     });
 
+    //clears forms on modal closing, hides hidden elements and shows hidden elements that should be unhidden
     //using .on() because we're using a class name... this will clear all forms on a page
     $(".form-modal").on("hidden.bs.modal", function () {
         $('form').trigger("reset");
@@ -136,7 +139,15 @@ $(function() {
         $(".default-show").removeClass("hidden");
     });
 
-
+    //trigger deduct modal
+    $(document).on("click", ".deduct-btn", function(){
+        var deductUID = $(this).data('uid');
+        var deductName = $(this).data('name');
+        var currentBalance = $(this).data('balance');
+        $('input[name="deduct-uid"]').val(deductUID);
+        $('input[name="current-balance"]').val(currentBalance);
+        $(".say-budget-name").text(deductName);
+    });
     
 })
 

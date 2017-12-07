@@ -236,19 +236,21 @@ input:-webkit-autofill{
 		padding-left: 0px;
 	}
 
-.budget-deduct-btn{
+.budget-deduct-btn-cell{
 	width:1%;
 	margin-left: 12px;
     white-space:nowrap;
     color: #59717F;
 }
-	
-	.budget-deduct-btn a{
-		color: #59717F;
-		text-decoration: none;
+
+	.btn.deduct-btn{
+	    font-weight: 400;
+	    color: #59717F;
+	    border-radius: 0;
+	    padding: 0px;
 	}
 
-	.budget-deduct-btn a:hover{
+	.btn.deduct-btn:hover{
 		color: #3E4F59;
 	}
 

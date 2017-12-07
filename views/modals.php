@@ -5,7 +5,7 @@
             <form id="new-budget-form" method="POST" action="<?php echo htmlentities($_SERVER['REQUEST_URI']); ?>">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title edit-new-title">Create New Budget</h4>
+                    <h4 class="modal-title">New Budget</h4>
                 </div>
                 <div class="modal-body">
                     <p>Enter budget details</p>
@@ -17,7 +17,7 @@
                         <label for="budget-balance-input">Initial Balance</label>
                         <div class="input-group">
                             <span class="input-group-addon">$</span>
-                            <input type="number" class="form-control" id="budget-balance-input" name="budget-balance-input" placeholder="Initial Balance" autocomplete='off' step="0.01">
+                            <input type="number" class="form-control" id="budget-balance-input" name="budget-balance-input" placeholder="0.00" autocomplete='off' step="0.01">
                         </div>
                     </div>
                     <div class="checkbox">
@@ -30,7 +30,7 @@
                             <label for="refill-amount-input">Refill Amount</label>
                             <div class="input-group">
                                 <span class="input-group-addon">$</span>
-                                <input type="number" class="form-control" name="refill-amount-input" placeholder="Refill Amount" autocomplete='off' step="0.01">
+                                <input type="number" class="form-control" name="refill-amount-input" placeholder="0.00" autocomplete='off' step="0.01">
                             </div>
                         </div>
                         <div id="refill-frequency-group" class="form-group">
@@ -73,8 +73,40 @@
 </div><!-- /.modal -->
 
 
-
-
+<!-- BUDGET DEDUCT MODAL -->
+<div class="modal fade form-modal" id="budget-deduct-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="new-budget-form" method="POST" action="<?php echo htmlentities($_SERVER['REQUEST_URI']); ?>">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Deduct from Budget</h4>
+                </div>
+                <div class="modal-body">
+                    <p>How much would you like to deduct from <strong><span class="say-budget-name"></span></strong>?</p>
+                    <div class="form-group">
+                        <label for="budget-deduction-input">Deduction Amount</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="number" class="form-control" id="budget-deduction-input" name="budget-deduction-input" placeholder="0.00" autocomplete='off' step="0.01" autofocus>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="deduction-desc-input">Description (optional)</label>
+                        <input type="text" class="form-control" id="deduction-desc-input" name="deduction-desc-input" placeholder="Write a brief description about this deduction!" autocomplete='off'>
+                    </div>
+                    <input type="hidden" name="budgetaction" value="deduct">
+                    <input type="hidden" name="deduct-uid" value="">
+                    <input type="hidden" name="current-balance" value="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="submit" name="submit" class="btn btn-primary">Deduct</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 

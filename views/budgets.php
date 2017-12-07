@@ -33,7 +33,7 @@
             <ul id="item-list" class="list-unstyled">
 
                 <?php foreach($budgets as $budget): ?>
-                <li class="budget-table table-parent" data-uid="<?php echo $budget['uid']?>" data-name="<?php echo $budget['name']?>">
+                <li class="budget-table table-parent" id="budget<?php echo $budget['uid']?>">
                     <a href="<?php echo $baseurl.'?budget='.$budget['uid']?>" class="budget-data table-cell">
                         <div class="budget-data-padding">
                             <div class="budget-details table-cell">
@@ -47,12 +47,12 @@
                                     ?>
                                 </div>
                                 <div class="budget-properties">
+                                    <?php $refillamount = $budget['refillamount']; ?>
                                     <?php if($budget['autorefill'] == 1): ?>
                                         <div class="half-badge half-badge-left refill-badge">
                                             <i class="fa fa-repeat" aria-hidden="true"></i>
                                         </div><div class="half-badge half-badge-right refill-badge">
                                             <?php
-                                                $refillamount = $budget['refillamount'];
                                                 echo "$".number_format(($refillamount/100), 2, '.', ',')."/".$budget['refillfrequency'];
                                             ?>
                                         </div>
@@ -92,10 +92,10 @@
                         </div>
                     </a>
                     <div class="budget-spacing-column table-cell"></div>
-                    <div class="budget-deduct-btn table-cell table-cell-vcenter text-center">
-                        <a href="">
+                    <div class="budget-deduct-btn-cell table-cell table-cell-vcenter text-center">
+                        <button type="button" class="btn deduct-btn" data-toggle="modal" data-target="#budget-deduct-modal" data-uid="<?php echo $budget['uid']?>" data-name="<?php echo $budget['name']?>" data-balance="<?php echo $budget['balance']?>">
                             <i class="fa fa-chevron-circle-down fa-4x" aria-hidden="true"></i>
-                        </a>
+                        </button>
                     </div>
                 </li>
                 <?php endforeach; ?>

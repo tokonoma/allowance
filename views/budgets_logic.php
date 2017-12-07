@@ -1,6 +1,12 @@
 <?php
 
     $dashboarduser = $_SESSION['email'];
+
+    //define current date
+    $currentdate = date("Ymd");
+    $currentyear = date("Y");
+    $currentmonth = date("m");
+    $currentday = date("d");
     
     try{
         //postgres for prod
@@ -9,14 +15,6 @@
 
         //do while loop for catching up over multiple months
         //maybe we need to create a func for updating refill date
-
-        //https://stackoverflow.com/questions/21735650/php-converting-dollars-to-cents
-        
-        //define current date
-        $currentdate = date("Ymd");
-        $currentyear = date("Y");
-        $currentmonth = date("m");
-        $currentday = date("d");
 
         //budget actions
         if(isset($_POST['budgetaction'])){
@@ -78,31 +76,21 @@
                     }
                     $input_shares = 0;
 
-                    //tests
-                    // echo "input_budgetname = ".$input_budgetname."<br>";
-                    // echo "input_balance = ".$input_balance."<br>";
-                    // echo "input_autorefill = ".$input_autorefill."<br>";
-                    // echo "input_refillamount = ".$input_refillamount."<br>";
-                    // echo "input_refillfreq = ".$input_refillfreq."<br>";
-                    // echo "input_refillon = ".$input_refillon."<br>";
-                    // echo "input_nextrefill = ".$input_nextrefill."<br>";
-                    // echo "input_shares = ".$input_shares."<br>";
-
                     //insert into budgets table
                     $insert = $db->prepare("INSERT INTO budgets (name, balance, autorefill, refillamount, refillfrequency, refillon, nextrefill, owner, shares) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
                     $insertarray = array($input_budgetname, $input_balance, $input_autorefill, $input_refillamount, $input_refillfreq, $input_refillon, $input_nextrefill, $dashboarduser, $input_shares);
                     $insert->execute($insertarray);
 
                     //create table for budget
-                    $budgetuid = $db->lastInsertId();
-                    $budgettablename = "budget".$budgetuid;
+                    $newbudgetuid = $db->lastInsertId();
+                    $budgettablename = "budget".$newbudgetuid;
                     $db->exec("CREATE TABLE IF NOT EXISTS $budgettablename (uid INTEGER PRIMARY KEY, name TEXT, budgetuid INTEGER, balance INTEGER, modifyamount INTEGER, transactiondate TEXT, user TEXT)");
 
                     //log creation of budget into table
                     $input_transactionname = "Budget created";
 
                     $insert = $db->prepare("INSERT INTO $budgettablename (name, budgetuid, balance, modifyamount, transactiondate, user) VALUES (?, ?, ?, ?, ?, ?)");
-                    $insertarray = array($input_transactionname, $budgetuid, $input_balance, $input_balance, $currentdate, $dashboarduser);
+                    $insertarray = array($input_transactionname, $newbudgetuid, $input_balance, $input_balance, $currentdate, $dashboarduser);
                     $insert->execute($insertarray);
 
                     //finish and redirect with success message
@@ -113,6 +101,31 @@
                     break;
                 case 'deduct':
                     //deduct from balance item
+                    $input_deductuid = $_POST['deduct-uid'];
+                    $budgettablename = "budget".$input_deductuid;
+
+                    $input_currentbalance = $_POST['current-balance'];
+                    $input_deductamount = $_POST['budget-deduction-input'];
+                    $input_deductamount = $input_deductamount*100;
+                    $newbalance = $input_currentbalance - $input_deductamount;
+
+                    $input_deductdesc = (!empty($_POST['deduction-desc-input']) ? $_POST['deduction-desc-input'] : "no description");
+
+                    //subtract from balance in budgets table
+                    $update = $db->prepare("UPDATE budgets SET balance = :newbalancebind WHERE uid = $input_deductuid");
+                    $update->bindParam(':newbalancebind', $newbalance, PDO::PARAM_STR);
+                    $update->execute();
+
+                    //add transaction to history table
+                    $insert = $db->prepare("INSERT INTO $budgettablename (name, budgetuid, balance, modifyamount, transactiondate, user) VALUES (?, ?, ?, ?, ?, ?)");
+                    $insertarray = array($input_deductdesc, $input_deductuid, $newbalance, $input_deductamount, $currentdate, $dashboarduser);
+                    $insert->execute($insertarray);
+
+                    //finish and redirect with success message
+                    $_SESSION['sessionalert'] = "generalsuccess";
+                    header("Location: ".$_SERVER['REQUEST_URI']."#budget".$input_deductuid);
+                    exit();
+
                     break;
             }
             $statusMessage = "Error saving item";

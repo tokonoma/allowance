@@ -16,6 +16,10 @@
         //set a default type in case it's not sent for any reason
         $statusType = "info";
         switch ($getAlert) {
+            case "generalsuccess":
+                $statusMessage = "Success!";
+                $statusType = "success";
+                break;
             case "budgetcreated":
                 $statusMessage = "New Budget Created!";
                 $statusType = "success";
