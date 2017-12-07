@@ -17,7 +17,7 @@
                         <label for="budget-balance-input">Initial Balance</label>
                         <div class="input-group">
                             <span class="input-group-addon">$</span>
-                            <input type="number" class="form-control" id="budget-balance-input" name="budget-balance-input" placeholder="Initial Balance" autocomplete='off'>
+                            <input type="number" class="form-control" id="budget-balance-input" name="budget-balance-input" placeholder="Initial Balance" autocomplete='off' step="0.01">
                         </div>
                     </div>
                     <div class="checkbox">
@@ -30,7 +30,7 @@
                             <label for="refill-amount-input">Refill Amount</label>
                             <div class="input-group">
                                 <span class="input-group-addon">$</span>
-                                <input type="number" class="form-control" name="refill-amount-input" placeholder="Refill Amount" autocomplete='off'>
+                                <input type="number" class="form-control" name="refill-amount-input" placeholder="Refill Amount" autocomplete='off' step="0.01">
                             </div>
                         </div>
                         <div id="refill-frequency-group" class="form-group">

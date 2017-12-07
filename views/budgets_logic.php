@@ -18,15 +18,6 @@
         $currentmonth = date("m");
         $currentday = date("d");
 
-        //testing
-        // $currentday = date("d");
-        // $currentmonth = "04";
-        // $currentyear = date("Y");
-
-        // echo "current day ".$currentday."<br>";
-        // echo "current month ".$currentmonth."<br>";
-        // echo "current year ".$currentyear."<br>";
-
         //budget actions
         if(isset($_POST['budgetaction'])){
                 
@@ -37,9 +28,16 @@
                     //add row to table
                     $input_budgetname = $_POST['budget-name-input'];
                     $input_balance = $_POST['budget-balance-input'];
+                    $input_balance = $input_balance*100;
                     $input_autorefill = (!empty($_POST['budget-refill-input']) ? $_POST['budget-refill-input'] : 0);
                     //If refill is off, use this to hold original balance
-                    $input_refillamount = (!empty($_POST['budget-refill-input']) ? $_POST['refill-amount-input'] : $input_balance);
+                    if(!empty($_POST['budget-refill-input'])){
+                        $input_refillamount = $_POST['refill-amount-input'];
+                        $input_refillamount = $input_refillamount*100;
+                    }
+                    else{
+                        $input_refillamount = $input_balance;
+                    }
                     $input_refillfreq = (!empty($_POST['budget-refill-input']) ? $_POST['refill-frequency-input'] : "none");
                     $input_refillfreq = strtolower($input_refillfreq);
                     if($input_refillfreq == "weekly"){
@@ -81,31 +79,47 @@
                     $input_shares = 0;
 
                     //tests
-                    echo "input_budgetname = ".$input_budgetname."<br>";
-                    echo "input_balance = ".$input_balance."<br>";
-                    echo "input_autorefill = ".$input_autorefill."<br>";
-                    echo "input_refillamount = ".$input_refillamount."<br>";
-                    echo "input_refillfreq = ".$input_refillfreq."<br>";
-                    echo "input_refillon = ".$input_refillon."<br>";
-                    echo "input_nextrefill = ".$input_nextrefill."<br>";
-                    echo "input_shares = ".$input_shares."<br>";
+                    // echo "input_budgetname = ".$input_budgetname."<br>";
+                    // echo "input_balance = ".$input_balance."<br>";
+                    // echo "input_autorefill = ".$input_autorefill."<br>";
+                    // echo "input_refillamount = ".$input_refillamount."<br>";
+                    // echo "input_refillfreq = ".$input_refillfreq."<br>";
+                    // echo "input_refillon = ".$input_refillon."<br>";
+                    // echo "input_nextrefill = ".$input_nextrefill."<br>";
+                    // echo "input_shares = ".$input_shares."<br>";
 
-                    // $insert = $db->prepare("INSERT INTO budgets (name, balance, autorefill, refillamount, refillfrequency, nextrefill, owner) VALUES (?, ?, ?, ?, ?, ?, ?)");
-                    // $insertarray = array($input_budgetname, $input_balance, $input_autorefill, $input_refillamount, $input_refillfreq, $input_nextrefill, $input_owner);
-                    // $insert->execute($insertarray);
+                    //insert into budgets table
+                    $insert = $db->prepare("INSERT INTO budgets (name, balance, autorefill, refillamount, refillfrequency, refillon, nextrefill, owner, shares) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    $insertarray = array($input_budgetname, $input_balance, $input_autorefill, $input_refillamount, $input_refillfreq, $input_refillon, $input_nextrefill, $dashboarduser, $input_shares);
+                    $insert->execute($insertarray);
 
                     //create table for budget
+                    $budgetuid = $db->lastInsertId();
+                    $budgettablename = "budget".$budgetuid;
+                    $db->exec("CREATE TABLE IF NOT EXISTS $budgettablename (uid INTEGER PRIMARY KEY, name TEXT, budgetuid INTEGER, balance INTEGER, modifyamount INTEGER, transactiondate TEXT, user TEXT)");
+
+                    //log creation of budget into table
+                    $input_transactionname = "Budget created";
+
+                    $insert = $db->prepare("INSERT INTO $budgettablename (name, budgetuid, balance, modifyamount, transactiondate, user) VALUES (?, ?, ?, ?, ?, ?)");
+                    $insertarray = array($input_transactionname, $budgetuid, $input_balance, $input_balance, $currentdate, $dashboarduser);
+                    $insert->execute($insertarray);
+
+                    //finish and redirect with success message
+                    $_SESSION['sessionalert'] = "budgetcreated";
+                    header("Location: ".$_SERVER['REQUEST_URI']);
+                    exit();
+
                     break;
                 case 'deduct':
                     //deduct from balance item
                     break;
             }
-            //$statusMessage = "Error saving item";
-            //$statusType = "danger";
+            $statusMessage = "Error saving item";
+            $statusType = "danger";
 
-            //header("Location: ".$_SERVER['REQUEST_URI']);
-            //exit();
-
+            header("Location: ".$_SERVER['REQUEST_URI']);
+            exit();
         }
 
 

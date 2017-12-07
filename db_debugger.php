@@ -109,7 +109,7 @@ try{
     //$db->exec("DROP TABLE tablename");
 
     //row delete tool
-    //$db->exec("DELETE FROM budgets WHERE owner = 't.reeder03@gmail.com'");
+    //$db->exec("DELETE FROM budget3 WHERE uid = 1");
 
 
     //queries

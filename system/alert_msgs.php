@@ -16,6 +16,10 @@
         //set a default type in case it's not sent for any reason
         $statusType = "info";
         switch ($getAlert) {
+            case "budgetcreated":
+                $statusMessage = "New Budget Created!";
+                $statusType = "success";
+                break;
             case "itemedited":
                 $statusMessage = ucfirst($alertnoun)." edited";
                 $statusType = "success";

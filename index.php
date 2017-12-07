@@ -15,7 +15,7 @@ $cleanuri = explode('?', $_SERVER['REQUEST_URI'], 2);
 $baseurl .= htmlspecialchars($cleanuri[0]);
 
 //include alerts logic and messages
-include('system/alerts.php');
+include('system/alert_msgs.php');
 
 //actions
 if(isset($_POST['action'])){ 

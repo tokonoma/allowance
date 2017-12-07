@@ -47,7 +47,7 @@
                                     ?>
                                 </div>
                                 <div class="budget-properties">
-                                    <?php if($budget['refillamount'] > 0): ?>
+                                    <?php if($budget['autorefill'] == 1): ?>
                                         <div class="half-badge half-badge-left refill-badge">
                                             <i class="fa fa-repeat" aria-hidden="true"></i>
                                         </div><div class="half-badge half-badge-right refill-badge">
