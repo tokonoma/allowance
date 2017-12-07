@@ -34,7 +34,8 @@
                     $input_budgetname = $_POST['budget-name-input'];
                     $input_balance = $_POST['budget-balance-input'];
                     $input_autorefill = (!empty($_POST['budget-refill-input']) ? $_POST['budget-refill-input'] : 0);
-                    $input_refillamount = (!empty($_POST['budget-refill-input']) ? $_POST['refill-amount-input'] : 0);
+                    //If refill is off, use this to hold original balance
+                    $input_refillamount = (!empty($_POST['budget-refill-input']) ? $_POST['refill-amount-input'] : $input_balance);
                     $input_refillfreq = (!empty($_POST['budget-refill-input']) ? $_POST['refill-frequency-input'] : "none");
                     $input_refillfreq = strtolower($input_refillfreq);
                     if($input_refillfreq == "weekly"){
