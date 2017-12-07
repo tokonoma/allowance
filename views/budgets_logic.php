@@ -6,12 +6,17 @@
         //postgres for prod
         $db = new PDO($dsn);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        //do while loop for catching up over multiple months
+        //maybe we need to create a func for updating refill date
+
+        //https://stackoverflow.com/questions/21735650/php-converting-dollars-to-cents
         
         //define current date
         $currentdate = date("Ymd");
-        $currentday = date("d");
-        $currentmonth = date("m");
         $currentyear = date("Y");
+        $currentmonth = date("m");
+        $currentday = date("d");
 
         //testing
         // $currentday = date("d");
@@ -27,7 +32,6 @@
                 
             $savetype = $_POST['budgetaction'];
 
-            // if new pos has value and edit uid is empty, add a NEW item to the db
             switch ($savetype){
                 case 'new':
                     //add row to table
@@ -40,15 +44,11 @@
                     $input_refillfreq = strtolower($input_refillfreq);
                     if($input_refillfreq == "weekly"){
                         $input_refillon = $_POST['refill-weekly-input'];
+                        $nextrefillstr = "next ".$input_refillon;
+                        $input_nextrefill = date("Ymd", strtotime($nextrefillstr));
+
+                        //all lower for consistent storing
                         $input_refillon = strtolower($input_refillon);
-
-                        //calculate next refill date
-                        //https://www.w3schools.com/php/php_looping.asp
-                        //http://php.net/manual/en/control-structures.do.while.php
-                        //http://php.net/strtotime
-                        //https://www.w3schools.com/php/func_date_strtotime.asp
-
-                        $input_nextrefill = 0;
                     }
                     elseif($input_refillfreq == "monthly"){
                         $input_refillon = $_POST['refill-monthly-input'];
@@ -80,19 +80,15 @@
                     }
                     $input_shares = 0;
 
-                    //for testing
-                    echo "next refill ".$input_nextrefill."<br>";
-
                     //tests
-                    // echo "input_budgetname = ".$input_budgetname."<br>";
-                    // echo "input_balance = ".$input_balance."<br>";
-                    // echo "input_autorefill = ".$input_autorefill."<br>";
-                    // echo "input_refillamount = ".$input_refillamount."<br>";
-                    // echo "input_refillfreq = ".$input_refillfreq."<br>";
-                    // echo "input_refillon = ".$input_refillon."<br>";
-                    // echo "input_shares = ".$input_shares."<br>";
-
-                    //$input_shares
+                    echo "input_budgetname = ".$input_budgetname."<br>";
+                    echo "input_balance = ".$input_balance."<br>";
+                    echo "input_autorefill = ".$input_autorefill."<br>";
+                    echo "input_refillamount = ".$input_refillamount."<br>";
+                    echo "input_refillfreq = ".$input_refillfreq."<br>";
+                    echo "input_refillon = ".$input_refillon."<br>";
+                    echo "input_nextrefill = ".$input_nextrefill."<br>";
+                    echo "input_shares = ".$input_shares."<br>";
 
                     // $insert = $db->prepare("INSERT INTO budgets (name, balance, autorefill, refillamount, refillfrequency, nextrefill, owner) VALUES (?, ?, ?, ?, ?, ?, ?)");
                     // $insertarray = array($input_budgetname, $input_balance, $input_autorefill, $input_refillamount, $input_refillfreq, $input_nextrefill, $input_owner);
