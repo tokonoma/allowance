@@ -194,6 +194,7 @@ input:-webkit-autofill{
 			padding: 4px 8px;
 			font-weight: 400;
 			border: solid 1px transparent;
+			text-transform: uppercase;
 		}
 
 		.shares-badge{
@@ -204,6 +205,16 @@ input:-webkit-autofill{
 
 		.refill-badge{
 			background: #09A387;
+		}
+
+		.budget-properties .badge.initial-badge{
+			background: transparent;
+		    border-color: #09A387;
+		    color: #09A387;
+		}
+
+		.refill-badge.half-badge{
+		    text-transform: uppercase;
 		}
 
 		.refill-badge.half-badge-left{
@@ -248,6 +259,7 @@ input:-webkit-autofill{
 	    color: #59717F;
 	    border-radius: 0;
 	    padding: 0px;
+	    background-color: transparent;
 	}
 
 	.btn.deduct-btn:hover{

@@ -4,15 +4,7 @@ session_start();
 include('system/config.php');
 include('system/db_connect.php');
 
-//this is for getting baseurl to work locally, 
-$baseurl  = isset($_SERVER['HTTPS']) ? 'https://' : 'http://';
-$baseurl .= $_SERVER['SERVER_NAME'];
-if (strpos($baseurl, 'localhost') !== false) {
-    $baseurl .= ":".$_SERVER['SERVER_PORT'];
-}
-//$baseurl .= htmlspecialchars($_SERVER['REQUEST_URI']);
-$cleanuri = explode('?', $_SERVER['REQUEST_URI'], 2);
-$baseurl .= htmlspecialchars($cleanuri[0]);
+//looking for baseurl definition? it's in db_connect.php
 
 //include alerts logic and messages
 include('system/alert_msgs.php');

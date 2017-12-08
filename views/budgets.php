@@ -56,6 +56,12 @@
                                                 echo "$".number_format(($refillamount/100), 2, '.', ',')."/".$budget['refillfrequency'];
                                             ?>
                                         </div>
+                                    <?php else: ?>
+                                        <span class="badge initial-badge">
+                                            <?php
+                                                echo "Started with $".number_format(($refillamount/100), 2, '.', ',');
+                                            ?>
+                                        </span>
                                     <?php endif; ?>
                                     <?php if($budget['shares'] > 0): ?>
                                         <span class="badge shares-badge">

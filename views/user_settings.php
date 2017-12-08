@@ -16,9 +16,6 @@
 
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 
-<input type='hidden' id="listnoun" value="<?php echo $listnoun ?>">
-<script src="../assets/js/marian.js"></script>
-
 <script>
     $(function() {
         $(".save-settings-btn").click(function(){

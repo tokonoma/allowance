@@ -6,6 +6,18 @@ $localips = array(
 	'::1'
 );
 
+//this is for getting baseurl to work locally, 
+$baseurl  = isset($_SERVER['HTTPS']) ? 'https://' : 'http://';
+$baseurl .= $_SERVER['SERVER_NAME'];
+if (strpos($baseurl, 'localhost') !== false) {
+    $baseurl .= ":".$_SERVER['SERVER_PORT'];
+}
+
+//create base url for server and for all routing in app
+$cleanuri = explode('?', $_SERVER['REQUEST_URI'], 2);
+$cleanurizero = htmlspecialchars($cleanuri[0]);
+$baseurl .= $cleanurizero;
+
 //also, try putting ../ in the middle of a path like get to ROOT, get CURRENT, then ../ to system
 
 //this is for developing locally, for example, with MAMP...
@@ -16,7 +28,7 @@ if(in_array($_SERVER['REMOTE_ADDR'], $localips)){
 	$dbrelativepath = "/".$projectdirectory."/system/data/database.sqlite";
 }
 else{
-	$dbrelativepath = "/system/data/database.sqlite";
+	$dbrelativepath = $cleanurizero."system/data/database.sqlite";
 }
 
 //sqlite DB

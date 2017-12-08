@@ -4,8 +4,6 @@
 
 <?php include('views/nav.php'); ?>
 
-<?php include('views/header_bar.php'); ?>
-
 <?php include('views/budget.php'); ?>
 
 
