@@ -3,6 +3,7 @@
     $dashboarduser = $_SESSION['email'];
 
     //define current date
+    $currenttimestamp = time();
     $currentdate = date("Ymd");
     $currentyear = date("Y");
     $currentmonth = date("m");
@@ -12,9 +13,6 @@
         //postgres for prod
         $db = new PDO($dsn);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        //do while loop for catching up over multiple months
-        //maybe we need to create a func for updating refill date
 
         //budget actions
         if(isset($_POST['budgetaction'])){
@@ -38,10 +36,11 @@
                     }
                     $input_refillfreq = (!empty($_POST['budget-refill-input']) ? $_POST['refill-frequency-input'] : "none");
                     $input_refillfreq = strtolower($input_refillfreq);
+
+                    //calculate next refill
                     if($input_refillfreq == "weekly"){
                         $input_refillon = $_POST['refill-weekly-input'];
-                        $nextrefillstr = "next ".$input_refillon;
-                        $input_nextrefill = date("Ymd", strtotime($nextrefillstr));
+                        $input_nextrefill = findRefillDate($currenttimestamp, $input_refillfreq, $input_refillon);
 
                         //all lower for consistent storing
                         $input_refillon = strtolower($input_refillon);
@@ -50,29 +49,11 @@
                         $input_refillon = $_POST['refill-monthly-input'];
                         $input_refillon = sprintf("%02d", $input_refillon);
 
-                        //calculate next refill date
-                        //have we already passed the day for this month?
-                        if($currentday >= $input_refillon){
-                            //do we need to move into 2018?
-                            if($currentmonth == 12){
-                                $refillmonth = "01";
-                                $refillyear = $currentyear + 1;
-                            }
-                            else{
-                                $refillmonth = $currentmonth + 1;
-                                $refillmonth = sprintf("%02d", $refillmonth);
-                                $refillyear = $currentyear;
-                            }
-                        }
-                        else{
-                            $refillmonth = $currentmonth;
-                            $refillyear = $currentyear;
-                        }
-                        $input_nextrefill = $refillyear.$refillmonth.$input_refillon;
+                        $input_nextrefill = findRefillDate($currenttimestamp, $input_refillfreq, $input_refillon);
                     }
                     else{
                         $input_refillon = "none";
-                        $input_nextrefill = 0;
+                        $input_nextrefill = findRefillDate($currenttimestamp, $input_refillfreq, $input_refillon);
                     }
                     $input_shares = 0;
 
@@ -135,42 +116,6 @@
             exit();
         }
 
-
-        //new or edited item save
-        /*
-        if(isset($_POST['item-title-input']) && isset($_POST['item-desc-input'])){
-                
-            $itemtitle = $_POST['item-title-input'];
-            $itemdesc = $_POST['item-desc-input'];
-            $newitempos = $_POST['new-item-pos'];
-            $edituid = $_POST['edit-item-uid'];
-
-            // if new pos has value and edit uid is empty, add a NEW item to the db
-            if(!empty($newitempos) && empty($edituid)){
-                $insert = $db->prepare("INSERT INTO $insertprep");
-                array_push($insertarray, $newitempos, $itemtitle, $itemdesc);
-                $insert->execute($insertarray);
-                $_SESSION['sessionalert'] = "itemcreated";
-            }
-            // if new pos is empty and edit uid has a value, UPDATE the item based on its UID
-            elseif(!empty($edituid) && empty($newitempos)){
-                $update = $db->prepare("UPDATE $dbtable SET title = :itemtitle, description = :itemdesc WHERE uid = $edituid");
-                $update->bindParam(':itemtitle', $itemtitle, PDO::PARAM_STR);
-                $update->bindParam(':itemdesc', $itemdesc, PDO::PARAM_STR);
-                $update->execute();
-                $_SESSION['sessionalert'] = "itemedited";
-            }
-            else{
-                $statusMessage = "Error saving item";
-                $statusType = "danger";
-            }
-
-            header("Location: ".$_SERVER['REQUEST_URI']);
-            exit();
-
-        }
-        */
-
         //delete item
         /*
         if(isset($_POST['delete-item-uid'])){
@@ -198,8 +143,45 @@
         */
 
         //generate content from query db
+        $budgetupdates = $db->query("SELECT * FROM budgets WHERE owner = '$dashboarduser' ORDER BY uid ASC");
+
+        //update any auto refills first
+        foreach($budgetupdates as $budget){
+            $updatebudgetuid = $budget['uid'];
+            $updatebudgetbalance = $budget['balance'];
+            $updateautorefill = $budget['autorefill'];
+            $updatenextrefill = $budget['nextrefill'];
+            $updatefreq = $budget['refillfrequency'];
+            $updaterefillon = $budget['refillon'];
+            $updateamount = $budget['refillamount'];
+            if($updateautorefill == 1){
+                while($updatenextrefill <= $currentdate){
+                    $nextrefillts = strtotime($updatenextrefill); 
+                    $updatebudgetbalance += $updateamount;
+                    $updatenextrefill = findRefillDate($nextrefillts, $updatefreq, $updaterefillon);
+                    
+                    //add new balance to table
+                    $updatebudgets = $db->prepare("UPDATE budgets SET balance = :updatebalancebind, nextrefill = :updatenextrefillbind WHERE uid = $updatebudgetuid");
+                    $updatebudgets->bindParam(':updatebalancebind', $updatebudgetbalance, PDO::PARAM_STR);
+                    $updatebudgets->bindParam(':updatenextrefillbind', $updatenextrefill, PDO::PARAM_STR);
+                    $updatebudgets->execute();
+
+                    //add new transaction to budget-specific table
+                    $updatebudgettablename = "budget".$updatebudgetuid;
+                    $updaterefilldesc = "Auto Refill";
+                    $systemuser = "System";
+                    $insertupdate = $db->prepare("INSERT INTO $updatebudgettablename (name, budgetuid, balance, modifyamount, transactiondate, user) VALUES (?, ?, ?, ?, ?, ?)");
+                    $insertarray = array($updaterefilldesc, $updatebudgetuid, $updatebudgetbalance, $updateamount, $updatenextrefill, $systemuser);
+                    $insertupdate->execute($insertarray);
+                }
+            }
+        }
+
+        //generate budgets for list
         $budgets = $db->query("SELECT * FROM budgets WHERE owner = '$dashboarduser' ORDER BY uid ASC");
-        //$budgets = $db->query("SELECT * FROM budgets WHERE owner = 'melanie.s.reeder@gmail.com' ORDER BY uid ASC");
+
+        //generate shared budgets list
+        //$sharedbudgets = $db->query("SELECT * FROM shares WHERE shareduser = '$dashboarduser' ORDER BY uid ASC");
 
         //reordering save - called via ajax
         /*
@@ -223,5 +205,40 @@
 
     // remove alert variable
     unset($_SESSION['sessionalert']);
+
+    function findRefillDate($now, $freq, $refillon){
+        if($freq == "weekly"){
+            $nextrefillstr = "next ".$refillon;
+            $nextrefill = date("Ymd", strtotime($nextrefillstr, $now));
+        }
+        elseif($freq == "monthly"){
+            //breakapart $now
+            $nowyear = date("Y", $now);
+            $nowmonth = date("m", $now);
+            $nowday = date("d", $now); 
+            //have we already passed the day for this month?
+            if($nowday >= $refillon){
+                //do we need to move into 2018?
+                if($nowmonth == 12){
+                    $refillmonth = "01";
+                    $refillyear = $nowyear + 1;
+                }
+                else{
+                    $refillmonth = $nowmonth + 1;
+                    $refillmonth = sprintf("%02d", $refillmonth);
+                    $refillyear = $nowyear;
+                }
+            }
+            else{
+                $refillmonth = $nowmonth;
+                $refillyear = $nowyear;
+            }
+            $nextrefill = $refillyear.$refillmonth.$refillon;
+        }
+        else{
+            $nextrefill = 0;
+        }
+        return $nextrefill;
+    }           
 
 ?>

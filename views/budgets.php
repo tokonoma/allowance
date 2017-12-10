@@ -94,7 +94,6 @@
                             <?php else: ?>
                                 <div class="balance-health-bar"></div>
                             <?php endif; ?>
-                                }
                         </div>
                     </a>
                     <div class="budget-spacing-column table-cell"></div>

@@ -91,9 +91,9 @@ try{
     // $update->bindParam(':bodyinput', $bodyinput, PDO::PARAM_STR);
     // $update->execute();
 
-    // $input_refill = 150;
-    // $update = $db->prepare("UPDATE budgets SET refillamount = :amount WHERE uid = 1");
-    // $update->bindParam(':amount', $input_refill, PDO::PARAM_STR);
+    // $input_number = 20171210;
+    // $update = $db->prepare("UPDATE budgets SET nextrefill = :numberbind WHERE uid = 6");
+    // $update->bindParam(':numberbind', $input_number, PDO::PARAM_STR);
     // $update->execute();
 
     //add a column
@@ -109,7 +109,7 @@ try{
     //$db->exec("DROP TABLE tablename");
 
     //row delete tool
-    //$db->exec("DELETE FROM budget4 WHERE uid = 2");
+    //$db->exec("DELETE FROM budget6 WHERE user = 'System'");
 
 
     //queries
