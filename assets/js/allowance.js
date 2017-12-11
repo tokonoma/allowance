@@ -144,9 +144,11 @@ $(function() {
         var deductUID = $(this).data('uid');
         var deductName = $(this).data('name');
         var currentBalance = $(this).data('balance');
+        currentBalance = "$"+((currentBalance/100).toFixed(2));
         $('input[name="deduct-uid"]').val(deductUID);
-        $('input[name="current-balance"]').val(currentBalance);
         $(".say-budget-name").text(deductName);
+        $(".say-current-balance").text(currentBalance);
+
     });
     
 })

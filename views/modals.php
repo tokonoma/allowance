@@ -83,7 +83,11 @@
                     <h4 class="modal-title">Deduct from Budget</h4>
                 </div>
                 <div class="modal-body">
-                    <p>How much would you like to deduct from <strong><span class="say-budget-name"></span></strong>?</p>
+                    <p>
+                        <strong><span class="say-budget-name"></span></strong>: 
+                        <span class="say-current-balance"></span>
+                    </p>
+                    <p>How much would you like to deduct?</p>
                     <div class="form-group">
                         <label for="budget-deduction-input">Deduction Amount</label>
                         <div class="input-group">
@@ -97,7 +101,6 @@
                     </div>
                     <input type="hidden" name="budgetaction" value="deduct">
                     <input type="hidden" name="deduct-uid" value="">
-                    <input type="hidden" name="current-balance" value="">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>

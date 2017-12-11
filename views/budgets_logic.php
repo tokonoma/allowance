@@ -65,13 +65,13 @@
                     //create table for budget
                     $newbudgetuid = $db->lastInsertId();
                     $budgettablename = "budget".$newbudgetuid;
-                    $db->exec("CREATE TABLE IF NOT EXISTS $budgettablename (uid INTEGER PRIMARY KEY, name TEXT, budgetuid INTEGER, balance INTEGER, modifyamount INTEGER, transactiondate TEXT, user TEXT)");
+                    $db->exec("CREATE TABLE IF NOT EXISTS $budgettablename (uid INTEGER PRIMARY KEY, name TEXT, budgetuid INTEGER, balance INTEGER, withdraw INTEGER, deposit INTEGER, transactiondate TEXT, user TEXT)");
 
                     //log creation of budget into table
                     $input_transactionname = "Budget created";
 
-                    $insert = $db->prepare("INSERT INTO $budgettablename (name, budgetuid, balance, modifyamount, transactiondate, user) VALUES (?, ?, ?, ?, ?, ?)");
-                    $insertarray = array($input_transactionname, $newbudgetuid, $input_balance, $input_balance, $currentdate, $dashboarduser);
+                    $insert = $db->prepare("INSERT INTO $budgettablename (name, budgetuid, balance, withdraw, deposit, transactiondate, user) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                    $insertarray = array($input_transactionname, $newbudgetuid, $input_balance, 0, $input_balance, $currentdate, $dashboarduser);
                     $insert->execute($insertarray);
 
                     //finish and redirect with success message
@@ -85,7 +85,12 @@
                     $input_deductuid = $_POST['deduct-uid'];
                     $budgettablename = "budget".$input_deductuid;
 
-                    $input_currentbalance = $_POST['current-balance'];
+                    //get current balance
+                    $currentbalancedata = $db->query("SELECT balance FROM budgets WHERE uid = '$input_deductuid'");
+                    foreach($currentbalancedata as $getbalance){
+                        $input_currentbalance = $getbalance['balance'];
+                    }
+
                     $input_deductamount = $_POST['budget-deduction-input'];
                     $input_deductamount = $input_deductamount*100;
                     $newbalance = $input_currentbalance - $input_deductamount;
@@ -98,8 +103,9 @@
                     $update->execute();
 
                     //add transaction to history table
-                    $insert = $db->prepare("INSERT INTO $budgettablename (name, budgetuid, balance, modifyamount, transactiondate, user) VALUES (?, ?, ?, ?, ?, ?)");
-                    $insertarray = array($input_deductdesc, $input_deductuid, $newbalance, $input_deductamount, $currentdate, $dashboarduser);
+                    $input_deductamount = $input_deductamount;
+                    $insert = $db->prepare("INSERT INTO $budgettablename (name, budgetuid, balance, withdraw, deposit, transactiondate, user) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                    $insertarray = array($input_deductdesc, $input_deductuid, $newbalance, $input_deductamount, 0, $currentdate, $dashboarduser);
                     $insert->execute($insertarray);
 
                     //finish and redirect with success message
@@ -147,17 +153,22 @@
 
         //update any auto refills first
         foreach($budgetupdates as $budget){
-            $updatebudgetuid = $budget['uid'];
-            $updatebudgetbalance = $budget['balance'];
+
             $updateautorefill = $budget['autorefill'];
-            $updatenextrefill = $budget['nextrefill'];
-            $updatefreq = $budget['refillfrequency'];
-            $updaterefillon = $budget['refillon'];
-            $updateamount = $budget['refillamount'];
+
             if($updateautorefill == 1){
+                $updatebudgetuid = $budget['uid'];
+                $updatebudgetbalance = $budget['balance'];
+                $updatenextrefill = $budget['nextrefill'];
+                $updatefreq = $budget['refillfrequency'];
+                $updaterefillon = $budget['refillon'];
+                $updateamount = $budget['refillamount'];
+
                 while($updatenextrefill <= $currentdate){
                     $nextrefillts = strtotime($updatenextrefill); 
                     $updatebudgetbalance += $updateamount;
+                    //save original nextrefill for transaction date
+                    $prevnextrefill = $updatenextrefill;
                     $updatenextrefill = findRefillDate($nextrefillts, $updatefreq, $updaterefillon);
                     
                     //add new balance to table
@@ -170,8 +181,8 @@
                     $updatebudgettablename = "budget".$updatebudgetuid;
                     $updaterefilldesc = "Auto Refill";
                     $systemuser = "System";
-                    $insertupdate = $db->prepare("INSERT INTO $updatebudgettablename (name, budgetuid, balance, modifyamount, transactiondate, user) VALUES (?, ?, ?, ?, ?, ?)");
-                    $insertarray = array($updaterefilldesc, $updatebudgetuid, $updatebudgetbalance, $updateamount, $updatenextrefill, $systemuser);
+                    $insertupdate = $db->prepare("INSERT INTO $updatebudgettablename (name, budgetuid, balance, withdraw, deposit transactiondate, user) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                    $insertarray = array($updaterefilldesc, $updatebudgetuid, $updatebudgetbalance, 0, $updateamount, $prevnextrefill, $systemuser);
                     $insertupdate->execute($insertarray);
                 }
             }

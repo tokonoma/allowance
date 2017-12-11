@@ -2,7 +2,7 @@
 
     $dashboarduser = $_SESSION['email'];
     
-   try{
+    try{
         //postgres for prod
         $db = new PDO($dsn);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -12,17 +12,18 @@
                 
             $savetype = $_POST['budgetaction'];
 
-            // if new pos has value and edit uid is empty, add a NEW item to the db
             switch ($savetype){
-                case 'new':
-                    //add row to table
-                    //create table for budget
-                    break;
                 case 'edit':
                     //edit item
+                    header("Location: ".$_SERVER['REQUEST_URI']);
+                    exit();
+
                     break;
                 case 'delete':
                     //delete item and associated items
+                    header("Location: ".$baseurl);
+                    exit();
+
                     break;
             }
             //$statusMessage = "Error saving item";
@@ -99,8 +100,8 @@
         $budgetuid = $_GET['budget'];
         $budgettablename = "budget".$budgetuid;
         //$budgets = $db->query("SELECT * FROM budgets WHERE owner = '$_SESSION['email']' AND uid = $budgetuid ORDER BY uid ASC");
-        $budget = $db->query("SELECT * FROM budgets WHERE owner = 'melanie.s.reeder@gmail.com' AND uid = $budgetuid ORDER BY 'uid' ASC");
-        $budgettable = $db->query("SELECT * FROM $budgettablename ORDER BY 'transactiondate' DESC");
+        $thisbudget = $db->query("SELECT * FROM budgets WHERE owner = '$dashboarduser' AND uid = $budgetuid");
+        $budgettable = $db->query("SELECT * FROM $budgettablename ORDER BY CAST(uid AS REAL)DESC");
 
         //reordering save - called via ajax
         /*
