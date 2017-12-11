@@ -7,12 +7,46 @@
         $db = new PDO($dsn);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+        //generate content from query db
+        $budgetuid = $_GET['budget'];
+        $budgettablename = "budget".$budgetuid;
+
         //budget actions
         if(isset($_POST['budgetaction'])){
                 
             $savetype = $_POST['budgetaction'];
 
             switch ($savetype){
+                case 'deduct':
+                    //get current balance
+                    $currentbalancedata = $db->query("SELECT balance FROM budgets WHERE uid = '$budgetuid'");
+                    foreach($currentbalancedata as $getbalance){
+                        $input_currentbalance = $getbalance['balance'];
+                    }
+
+                    $input_deductamount = $_POST['budget-deduction-input'];
+                    $input_deductamount = $input_deductamount*100;
+                    $newbalance = $input_currentbalance - $input_deductamount;
+
+                    $input_deductdesc = (!empty($_POST['deduction-desc-input']) ? $_POST['deduction-desc-input'] : "no description");
+
+                    //subtract from balance in budgets table
+                    $update = $db->prepare("UPDATE budgets SET balance = :newbalancebind WHERE uid = $budgetuid");
+                    $update->bindParam(':newbalancebind', $newbalance, PDO::PARAM_STR);
+                    $update->execute();
+
+                    //add transaction to history table
+                    $input_deductamount = $input_deductamount;
+                    $insert = $db->prepare("INSERT INTO $budgettablename (name, budgetuid, balance, withdraw, deposit, transactiondate, user) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                    $insertarray = array($input_deductdesc, $budgetuid, $newbalance, $input_deductamount, 0, $currentdate, $dashboarduser);
+                    $insert->execute($insertarray);
+
+                    //finish and redirect with success message
+                    $_SESSION['sessionalert'] = "generalsuccess";
+                    header("Location: ".$_SERVER['REQUEST_URI']."#budget".$budgetuid);
+                    exit();
+
+                    break;
                 case 'edit':
                     //edit item
                     header("Location: ".$_SERVER['REQUEST_URI']);
@@ -33,42 +67,6 @@
             exit();
 
         }
-
-        
-        //new or edited item save
-        /*
-        if(isset($_POST['item-title-input']) && isset($_POST['item-desc-input'])){
-                
-            $itemtitle = $_POST['item-title-input'];
-            $itemdesc = $_POST['item-desc-input'];
-            $newitempos = $_POST['new-item-pos'];
-            $edituid = $_POST['edit-item-uid'];
-
-            // if new pos has value and edit uid is empty, add a NEW item to the db
-            if(!empty($newitempos) && empty($edituid)){
-                $insert = $db->prepare("INSERT INTO $insertprep");
-                array_push($insertarray, $newitempos, $itemtitle, $itemdesc);
-                $insert->execute($insertarray);
-                $_SESSION['sessionalert'] = "itemcreated";
-            }
-            // if new pos is empty and edit uid has a value, UPDATE the item based on its UID
-            elseif(!empty($edituid) && empty($newitempos)){
-                $update = $db->prepare("UPDATE $dbtable SET title = :itemtitle, description = :itemdesc WHERE uid = $edituid");
-                $update->bindParam(':itemtitle', $itemtitle, PDO::PARAM_STR);
-                $update->bindParam(':itemdesc', $itemdesc, PDO::PARAM_STR);
-                $update->execute();
-                $_SESSION['sessionalert'] = "itemedited";
-            }
-            else{
-                $statusMessage = "Error saving item";
-                $statusType = "danger";
-            }
-
-            header("Location: ".$_SERVER['REQUEST_URI']);
-            exit();
-
-        }
-        */
 
         //delete item
         /*
@@ -96,9 +94,6 @@
         }
         */
 
-        //generate content from query db
-        $budgetuid = $_GET['budget'];
-        $budgettablename = "budget".$budgetuid;
         //$budgets = $db->query("SELECT * FROM budgets WHERE owner = '$_SESSION['email']' AND uid = $budgetuid ORDER BY uid ASC");
         $thisbudget = $db->query("SELECT * FROM budgets WHERE owner = '$dashboarduser' AND uid = $budgetuid");
         $budgettable = $db->query("SELECT * FROM $budgettablename ORDER BY CAST(uid AS REAL)DESC");

@@ -95,24 +95,78 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>Date</th>
-                            <th>Name</th>
-                            <th>Withdraw/Deposit</th>
-                            <th>User</th>
-                            <th>Balance</th>
+                            <th>
+                                <span class="hidden-sm hidden-xs">Date</span>
+                                <span class="hidden-md hidden-lg"><i class="fa fa-camera-retro"></i></span>
+                            </th>
+                            <th>
+                                <span class="hidden-sm hidden-xs">Description</span>
+                                <span class="hidden-md hidden-lg"><i class="fa fa-commenting"></i></span>
+                            </th>
+                            <th>
+                                <span class="hidden-sm hidden-xs">Withdraw/Deposit</span>
+                                <span class="hidden-md hidden-lg"><i class="fa fa-minus"></i>/<i class="fa fa-plus"></i></span>
+                            </th>
+                            <th>
+                                <span class="hidden-sm hidden-xs">User</span>
+                                <span class="hidden-md hidden-lg"><i class="fa fa-user"></i></span>
+                            </th>
+                            <th class="text-right" align="right">
+                                <span class="hidden-sm hidden-xs">Balance</span>
+                                <span class="hidden-md hidden-lg"><i class="fa fa-money"></i></span>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach($budgettable as $budgettransaction): ?>
                         <tr>
                             <td><?php echo date("m/d/y", strtotime($budgettransaction['transactiondate']))?></td>
-                            <td><?php echo $budgettransaction['name']?></td>
                             <td>
-                                <?php echo "$".number_format(($budgettransaction['modifyamount']/100), 2, '.', ',')?>
-                                
+                                <span class="hidden-xs">
+                                    <?php echo $budgettransaction['name']?>
+                                </span>
+                                <span class="hidden-sm hidden-md hidden-lg">
+                                    <div class="btn-group tool-tip-btn">
+                                        <button type="button" class="btn btn-link btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i> <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li class="no-a-tag"><?php echo $budgettransaction['name']?></li>
+                                        </ul>
+                                    </div>
+                                </span>
                             </td>
-                            <td><?php echo $budgettransaction['user']?></td>
-                            <td><?php echo "$".number_format(($budgettransaction['balance']/100), 2, '.', ',')?></td>
+                            <td>
+                                <?php
+                                    $depositamount = $budgettransaction['deposit'];
+                                    $withdrawamount = $budgettransaction['withdraw'];
+                                    if($depositamount == 0 && $withdrawamount > 0){
+                                        echo "<span class='withdraw-span'>-$".number_format(($withdrawamount/100), 2, '.', ',')."</span>";
+                                    }
+                                    elseif($depositamount > 0 && $withdrawamount == 0){
+                                         echo "<span class='deposit-span'>+$".number_format(($depositamount/100), 2, '.', ',')."</span>";;
+                                    }
+                                    else{
+                                        echo "-";
+                                    }
+                                ?>
+                            </td>
+                            <td>
+                                <span class="hidden-xs">
+                                    <?php echo $budgettransaction['user']?>
+                                </span>
+                                <span class="hidden-sm hidden-md hidden-lg">
+                                    <div class="btn-group tool-tip-btn">
+                                        <button type="button" class="btn btn-link btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i> <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li class="no-a-tag"><?php echo $budgettransaction['user']?></li>
+                                        </ul>
+                                    </div>
+                                </span>
+                            </td>
+                            <td align="right"><?php echo "$".number_format(($budgettransaction['balance']/100), 2, '.', ',')?></td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>

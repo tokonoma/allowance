@@ -6,7 +6,7 @@ html, body{
 
 body{
 	font-family: 'Open Sans', arial, sans-serif;
-	color: #303D44;;
+	color: #303D44;
 }
 
 .height100{
@@ -34,6 +34,11 @@ input:-webkit-autofill{
     background-color: #09A387;
     border-color: #088971;
 }
+	.allw-success.btn:hover{
+		color: #ffffff;
+	    background-color: #088971;
+	    border-color: #088971;
+	}
 
 .half-badge{
 	display: inline-block;
@@ -58,6 +63,10 @@ input:-webkit-autofill{
 	    padding: 4px 8px 4px 4px;
 	    border: solid 1px transparent;
 	}
+
+.character-wrap{
+	word-wrap:break-word;
+}
 
 
 
@@ -95,6 +104,21 @@ input:-webkit-autofill{
 	border: none;
 	border-bottom: 1px solid #e7e7e7;
 }*/
+
+.dropdown-menu>li.no-a-tag{
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: 400;
+    line-height: 1.42857143;
+    color: #333;
+    white-space: nowrap;
+}
+
+.tool-tip-btn .btn-link{
+	text-decoration: none;
+	color: #303D44;
+}
 
 
 
@@ -277,6 +301,16 @@ input:-webkit-autofill{
 		height: 4px;
 		background: #09A387;
 	}
+
+
+
+/*SETTINGS*/
+.withdraw-span{
+	color: #7A6153;
+}
+.deposit-span{
+	color: #007F68;
+}
 
 
 /*SETTINGS*/
