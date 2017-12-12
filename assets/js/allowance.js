@@ -104,6 +104,7 @@ $(function() {
             $("#delete-budget-submit-btn").addClass("disabled-fade");
         }
     });
+
 })
 
 //reordering auto-ajax function

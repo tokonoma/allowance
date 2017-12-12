@@ -42,7 +42,7 @@ try{
                     //save it
                     $input_pass = $_POST['password-one'];
                     $newpass = password_hash($input_pass, PASSWORD_BCRYPT);
-                    $update = $db->prepare("UPDATE users SET password = :newpass WHERE email = '$user_id'");
+                    $update = $db->prepare("UPDATE users SET password = :newpass WHERE email = '$userid'");
                     $update->bindParam(':newpass', $newpass, PDO::PARAM_STR);
                     $update->execute();
 

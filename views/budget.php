@@ -6,52 +6,59 @@
             
             <ul id="item-list" class="list-unstyled">
                 <?php foreach($thisbudget as $budget): ?>
-                <li class="budget-table table-parent" id="budget<?php echo $budget['uid']?>">
-                    <a href="<?php echo $baseurl.'?budget='.$budget['uid']?>" class="budget-data table-cell">
+
+                <?php
+                    //let's get all those variables we need
+                    $thisbudgetuid = $budget['name'];
+                    $thisbudgetname = $budget['name'];
+                    $thisbudgetbalance = $budget['balance'];
+                    $thisprintbalance = "$".number_format(($thisbudgetbalance/100), 2, '.', ',');
+                    $thisautorefill = $budget['autorefill'];
+                    $thisrefillamount = $budget['refillamount'];
+                    $thisprintrefillamount = "$".number_format(($thisrefillamount/100), 2, '.', ',');
+                    $thisrefillfreq = $budget['refillfrequency'];
+                    $thisbudgetshares = $budget['shares'];
+                ?>
+                <li class="budget-table budget-detail table-parent" id="budget<?php echo $thisbudgetuid?>">
+                    <a href="<?php echo $baseurl.'?budget='.$thisbudgetuid?>" class="budget-data table-cell">
                         <div class="budget-data-padding">
                             <div class="budget-details table-cell">
                                 <div class="budget-name">
-                                    <?php echo $budget['name']; ?>
+                                    <?php echo $thisbudgetname; ?>
                                 </div>
                                 <div class="budget-balance tiny-balance">
-                                    <?php
-                                        $balance = $budget['balance'];
-                                        echo "$".number_format(($balance/100), 2, '.', ',');
-                                    ?>
+                                    <?php echo $thisprintbalance?>
                                 </div>
                                 <div class="budget-properties">
-                                    <?php $refillamount = $budget['refillamount']; ?>
-                                    <?php if($budget['autorefill'] == 1): ?>
+                                    <?php if($thisautorefill == 1): ?>
                                         <div class="half-badge half-badge-left refill-badge">
                                             <i class="fa fa-repeat" aria-hidden="true"></i>
                                         </div><div class="half-badge half-badge-right refill-badge">
                                             <?php
-                                                echo "$".number_format(($refillamount/100), 2, '.', ',')."/".$budget['refillfrequency'];
+                                                echo $thisprintrefillamount."/".$thisrefillfreq;
                                             ?>
                                         </div>
                                     <?php else: ?>
                                         <span class="badge initial-badge">
                                             <?php
-                                                echo "Started with $".number_format(($refillamount/100), 2, '.', ',');
+                                                echo "Started with ".$thisprintrefillamount;
                                             ?>
                                         </span>
                                     <?php endif; ?>
-                                    <?php if($budget['shares'] > 0): ?>
+                                    <?php if($thisbudgetshares > 0): ?>
                                         <span class="badge shares-badge">
-                                            <i class="fa fa-user-plus" aria-hidden="true"></i><?php echo $budget['shares']?>
+                                            <i class="fa fa-user-plus" aria-hidden="true"></i><?php echo $thisbudgetshares?>
                                         </span>
                                     <?php endif; ?>
                                 </div>
                             </div>
                             <div class="budget-balance table-cell table-cell-vcenter">
-                                <?php
-                                    echo "$".number_format(($balance/100), 2, '.', ',');
-                                ?>
+                                <?php echo $thisprintbalance?>
                             </div>
                         </div>
                         <div class="balance-health-bar-container">
                             <?php
-                                $balancehealth = $balance/$refillamount*100;
+                                $balancehealth = $thisbudgetbalance/$thisrefillamount*100;
                                 if($balancehealth >= 66){
                                     $balancehealthhex = "#09A387";
                                 }
@@ -62,7 +69,7 @@
                                     $balancehealthhex = "#C6500B";
                                 }
                             ?>
-                            <?php if($balance < $refillamount): ?>
+                            <?php if($thisbudgetbalance < $thisrefillamount): ?>
                                 <div class="balance-health-bar" style="background: <?php echo $balancehealthhex?>; width: <?php echo $balancehealth."%"?>;"></div>
                             <?php else: ?>
                                 <div class="balance-health-bar"></div>
@@ -71,16 +78,11 @@
                     </a>
                     <div class="budget-spacing-column table-cell"></div>
                     <div class="budget-deduct-btn-cell table-cell table-cell-vcenter text-center">
-                        <button type="button" class="btn deduct-btn" data-toggle="modal" data-target="#budget-deduct-modal" data-uid="<?php echo $budget['uid']?>" data-name="<?php echo $budget['name']?>" data-balance="<?php echo $budget['balance']?>">
+                        <button type="button" class="btn deduct-btn" data-toggle="modal" data-target="#budget-deduct-modal" data-uid="<?php echo $thisbudgetuid?>" data-name="<?php echo $thisbudgetname?>" data-balance="<?php echo $thisbudgetbalance?>">
                             <i class="fa fa-chevron-circle-down fa-4x" aria-hidden="true"></i>
                         </button>
                     </div>
                 </li>
-
-                <?php
-                    $thisbudgetname = $budget['name'];
-                    $thisbalance = $budget['balance'];
-                ?>
 
                 <?php endforeach; ?>
 
@@ -90,9 +92,11 @@
 </div> <!-- /container -->
 
 <div class="container">
-    <div class="row">
+    <div class="row budget-toolbar">
         <div class="col-md-10 col-md-offset-1 col-sm-12">
-            <button type="button" id="delete-me-btn" class="btn btn-primary" data-toggle="modal" data-target="#budget-delete-modal" data-name="<?php echo $thisbudgetname?>" data-balance="<?php echo $thisbalance?>">Delete This</button>
+            <button type="button" id="edit-me-btn" class="btn btn-default btn-sm" data-toggle="modal" data-target="#edit-budget-modal"><i class="fa fa-edit" aria-hidden="true"></i> Edit</button>
+            <button type="button" id="share-me-btn" class="btn btn-default btn-sm" data-toggle="modal" data-target="#budget-share-modal"><i class="fa fa-user-plus" aria-hidden="true"></i> Share</button>
+            <button type="button" id="delete-me-btn" class="btn btn-default btn-sm" data-toggle="modal" data-target="#budget-delete-modal" data-name="<?php echo $thisbudgetname?>" data-balance="<?php echo $thisbudgetbalance?>"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>
         </div>
     </div>
 </div>
@@ -101,9 +105,8 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1 col-sm-12">
 
+            <h4>Budget History</h4>
             <div class="panel panel-default">
-                <!-- Default panel contents -->
-                <div class="panel-heading">Budget History</div>
                 <!-- Table -->
                 <table class="table table-striped">
                     <thead>

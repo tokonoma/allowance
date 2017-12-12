@@ -317,12 +317,22 @@ input:-webkit-autofill{
 
 
 /*BUDGET*/
+.budget-table.budget-detail{
+	margin-bottom: 12px;
+}
+
 .withdraw-span{
 	color: #7A6153;
 }
+
 .deposit-span{
 	color: #007F68;
 }
+
+.budget-toolbar{
+	margin-bottom: 24px;
+}
+
 
 
 /*SETTINGS*/
@@ -330,15 +340,6 @@ input:-webkit-autofill{
 	font-size: 124px;
 	color: #adadad;
 	margin-bottom: 48px;
-}
-
-
-/*OVERVIEW*/
-.overview-container{
-	height: 360px;
-	border: dashed 1px #04384A;
-	background: #0B90AA;
-	border-radius: 4px;
 }
 
 
