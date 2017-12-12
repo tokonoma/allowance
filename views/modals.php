@@ -125,20 +125,22 @@
                     <strong><span class="say-delete-budget-name"></span></strong>: 
                     <span class="say-delete-current-balance"></span>
                 </p>
+                <p id="must-check-to-delete" class="hidden form-hidden text-danger">You must check these boxes to delete this budget!</p>
+                
                 <form id="budget-delete-form" method="POST" action="<?php echo htmlentities($_SERVER['REQUEST_URI']); ?>">
                     <div class="checkbox">
                         <label>
-                            <input id="delete-you-sure-1" type="checkbox" name="you-sure-1" value="1"> I want to delete this budget!
+                            <input id="delete-you-sure-1" type="checkbox" name="delete-you-sure-1" value="1" class="delete-you-sure"> I want to delete this budget!
                         </label>
                     </div>
                    <div class="checkbox">
                         <label>
-                            <input id="delete-you-sure-2" type="checkbox" name="you-sure-2" value="1"> I want to destroy all data concerning this budget!
+                            <input id="delete-you-sure-2" type="checkbox" name="delete-you-sure-2" value="1" class="delete-you-sure"> I want to destroy all data concerning this budget!
                         </label>
                     </div>
                     <div class="checkbox">
                         <label>
-                            <input id="delete-you-sure-3" type="checkbox" name="you-sure-3" value="1"> I want to never see this budget again!
+                            <input id="delete-you-sure-3" type="checkbox" name="delete-you-sure-3" value="1" class="delete-you-sure"> I want to never see this budget again!
                         </label>
                     </div>
                     <input type="hidden" name="budgetaction" value="delete">
@@ -146,7 +148,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" id="delete-budget-submit-btn" name="delete-budget-submit-btn" class="btn btn-danger">Delete Forever</button>
+                <button type="button" id="delete-budget-submit-btn" name="delete-budget-submit-btn" class="btn btn-danger disabled-fade">Delete Forever</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

@@ -76,6 +76,12 @@
                         </button>
                     </div>
                 </li>
+
+                <?php
+                    $thisbudgetname = $budget['name'];
+                    $thisbalance = $budget['balance'];
+                ?>
+
                 <?php endforeach; ?>
 
             </ul>
@@ -86,7 +92,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-10 col-md-offset-1 col-sm-12">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#budget-delete-modal">Delete This</button>
+            <button type="button" id="delete-me-btn" class="btn btn-primary" data-toggle="modal" data-target="#budget-delete-modal" data-name="<?php echo $thisbudgetname?>" data-balance="<?php echo $thisbalance?>">Delete This</button>
         </div>
     </div>
 </div>

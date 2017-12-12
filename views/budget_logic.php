@@ -55,6 +55,13 @@
                     break;
                 case 'delete':
                     //delete item and associated items
+                    //delete budget from budgets table
+                    $db->exec("DELETE FROM budgets WHERE uid = $budgetuid");
+
+                    //delete budgets table
+                    $db->exec("DROP TABLE $budgettablename");
+
+
                     header("Location: ".$baseurl);
                     exit();
 

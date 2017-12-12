@@ -101,12 +101,22 @@ $(function() {
 
     //click to call js submit delete form
     $("#delete-budget-submit-btn").click(function(){
-        if(($("#delete-you-sure-1").checked)&&($("#delete-you-sure-2").checked)&&($("#delete-you-sure-3").checked)){
-            //submitJSForm("budget-delete-form");
-            alert("this will delete!!!!");
+        if(($('#delete-you-sure-1').is(':checked'))&&($('#delete-you-sure-2').is(':checked'))&&($('#delete-you-sure-3').is(':checked'))){
+            submitJSForm("budget-delete-form");
         }
         else{
-            alert("not going to delete");
+            $("#must-check-to-delete").removeClass("hidden");
+        }
+    });
+
+    //check state of checks
+    $('.delete-you-sure').change(function(){
+        if(($('#delete-you-sure-1').is(':checked'))&&($('#delete-you-sure-2').is(':checked'))&&($('#delete-you-sure-3').is(':checked'))){
+            $("#must-check-to-delete").addClass("hidden");
+            $("#delete-budget-submit-btn").removeClass("disabled-fade");
+        }
+        else{
+            //nothing
         }
     });
 
@@ -153,8 +163,8 @@ $(function() {
     });
     
 
-    //trigger deduct modal
-    $(document).on("click", "#budget-delete-modal", function(){
+    //trigger delete modal
+    $("#delete-me-btn").click(function(){
         var deleteName = $(this).data('name');
         var currentBalance = $(this).data('balance');
         currentBalance = "$"+((currentBalance/100).toFixed(2));
