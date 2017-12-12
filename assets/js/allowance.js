@@ -89,24 +89,26 @@ $(function() {
         }
     });
 
+
+
+    //ALLOWANCE CODE
+
     //click to call js submit for single/generic form
+    //does this work with classes?
     $(".js-submit-btn").click(function() {
         submitJSForm();
     });
 
-    //EDIT PAGE modal I don't know what I was doing with this or where I left off...
-    // $(document).on("click", ".send-uid", function(){
-    //     //send info on item to be edited to modal
-    //     var budgetuid = $(this).closest(".budget-table").data('uid');
-    //     var budgetuid = $(this).closest(".budget-table").data('name');
-    //     var budgetuid = $(this).closest(".budget-table").data('modal');
-    //     $('input[name="edit-item-uid"]').val(budgetuid);
-
-    //     //clear any left overs from abandoned new item modals
-    //     $('input[name="new-item-pos"]').val("");
-    // });
-
-    //ALLOWANCE CODE
+    //click to call js submit delete form
+    $("#delete-budget-submit-btn").click(function(){
+        if(($("#delete-you-sure-1").checked)&&($("#delete-you-sure-2").checked)&&($("#delete-you-sure-3").checked)){
+            //submitJSForm("budget-delete-form");
+            alert("this will delete!!!!");
+        }
+        else{
+            alert("not going to delete");
+        }
+    });
 
     //show, hide auto-refill options
     $('#budget-refill-input').change(function(){
@@ -148,9 +150,17 @@ $(function() {
         $('input[name="deduct-uid"]').val(deductUID);
         $(".say-budget-name").text(deductName);
         $(".say-current-balance").text(currentBalance);
-
     });
     
+
+    //trigger deduct modal
+    $(document).on("click", "#budget-delete-modal", function(){
+        var deleteName = $(this).data('name');
+        var currentBalance = $(this).data('balance');
+        currentBalance = "$"+((currentBalance/100).toFixed(2));
+        $(".say-delete-budget-name").text(deleteName);
+        $(".say-delete-current-balance").text(currentBalance);
+    });
 })
 
 //reordering auto-ajax function
@@ -164,7 +174,6 @@ function updateOrder(uid, pos){
         }
     });
 }
-
 
 //js form submit function
 function submitJSForm(formid){

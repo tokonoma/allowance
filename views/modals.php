@@ -77,7 +77,7 @@
 <div class="modal fade form-modal" id="budget-deduct-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form id="new-budget-form" method="POST" action="<?php echo htmlentities($_SERVER['REQUEST_URI']); ?>">
+            <form id="budget-deduct-form" method="POST" action="<?php echo htmlentities($_SERVER['REQUEST_URI']); ?>">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Deduct from Budget</h4>
@@ -115,36 +115,39 @@
 <div class="modal fade form-modal" id="budget-delete-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form id="new-budget-form" method="POST" action="<?php echo htmlentities($_SERVER['REQUEST_URI']); ?>">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Deduct from Budget</h4>
-                </div>
-                <div class="modal-body">
-                    <p>
-                        <strong><span class="say-budget-name"></span></strong>: 
-                        <span class="say-current-balance"></span>
-                    </p>
-                    <p>How much would you like to deduct?</p>
-                    <div class="form-group">
-                        <label for="budget-deduction-input">Deduction Amount</label>
-                        <div class="input-group">
-                            <span class="input-group-addon">$</span>
-                            <input type="number" class="form-control" id="budget-deduction-input" name="budget-deduction-input" placeholder="0.00" autocomplete='off' step="0.01" autofocus>
-                        </div>
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Delete this Budget?</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to <strong>DELETE</strong> this budget?</p>
+                <p>
+                    <strong><span class="say-delete-budget-name"></span></strong>: 
+                    <span class="say-delete-current-balance"></span>
+                </p>
+                <form id="budget-delete-form" method="POST" action="<?php echo htmlentities($_SERVER['REQUEST_URI']); ?>">
+                    <div class="checkbox">
+                        <label>
+                            <input id="delete-you-sure-1" type="checkbox" name="you-sure-1" value="1"> I want to delete this budget!
+                        </label>
                     </div>
-                    <div class="form-group">
-                        <label for="deduction-desc-input">Description (optional)</label>
-                        <input type="text" class="form-control" id="deduction-desc-input" name="deduction-desc-input" placeholder="Write a brief description about this deduction!" autocomplete='off'>
+                   <div class="checkbox">
+                        <label>
+                            <input id="delete-you-sure-2" type="checkbox" name="you-sure-2" value="1"> I want to destroy all data concerning this budget!
+                        </label>
                     </div>
-                    <input type="hidden" name="budgetaction" value="deduct">
-                    <input type="hidden" name="deduct-uid" value="">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="submit" name="submit" class="btn btn-primary">Deduct</button>
-                </div>
-            </form>
+                    <div class="checkbox">
+                        <label>
+                            <input id="delete-you-sure-3" type="checkbox" name="you-sure-3" value="1"> I want to never see this budget again!
+                        </label>
+                    </div>
+                    <input type="hidden" name="budgetaction" value="delete">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" id="delete-budget-submit-btn" name="delete-budget-submit-btn" class="btn btn-danger">Delete Forever</button>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

@@ -83,6 +83,13 @@
     </div> <!-- /row -->
 </div> <!-- /container -->
 
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 col-sm-12">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#budget-delete-modal">Delete This</button>
+        </div>
+    </div>
+</div>
 
 <div class="container">
     <div class="row">
