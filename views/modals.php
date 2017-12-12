@@ -125,7 +125,9 @@
                     <strong><span class="say-delete-budget-name"></span></strong>: 
                     <span class="say-delete-current-balance"></span>
                 </p>
-                <p id="must-check-to-delete" class="hidden form-hidden text-danger">You must check these boxes to delete this budget!</p>
+                <p>Please check the following boxes to delete this budget</p>
+
+                <p id="must-check-to-delete" class="hidden form-hidden">Gotta check those checkboxes!!!</p>
                 
                 <form id="budget-delete-form" method="POST" action="<?php echo htmlentities($_SERVER['REQUEST_URI']); ?>">
                     <div class="checkbox">

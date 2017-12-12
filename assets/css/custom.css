@@ -72,6 +72,14 @@ input:-webkit-autofill{
 	opacity: 0.7;
 }
 
+.semi-bold{
+	font-weight: 600;
+}
+
+.bold{
+	font-weight: 700;
+}
+
 
 
 /*TABLE LAYOUT*/

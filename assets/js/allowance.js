@@ -10,114 +10,19 @@ $(function() {
     //fade out saved notification
     $('.notif-alert').delay(4000).fadeOut();
 
-    //MODAL FUNCTIONS
-    //NEW ITEM modal
-    $(document).on("click", ".new-item-btn", function(){
-        //config modal for new
-        $(".edit-new-title").text("Create New "+listnoun);
-        $(".submit-new-edit").text("Create "+listnoun);
-
-        //send info on item to be created
-        var itemcount = $(".panel").length;
-        var newItemPos = itemcount + 1;
-        $('input[name="new-item-pos"]').val(newItemPos);
-
-        //clear out inputs
-        $('input[name="item-title-input"]').val("");
-        $('textarea#item-desc-input').text("");
-        $('input[name="edit-item-uid"]').val("");
-    });
-
-    //EDIT PAGE modal
-    $(document).on("click", ".edit-item-btn", function(){
-        //config modal for editing
-        $(".edit-new-title").text("Edit "+listnoun);
-        $(".submit-new-edit").text("Save Changes");
-
-        //send info on page to be edited
-        var editUID = $(this).closest(".panel").data('uid');
-        $('input[name="edit-item-uid"]').val(editUID);
-        var editTitle = $(this).parent().parent().text();
-        var editDesc = $(this).parent().parent().parent().siblings(".panel-body").text();
-        var editTitle = $.trim(editTitle);
-        var editDesc = $.trim(editDesc);
-        $('input[name="item-title-input"]').val(editTitle);
-        $('textarea#item-desc-input').text(editDesc);
-
-        //clear any left overs from abandoned new item modals
-        $('input[name="new-item-pos"]').val("");
-    });
-
-    //submit for NEW or EDIT
-    $(".submit-new-edit").click(function(){
-        document.getElementById("new-edit-item-form").submit();
-    });
-
-    //DELETE PAGE modal
-    $(document).on("click", ".delete-item-btn", function(){
-        var deleteUID = $(this).closest(".panel").data('uid');
-        $('input[name="delete-item-uid"]').val(deleteUID);
-        var deleteTitle = $(this).parent().parent().text();
-        $(".delete-title").text(deleteTitle);
-    });
-
-    //submit for DELETE
-    $(".submit-delete").click(function(){
-        document.getElementById("delete-item-form").submit();
-    });
+    //MODALS
 
     //autofocus modal inputs
     $('.modal').on('shown.bs.modal', function() {
         $(this).find('input:first').focus();
     });
 
-
-    //toggle editors preview container
-    $(".preview-header").click(function() {
-        if($('.preview-body').hasClass('hidden')){
-            $(".preview-body").hide().removeClass("hidden").slideDown();
-            $(".preview-header .glyphicon-chevron-down").addClass("hidden");
-            $(".preview-header .glyphicon-chevron-up").removeClass("hidden");
-        }
-        else{
-            $(".preview-body").slideUp(function(){
-                $(".preview-body").addClass("hidden");
-                $(".preview-body").show();
-            });
-            $(".preview-header .glyphicon-chevron-down").removeClass("hidden");
-            $(".preview-header .glyphicon-chevron-up").addClass("hidden");
-        }
-    });
-
-
-
-    //ALLOWANCE CODE
+//ALLOWANCE CODE
 
     //click to call js submit for single/generic form
     //does this work with classes?
     $(".js-submit-btn").click(function() {
         submitJSForm();
-    });
-
-    //click to call js submit delete form
-    $("#delete-budget-submit-btn").click(function(){
-        if(($('#delete-you-sure-1').is(':checked'))&&($('#delete-you-sure-2').is(':checked'))&&($('#delete-you-sure-3').is(':checked'))){
-            submitJSForm("budget-delete-form");
-        }
-        else{
-            $("#must-check-to-delete").removeClass("hidden");
-        }
-    });
-
-    //check state of checks
-    $('.delete-you-sure').change(function(){
-        if(($('#delete-you-sure-1').is(':checked'))&&($('#delete-you-sure-2').is(':checked'))&&($('#delete-you-sure-3').is(':checked'))){
-            $("#must-check-to-delete").addClass("hidden");
-            $("#delete-budget-submit-btn").removeClass("disabled-fade");
-        }
-        else{
-            //nothing
-        }
     });
 
     //show, hide auto-refill options
@@ -170,6 +75,34 @@ $(function() {
         currentBalance = "$"+((currentBalance/100).toFixed(2));
         $(".say-delete-budget-name").text(deleteName);
         $(".say-delete-current-balance").text(currentBalance);
+    });
+
+    //click to call js submit delete form
+    $("#delete-budget-submit-btn").click(function(){
+        if(($('#delete-you-sure-1').is(':checked'))&&($('#delete-you-sure-2').is(':checked'))&&($('#delete-you-sure-3').is(':checked'))){
+            submitJSForm("budget-delete-form");
+        }
+        else{
+            $("#must-check-to-delete").addClass("text-danger bold");
+            $("#must-check-to-delete").removeClass("text-success");
+            $("#must-check-to-delete").text("You gotta check these boxes if you wanna delete!!!");
+            $("#must-check-to-delete").removeClass("hidden");
+        }
+    });
+
+    //check state of checks
+    $('.delete-you-sure').change(function(){
+        if(($('#delete-you-sure-1').is(':checked'))&&($('#delete-you-sure-2').is(':checked'))&&($('#delete-you-sure-3').is(':checked'))){
+            $("#must-check-to-delete").addClass("text-success bold");
+            $("#must-check-to-delete").removeClass("text-danger");
+            $("#must-check-to-delete").removeClass("hidden");
+            $("#must-check-to-delete").text("Alright, now all you have to do is hit that button!");
+            $("#delete-budget-submit-btn").removeClass("disabled-fade");
+        }
+        else{
+            $("#must-check-to-delete").removeClass("text-success");
+            $("#delete-budget-submit-btn").addClass("disabled-fade");
+        }
     });
 })
 
