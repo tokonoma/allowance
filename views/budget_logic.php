@@ -66,6 +66,18 @@
                     exit();
 
                     break;
+                case 'share':
+                    //get share email input
+
+                    //add to shares db
+
+                    //don't forget to get shares on dashboard
+
+                    $_SESSION['sessionalert'] = "generalsuccess";
+                    header("Location: ".$_SERVER['REQUEST_URI']."#budget".$budgetuid);
+                    exit();
+
+                    break;
             }
             //$statusMessage = "Error saving item";
             //$statusType = "danger";

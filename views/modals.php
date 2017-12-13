@@ -162,62 +162,49 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Delete this Budget?</h4>
+                <h4 class="modal-title">Share this Budget?</h4>
             </div>
-            <div class="modal-body">
-                <p>Are you sure you want to <strong>DELETE</strong> this budget?</p>
-                <p>
-                    <strong><span class="say-delete-budget-name"></span></strong>: 
-                    <span class="say-delete-current-balance"></span>
-                </p>
-                <p>Please check the following boxes to delete this budget</p>
-
-                <p id="must-check-to-delete" class="hidden form-hidden">Gotta check those checkboxes!!!</p>
-                
-                <form id="budget-delete-form" method="POST" action="<?php echo htmlentities($_SERVER['REQUEST_URI']); ?>">
-                    <div class="checkbox">
-                        <label>
-                            <input id="delete-you-sure-1" type="checkbox" name="delete-you-sure-1" value="1" class="delete-you-sure"> I want to delete this budget!
-                        </label>
+            <form id="budget-delete-form" method="POST" action="<?php echo htmlentities($_SERVER['REQUEST_URI']); ?>">
+                <div class="modal-body">
+                    <p>Aye yo <?php echo $_SESSION['firstname'] ?>, you tryin' to share this budget?</p>
+                    <p>
+                        <strong><span class="say-delete-budget-name"></span></strong>: 
+                        <span class="say-delete-current-balance"></span>
+                    </p>
+                    <p>Enter the email address of the user with whom you would like to share. And try not to faint at how grammatically accurate that sentence was. If the user has an account, this budget will appear on their dashboard.</p>
+                    <div class="form-group">
+                        <label for="deduction-desc-input">Description (optional)</label>
+                        <input type="email" class="form-control" id="share-user-input" name="share-user-input" placeholder="Please enter a users email address" autocomplete='off'>
                     </div>
-                   <div class="checkbox">
-                        <label>
-                            <input id="delete-you-sure-2" type="checkbox" name="delete-you-sure-2" value="1" class="delete-you-sure"> I want to destroy all data concerning this budget!
-                        </label>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <input id="delete-you-sure-3" type="checkbox" name="delete-you-sure-3" value="1" class="delete-you-sure"> I want to never see this budget again!
-                        </label>
-                    </div>
-                    <input type="hidden" name="budgetaction" value="delete">
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" id="delete-budget-submit-btn" name="delete-budget-submit-btn" class="btn btn-danger disabled-fade">Delete Forever</button>
-            </div>
+                    <input type="hidden" name="budgetaction" value="share">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="submit" name="submit" class="btn btn-success">Share!</button>
+                </div>
+            </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
 <!-- EDIT BUDGET MODAL -->
+<?php if(isset($budgetuid)): ?>
 <div class="modal fade form-modal" id="edit-budget-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form id="new-budget-form" method="POST" action="<?php echo htmlentities($_SERVER['REQUEST_URI']); ?>">
+            <form id="edit-budget-form" method="POST" action="<?php echo htmlentities($_SERVER['REQUEST_URI']); ?>">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Edit Budget</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Enter budget details</p>
+                    <p>Edit budget details</p>
                     <div class="form-group">
                         <label for="budget-name-input">Budget Name</label>
                         <input type="text" class="form-control" id="budget-name-input" name="budget-name-input" placeholder="Budget Title" autocomplete='off' autofocus>
                     </div>
                     <div class="form-group">
-                        <label for="budget-balance-input">Initial Balance</label>
+                        <label for="budget-balance-input">Current Balance</label>
                         <div class="input-group">
                             <span class="input-group-addon">$</span>
                             <input type="number" class="form-control" id="budget-balance-input" name="budget-balance-input" placeholder="0.00" autocomplete='off' step="0.01">
@@ -274,6 +261,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<?php endif; ?>
 
 
 
