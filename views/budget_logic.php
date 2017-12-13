@@ -36,7 +36,6 @@
                     $update->execute();
 
                     //add transaction to history table
-                    $input_deductamount = $input_deductamount;
                     $insert = $db->prepare("INSERT INTO $budgettablename (name, budgetuid, balance, withdraw, deposit, transactiondate, user) VALUES (?, ?, ?, ?, ?, ?, ?)");
                     $insertarray = array($input_deductdesc, $budgetuid, $newbalance, $input_deductamount, 0, $currentdate, $dashboarduser);
                     $insert->execute($insertarray);
@@ -54,9 +53,11 @@
 
                     break;
                 case 'delete':
-                    //delete item and associated items
                     //delete budget from budgets table
                     $db->exec("DELETE FROM budgets WHERE uid = $budgetuid");
+
+                    //delete any shares this budget may have had
+                    $db->exec("DELETE FROM budgets WHERE budgetuid = $budgetuid");
 
                     //delete budgets table
                     $db->exec("DROP TABLE $budgettablename");
@@ -68,6 +69,17 @@
                     break;
                 case 'share':
                     //get share email input
+                    $input_shareduser = $_POST['share-user-input'];
+
+                    //add to shares
+                    $update = $db->prepare("UPDATE budgets SET shares = shares + 1 WHERE uid = $budgetuid");
+                    $update->execute();
+
+                    //add transaction to history table
+                    $input_deductamount = $input_deductamount;
+                    $insert = $db->prepare("INSERT INTO shares (budgetuid, owner, shareduser) VALUES (?, ?, ?)");
+                    $insertarray = array($budgetuid, $budgetuid, $newbalance, $input_deductamount, 0, $currentdate, $dashboarduser);
+                    $insert->execute($insertarray);
 
                     //add to shares db
 

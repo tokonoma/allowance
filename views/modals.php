@@ -117,7 +117,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Delete this Budget?</h4>
+                <h4 class="modal-title">Delete this Budget</h4>
             </div>
             <div class="modal-body">
                 <p>Are you sure you want to <strong>DELETE</strong> this budget?</p>
@@ -157,21 +157,26 @@
 </div><!-- /.modal -->
 
 <!-- BUDGET SHARE MODAL -->
+<?php if(isset($budgetuid)): ?>
 <div class="modal fade form-modal" id="budget-share-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Share this Budget?</h4>
+                <h4 class="modal-title">Share this Budget</h4>
             </div>
             <form id="budget-delete-form" method="POST" action="<?php echo htmlentities($_SERVER['REQUEST_URI']); ?>">
                 <div class="modal-body">
                     <p>Aye yo <?php echo $_SESSION['firstname'] ?>, you tryin' to share this budget?</p>
                     <p>
-                        <strong><span class="say-delete-budget-name"></span></strong>: 
-                        <span class="say-delete-current-balance"></span>
+                        <strong><?php echo $thisbudgetname; ?></strong>: <?php echo $thisprintbalance; ?>
                     </p>
-                    <p>Enter the email address of the user with whom you would like to share. And try not to faint at how grammatically accurate that sentence was. If the user has an account, this budget will appear on their dashboard.</p>
+                    <p>
+                        Enter the email address of the user with whom you would like to share. And try not to faint at how grammatically accurate that sentence was.
+                    </p>
+                    <p>
+                        If the user has an account, this budget will appear on their dashboard.
+                    </p>
                     <div class="form-group">
                         <label for="deduction-desc-input">Description (optional)</label>
                         <input type="email" class="form-control" id="share-user-input" name="share-user-input" placeholder="Please enter a users email address" autocomplete='off'>
@@ -186,6 +191,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<?php endif; ?>
 
 <!-- EDIT BUDGET MODAL -->
 <?php if(isset($budgetuid)): ?>

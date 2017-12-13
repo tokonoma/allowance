@@ -109,7 +109,7 @@ try{
     //$db->exec("DROP TABLE tablename");
 
     //row delete tool
-    //$db->exec("DELETE FROM budget6 WHERE user = 'System'");
+    //$db->exec("DELETE FROM shares WHERE uid = 1");
 
 
     //queries
