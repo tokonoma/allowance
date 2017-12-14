@@ -12,22 +12,22 @@
                     $thisbudgetuid = $budget['name'];
                     $thisbudgetname = $budget['name'];
                     $thisbudgetbalance = $budget['balance'];
-                    $thisprintbalance = "$".number_format(($thisbudgetbalance/100), 2, '.', ',');
+                    $thisprintbalance = number_format(($thisbudgetbalance/100), 2, '.', ',');
                     $thisautorefill = $budget['autorefill'];
                     $thisrefillamount = $budget['refillamount'];
-                    $thisprintrefillamount = "$".number_format(($thisrefillamount/100), 2, '.', ',');
+                    $thisprintrefillamount = number_format(($thisrefillamount/100), 2, '.', ',');
                     $thisrefillfreq = $budget['refillfrequency'];
                     $thisbudgetshares = $budget['shares'];
                 ?>
                 <li class="budget-table budget-detail table-parent" id="budget<?php echo $thisbudgetuid?>">
-                    <a href="<?php echo $baseurl.'?budget='.$thisbudgetuid?>" class="budget-data table-cell">
+                    <div class="budget-data table-cell">
                         <div class="budget-data-padding">
                             <div class="budget-details table-cell">
                                 <div class="budget-name">
                                     <?php echo $thisbudgetname; ?>
                                 </div>
                                 <div class="budget-balance tiny-balance">
-                                    <?php echo $thisprintbalance?>
+                                    <?php echo "$".$thisprintbalance?>
                                 </div>
                                 <div class="budget-properties">
                                     <?php if($thisautorefill == 1): ?>
@@ -35,13 +35,13 @@
                                             <i class="fa fa-repeat" aria-hidden="true"></i>
                                         </div><div class="half-badge half-badge-right refill-badge">
                                             <?php
-                                                echo $thisprintrefillamount."/".$thisrefillfreq;
+                                                echo "$".$thisprintrefillamount."/".$thisrefillfreq;
                                             ?>
                                         </div>
                                     <?php else: ?>
                                         <span class="badge initial-badge">
                                             <?php
-                                                echo "Started with ".$thisprintrefillamount;
+                                                echo "Started with "."$".$thisprintrefillamount;
                                             ?>
                                         </span>
                                     <?php endif; ?>
@@ -53,7 +53,7 @@
                                 </div>
                             </div>
                             <div class="budget-balance table-cell table-cell-vcenter">
-                                <?php echo $thisprintbalance?>
+                                <?php echo "$".$thisprintbalance?>
                             </div>
                         </div>
                         <div class="balance-health-bar-container">
@@ -75,7 +75,7 @@
                                 <div class="balance-health-bar"></div>
                             <?php endif; ?>
                         </div>
-                    </a>
+                    </div>
                     <div class="budget-spacing-column table-cell"></div>
                     <div class="budget-deduct-btn-cell table-cell table-cell-vcenter text-center">
                         <button type="button" class="btn deduct-btn" data-toggle="modal" data-target="#budget-deduct-modal" data-uid="<?php echo $thisbudgetuid?>" data-name="<?php echo $thisbudgetname?>" data-balance="<?php echo $thisbudgetbalance?>">

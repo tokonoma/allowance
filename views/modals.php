@@ -172,13 +172,13 @@
                         <strong><?php echo $thisbudgetname; ?></strong>: <?php echo $thisprintbalance; ?>
                     </p>
                     <p>
-                        Enter the email address of the user with whom you would like to share. And try not to faint at how grammatically accurate that sentence was.
+                        Enter the email address of the user with whom you would like to share. And try not to faint at how grammatically correct that sentence was...
                     </p>
                     <p>
                         If the user has an account, this budget will appear on their dashboard.
                     </p>
                     <div class="form-group">
-                        <label for="deduction-desc-input">Description (optional)</label>
+                        <label for="share-user-input">Share With</label>
                         <input type="email" class="form-control" id="share-user-input" name="share-user-input" placeholder="Please enter a users email address" autocomplete='off'>
                     </div>
                     <input type="hidden" name="budgetaction" value="share">
@@ -207,13 +207,13 @@
                     <p>Edit budget details</p>
                     <div class="form-group">
                         <label for="budget-name-input">Budget Name</label>
-                        <input type="text" class="form-control" id="budget-name-input" name="budget-name-input" placeholder="Budget Title" autocomplete='off' autofocus>
+                        <input type="text" class="form-control" id="budget-name-input" name="budget-name-input" placeholder="Budget Title" autocomplete='off' value="<?php echo $thisbudgetname ?>">
                     </div>
                     <div class="form-group">
                         <label for="budget-balance-input">Current Balance</label>
                         <div class="input-group">
                             <span class="input-group-addon">$</span>
-                            <input type="number" class="form-control" id="budget-balance-input" name="budget-balance-input" placeholder="0.00" autocomplete='off' step="0.01">
+                            <input type="number" class="form-control" id="budget-balance-input" name="budget-balance-input" placeholder="0.00" autocomplete='off' step="0.01" value="<?php echo $thisprintbalance ?>">
                         </div>
                     </div>
                     <div class="checkbox">

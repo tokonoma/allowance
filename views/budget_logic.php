@@ -42,7 +42,7 @@
 
                     //finish and redirect with success message
                     $_SESSION['sessionalert'] = "generalsuccess";
-                    header("Location: ".$_SERVER['REQUEST_URI']."#budget".$budgetuid);
+                    header("Location: ".$_SERVER['REQUEST_URI']);
                     exit();
 
                     break;
@@ -75,18 +75,15 @@
                     $update = $db->prepare("UPDATE budgets SET shares = shares + 1 WHERE uid = $budgetuid");
                     $update->execute();
 
-                    //add transaction to history table
-                    $input_deductamount = $input_deductamount;
+                    //add share details to share table
                     $insert = $db->prepare("INSERT INTO shares (budgetuid, owner, shareduser) VALUES (?, ?, ?)");
-                    $insertarray = array($budgetuid, $budgetuid, $newbalance, $input_deductamount, 0, $currentdate, $dashboarduser);
+                    $insertarray = array($budgetuid, $dashboarduser, $input_shareduser);
                     $insert->execute($insertarray);
-
-                    //add to shares db
 
                     //don't forget to get shares on dashboard
 
                     $_SESSION['sessionalert'] = "generalsuccess";
-                    header("Location: ".$_SERVER['REQUEST_URI']."#budget".$budgetuid);
+                    header("Location: ".$_SERVER['REQUEST_URI']);
                     exit();
 
                     break;
@@ -98,32 +95,6 @@
             exit();
 
         }
-
-        //delete item
-        /*
-        if(isset($_POST['delete-item-uid'])){
-            
-            //always delete the central item
-            $deleteUID = $_POST['delete-item-uid'];
-            $db->exec("DELETE FROM $dbtable WHERE uid = $deleteUID;");
-
-            if(isset($_GET['pid']) && !isset($_GET['sid'])){
-                // PID with NO SID means it's a section
-                $db->exec("DELETE FROM content WHERE sid = $deleteUID;");
-            }
-            elseif(!isset($_GET['pid']) && !isset($_GET['sid'])){
-                // NO PID with NO SID means it's a page
-                $db->exec("DELETE FROM content WHERE pid = $deleteUID;");
-                $db->exec("DELETE FROM sections WHERE pid = $deleteUID;");
-            }
-
-            $_SESSION['sessionalert'] = "itemdeleted";
-
-            header("Location: ".$_SERVER['REQUEST_URI']);
-            exit();
-
-        }
-        */
 
         //$budgets = $db->query("SELECT * FROM budgets WHERE owner = '$_SESSION['email']' AND uid = $budgetuid ORDER BY uid ASC");
         $thisbudget = $db->query("SELECT * FROM budgets WHERE owner = '$dashboarduser' AND uid = $budgetuid");
