@@ -37,11 +37,11 @@ $(function() {
 
     //if weekly or monthly, form show/hide
     $('#refill-frequency-input').change(function(){
-        if($(this).val() === 'Weekly'){
+        if($(this).val() == 'weekly'){
             $("#refill-weekly-group").removeClass("hidden");
             $("#refill-monthly-group").addClass("hidden");
         }
-        else if($(this).val() === 'Monthly'){
+        else if($(this).val() == 'monthly'){
             $("#refill-weekly-group").addClass("hidden");
             $("#refill-monthly-group").removeClass("hidden");
         }
@@ -103,6 +103,14 @@ $(function() {
             $("#must-check-to-delete").removeClass("text-success");
             $("#delete-budget-submit-btn").addClass("disabled-fade");
         }
+    });
+
+    //populate unshare modal
+    $(document).on("click", ".unshare-btn", function(){
+        var unshareuser = $(this).data('shareduser');
+        var shareuid = $(this).data('uid');
+        $(".say-unshare-user").text(unshareuser);
+        $('input[name="share-uid"]').val(shareuid);
     });
 
 })

@@ -17,8 +17,13 @@
                     $thisrefillamount = $budget['refillamount'];
                     $thisprintrefillamount = number_format(($thisrefillamount/100), 2, '.', ',');
                     $thisrefillfreq = $budget['refillfrequency'];
+                    $thisrefillon = $budget['refillon'];
+                    $thisnextrefill = $budget['nextrefill'];
                     $thisbudgetshares = $budget['shares'];
                 ?>
+                <?php if($thisautorefill == 1): ?>
+                <h6>This budget will automatically refill on <strong><?php echo date("l\, F jS Y", strtotime($thisnextrefill)); ?></strong></h6>
+                <?php endif; ?>
                 <li class="budget-table budget-detail table-parent" id="budget<?php echo $thisbudgetuid?>">
                     <div class="budget-data table-cell">
                         <div class="budget-data-padding">
@@ -96,16 +101,42 @@
         <div class="col-md-10 col-md-offset-1 col-sm-12">
             <button type="button" id="edit-me-btn" class="btn btn-default btn-sm" data-toggle="modal" data-target="#edit-budget-modal"><i class="fa fa-edit" aria-hidden="true"></i> Edit</button>
             <button type="button" id="share-me-btn" class="btn btn-default btn-sm" data-toggle="modal" data-target="#budget-share-modal"><i class="fa fa-user-plus" aria-hidden="true"></i> Share</button>
-            <button type="button" id="delete-me-btn" class="btn btn-default btn-sm" data-toggle="modal" data-target="#budget-delete-modal" data-name="<?php echo $thisbudgetname?>" data-balance="<?php echo $thisbudgetbalance?>"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>
+            <?php if($origin != "shared"): ?>
+                <button type="button" id="delete-me-btn" class="btn btn-default btn-sm" data-toggle="modal" data-target="#budget-delete-modal" data-name="<?php echo $thisbudgetname?>" data-balance="<?php echo $thisbudgetbalance?>">
+                    <i class="fa fa-trash" aria-hidden="true"></i> Delete
+                </button>
+            <?php endif; ?>
         </div>
     </div>
 </div>
+
+
+<?php if(($numberofshares > 0) && ($origin != "shared")): ?>
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 col-sm-12">
+            <h3>Shares</h3>
+            <p>This budget has been shared with the following users</p>
+            <?php foreach($budgetshares as $budgetshare): ?>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <?php echo $budgetshare['shareduser']?>
+                    <button type="button" class="btn btn-default btn-xs pull-right unshare-btn" data-toggle="modal" data-target="#budget-unshare-modal" data-uid="<?php echo $budgetshare['uid']?>" data-shareduser="<?php echo $budgetshare['shareduser']?>">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+            <?php endforeach; ?>
+        </div> <!-- /col -->
+    </div> <!-- /row -->
+</div> <!-- /container -->
+<?php endif; ?>
 
 <div class="container">
     <div class="row">
         <div class="col-md-10 col-md-offset-1 col-sm-12">
 
-            <h4>Budget History</h4>
+            <h3>Budget History</h3>
             <div class="panel panel-default">
                 <!-- Table -->
                 <table class="table table-striped">

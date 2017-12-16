@@ -91,8 +91,8 @@ try{
     // $update->bindParam(':bodyinput', $bodyinput, PDO::PARAM_STR);
     // $update->execute();
 
-    // $input_number = 20171210;
-    // $update = $db->prepare("UPDATE budgets SET nextrefill = :numberbind WHERE uid = 6");
+    // $input_number = 0;
+    // $update = $db->prepare("UPDATE budgets SET shares = :numberbind WHERE uid = 5");
     // $update->bindParam(':numberbind', $input_number, PDO::PARAM_STR);
     // $update->execute();
 
@@ -138,7 +138,7 @@ catch(PDOException $e){
 
 <?php include('views/header.php'); ?>
 
-<div class="container">
+<div class="container utility">
     <div class="row">
         <div class="col-xs-12" style="margin-top: 24px;">
 

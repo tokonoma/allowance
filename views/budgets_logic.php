@@ -35,15 +35,11 @@
                         $input_refillamount = $input_balance;
                     }
                     $input_refillfreq = (!empty($_POST['budget-refill-input']) ? $_POST['refill-frequency-input'] : "none");
-                    $input_refillfreq = strtolower($input_refillfreq);
 
                     //calculate next refill
                     if($input_refillfreq == "weekly"){
                         $input_refillon = $_POST['refill-weekly-input'];
                         $input_nextrefill = findRefillDate($currenttimestamp, $input_refillfreq, $input_refillon);
-
-                        //all lower for consistent storing
-                        $input_refillon = strtolower($input_refillon);
                     }
                     elseif($input_refillfreq == "monthly"){
                         $input_refillon = $_POST['refill-monthly-input'];
@@ -149,47 +145,58 @@
         */
 
         //generate content from query db
-        $budgetupdates = $db->query("SELECT * FROM budgets WHERE owner = '$dashboarduser' ORDER BY uid ASC");
+        //$budgetupdates = $db->query("SELECT * FROM budgets WHERE owner = '$dashboarduser' ORDER BY uid ASC");
+        //for now lets update ALL budgets on load... until I can find a more focused technique
+        $budgetupdates = $db->query("SELECT * FROM budgets WHERE autorefill = 1");
 
         //update any auto refills first
         foreach($budgetupdates as $budget){
 
-            $updateautorefill = $budget['autorefill'];
+            $updatebudgetuid = $budget['uid'];
+            $updatebudgetbalance = $budget['balance'];
+            $updatenextrefill = $budget['nextrefill'];
+            $updatefreq = $budget['refillfrequency'];
+            $updaterefillon = $budget['refillon'];
+            $updateamount = $budget['refillamount'];
 
-            if($updateautorefill == 1){
-                $updatebudgetuid = $budget['uid'];
-                $updatebudgetbalance = $budget['balance'];
-                $updatenextrefill = $budget['nextrefill'];
-                $updatefreq = $budget['refillfrequency'];
-                $updaterefillon = $budget['refillon'];
-                $updateamount = $budget['refillamount'];
+            while($updatenextrefill <= $currentdate){
+                $nextrefillts = strtotime($updatenextrefill); 
+                $updatebudgetbalance += $updateamount;
+                //save original nextrefill for transaction date
+                $prevnextrefill = $updatenextrefill;
+                $updatenextrefill = findRefillDate($nextrefillts, $updatefreq, $updaterefillon);
+                
+                //add new balance to table
+                $updatebudgets = $db->prepare("UPDATE budgets SET balance = :updatebalancebind, nextrefill = :updatenextrefillbind WHERE uid = $updatebudgetuid");
+                $updatebudgets->bindParam(':updatebalancebind', $updatebudgetbalance, PDO::PARAM_STR);
+                $updatebudgets->bindParam(':updatenextrefillbind', $updatenextrefill, PDO::PARAM_STR);
+                $updatebudgets->execute();
 
-                while($updatenextrefill <= $currentdate){
-                    $nextrefillts = strtotime($updatenextrefill); 
-                    $updatebudgetbalance += $updateamount;
-                    //save original nextrefill for transaction date
-                    $prevnextrefill = $updatenextrefill;
-                    $updatenextrefill = findRefillDate($nextrefillts, $updatefreq, $updaterefillon);
-                    
-                    //add new balance to table
-                    $updatebudgets = $db->prepare("UPDATE budgets SET balance = :updatebalancebind, nextrefill = :updatenextrefillbind WHERE uid = $updatebudgetuid");
-                    $updatebudgets->bindParam(':updatebalancebind', $updatebudgetbalance, PDO::PARAM_STR);
-                    $updatebudgets->bindParam(':updatenextrefillbind', $updatenextrefill, PDO::PARAM_STR);
-                    $updatebudgets->execute();
-
-                    //add new transaction to budget-specific table
-                    $updatebudgettablename = "budget".$updatebudgetuid;
-                    $updaterefilldesc = "Auto Refill";
-                    $systemuser = "System";
-                    $insertupdate = $db->prepare("INSERT INTO $updatebudgettablename (name, budgetuid, balance, withdraw, deposit transactiondate, user) VALUES (?, ?, ?, ?, ?, ?, ?)");
-                    $insertarray = array($updaterefilldesc, $updatebudgetuid, $updatebudgetbalance, 0, $updateamount, $prevnextrefill, $systemuser);
-                    $insertupdate->execute($insertarray);
-                }
+                //add new transaction to budget-specific table
+                $updatebudgettablename = "budget".$updatebudgetuid;
+                $updaterefilldesc = "Auto Refill";
+                $systemuser = "System";
+                $insertupdate = $db->prepare("INSERT INTO $updatebudgettablename (name, budgetuid, balance, withdraw, deposit, transactiondate, user) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                $insertarray = array($updaterefilldesc, $updatebudgetuid, $updatebudgetbalance, 0, $updateamount, $prevnextrefill, $systemuser);
+                $insertupdate->execute($insertarray);
             }
         }
 
         //generate budgets for list
         $budgets = $db->query("SELECT * FROM budgets WHERE owner = '$dashboarduser' ORDER BY uid ASC");
+
+        //$numberofshares = $db->query("SELECT COUNT(*) FROM shares WHERE shareduser = '$dashboarduser'")->fetchColumn();
+        $shareduids = $db->query("SELECT budgetuid FROM shares WHERE shareduser = '$dashboarduser'");
+        $shareduidarray = array();
+        foreach($shareduids as $shareduid){
+            $shareduidarray[] = $shareduid['budgetuid'];
+        }
+        $shareduidarray = implode(",", $shareduidarray);
+        $sharedbudgets = $db->query("SELECT * FROM budgets WHERE uid IN ($shareduidarray)");
+
+        // $in = join(',', array_fill(0, count($shareduidarray), '?'));
+        // $sharedbudgets = $db->prepare();
+        // $statement->execute($ids);
 
         //generate shared budgets list
         //$sharedbudgets = $db->query("SELECT * FROM shares WHERE shareduser = '$dashboarduser' ORDER BY uid ASC");

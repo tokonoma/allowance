@@ -7,6 +7,15 @@ html, body{
 body{
 	font-family: 'Open Sans', arial, sans-serif;
 	color: #303D44;
+	font-size: 16px;
+}
+
+p{
+	font-size: 16px;
+}
+
+.container.utility{
+	font-size: 14px;
 }
 
 .height100{
@@ -78,6 +87,14 @@ input:-webkit-autofill{
 
 .bold{
 	font-weight: 700;
+}
+
+
+
+/*MODALS*/
+.modal-body h1, .modal-body h2, .modal-body h3, .modal-body h4{
+	margin-top: 12px;
+	margin-bottom: 28px;
 }
 
 
