@@ -11,6 +11,8 @@ try{
     $input_fname = $_POST['newuserfirstname'];
     $input_lname = $_POST['newuserlastname'];
     $input_admin = $_POST['newuseradmin'];
+    //factor this in?
+    $stayloggedin = 0;
 
     $insert = $db->prepare("INSERT INTO users (email, password, fname, lname, admin) VALUES (?, ?, ?, ?, ?)");
     $insertarray = array($input_email, $password_store, $input_fname, $input_lname, $input_admin);

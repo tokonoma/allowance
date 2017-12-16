@@ -35,7 +35,7 @@ if(isset($_POST['action'])){
                     $email = $user['email'];
                     $password = $user['password'];
                     $firstname = $user['fname'];
-                    $admin = $user['admin'];
+                    $stayon = $user['stayloggedin'];
                 }
 
                 $checkpass = password_verify($input_password, $password);
@@ -43,10 +43,10 @@ if(isset($_POST['action'])){
                 if(!empty($checkpass)){
                     $_SESSION['firstname'] = $firstname;
                     $_SESSION['email'] = $email;
+                    $_SESSION['stayon'] = $stayon;
 
-                    $_SESSION['expire'] = time()+60*360;
-                    if($admin == true){
-                        $_SESSION['admin'] = true;
+                    if($stayon == 0){
+                        $_SESSION['expire'] = time()+60*360;
                     }
                     header("Location: ".$baseurl);
                     exit();
@@ -87,7 +87,7 @@ if(isset($_POST['action'])){
 }
 
 //session expiration
-if(isset($_SESSION['expire']) && time() > $_SESSION['expire']){
+if(isset($_SESSION['expire']) && time() > $_SESSION['expire'] && $_SESSION['stayon'] == 0 ){
     session_unset();
     session_destroy();
     $statusMessage = "Your session has expired, please login again";

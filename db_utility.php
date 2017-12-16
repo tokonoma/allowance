@@ -97,12 +97,12 @@ try{
     // $update->execute();
 
     //add a column
-    //$db->exec("ALTER TABLE budgets ADD COLUMN refillon TEXT");
+    //$db->exec("ALTER TABLE users ADD COLUMN stayloggedin BOOLEAN");
 
     //then...
-    // $input_new_column_value = Friday;
-    // $update = $db->prepare("UPDATE budgets SET refillon = :shares WHERE uid = 2");
-    // $update->bindParam(':shares', $input_new_column_value, PDO::PARAM_STR);
+    // $input_new_column_value = 0;
+    // $update = $db->prepare("UPDATE users SET stayloggedin = :newcolbind WHERE lname = 'Reeder'");
+    // $update->bindParam(':newcolbind', $input_new_column_value, PDO::PARAM_STR);
     // $update->execute();
 
     //table delete tool

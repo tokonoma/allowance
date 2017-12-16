@@ -149,6 +149,10 @@ input:-webkit-autofill{
 	color: #303D44;
 }
 
+.allowance .navbar-default{
+	background: transparent;
+}
+
 
 
 /*LOG IN*/

@@ -27,6 +27,7 @@ try{
         $input_email = $_POST['user-email'];
         $input_fname = $_POST['first-name'];
         $input_lname = $_POST['last-name'];
+        $input_stayloggedin = (!empty($_POST['stay-logged-in']) ? $_POST['stay-logged-in'] : 0);
 
         $uniquecheck = $db->prepare("SELECT email from users where email = '$input_email'");
         $uniquecheck->execute();
@@ -60,14 +61,16 @@ try{
             }
 
             //if the email is the same or it's new AND unique, go ahead and save it
-            $update = $db->prepare("UPDATE users SET email = :email, fname = :fname, lname = :lname WHERE email = '$userid'");
+            $update = $db->prepare("UPDATE users SET email = :email, fname = :fname, lname = :lname, stayloggedin = :stayloggedin WHERE email = '$userid'");
             $update->bindParam(':email', $input_email, PDO::PARAM_STR);
-            $update->bindParam(':fname', $_POST['first-name'], PDO::PARAM_STR);
-            $update->bindParam(':lname', $_POST['last-name'], PDO::PARAM_STR);
+            $update->bindParam(':fname', $input_fname, PDO::PARAM_STR);
+            $update->bindParam(':lname', $input_lname, PDO::PARAM_STR);
+            $update->bindParam(':stayloggedin', $input_stayloggedin, PDO::PARAM_STR);
             $update->execute();
 
             $_SESSION['firstname'] = $input_fname;
             $_SESSION['email'] = $input_email;
+            $_SESSION['stayon'] = $input_stayloggedin;
             header("Location: ".$_SERVER['REQUEST_URI']);
             exit();
         }

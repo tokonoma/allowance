@@ -40,6 +40,16 @@
                         <input type="text" class="form-control" id="last-name" name="last-name" placeholder="title" autocomplete='off' value="<?php echo $user['lname']; ?>">
                     </div>
                     <hr>
+                    <div class="checkbox">
+                        <label>
+                            <?php if($user['stayloggedin'] == 1): ?>
+                            <input id="stay-logged-in" type="checkbox" name="stay-logged-in" value="1" checked> Stay Logged-In?
+                            <?php else: ?>
+                            <input id="stay-logged-in" type="checkbox" name="stay-logged-in" value="1"> Stay Logged-In?
+                            <?php endif; ?>
+                        </label>
+                    </div>
+                    <hr>
                     <div class="form-group">
                         <label for="password-one">Change Password</label>
                         <input type="password" class="form-control" id="password-one" name="password-one" placeholder="Enter new password" autocomplete='off' value="">
