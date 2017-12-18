@@ -25,6 +25,8 @@
     <!--icons-->
     <link rel="apple-touch-icon" href="assets/images/allowance-icon.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="apple-touch-startup-image" href="assets/images/allowance-launch.png.png">
     <!--<link href="/favicon.ico" rel="icon">-->
 </head>
 
