@@ -25,6 +25,5 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <script src="assets/js/sortable.js"></script>
 <script src="assets/js/allowance.js"></script>
-<script src="assets/js/links.js"></script>
 
 <script src="https://maxcdn.bootstrapcdn.com/js/ie10-viewport-bug-workaround.js"></script>
