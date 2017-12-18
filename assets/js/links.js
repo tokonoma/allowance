@@ -1,18 +1,18 @@
-// Listen for ALL links at the top level of the document. For
-// testing purposes, we're not going to worry about LOCAL vs.
-// EXTERNAL links - we'll just demonstrate the feature.
-$( document ).on(
-    "click",
-    "a",
-    function( event ){
+$(function() {
 
-        // Stop the default behavior of the browser, which
-        // is to change the URL of the page.
-        event.preventDefault();
-
-        // Manually change the location of the page to stay in
-        // "Standalone" mode and change the URL at the same time.
-        location.href = $( event.target ).attr( "href" );
-
+    if(("standalone" in window.navigator) && window.navigator.standalone){
+        var noddy, remotes = false;
+        document.addEventListener('click', function(event){
+            noddy = event.target;
+            while(noddy.nodeName !== "A" && noddy.nodeName !== "HTML"){
+                noddy = noddy.parentNode;
+            }
+        
+            if('href' in noddy && noddy.href.indexOf('http') !== -1 && (noddy.href.indexOf(document.location.host) !== -1 || remotes)){
+                event.preventDefault();
+                document.location.href = noddy.href;
+            }
+        },false);
     }
-);
+    
+});
