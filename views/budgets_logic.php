@@ -118,36 +118,27 @@
             exit();
         }
 
-        //delete item
-        /*
-        if(isset($_POST['delete-item-uid'])){
-            
-            //always delete the central item
-            $deleteUID = $_POST['delete-item-uid'];
-            $db->exec("DELETE FROM $dbtable WHERE uid = $deleteUID;");
-
-            if(isset($_GET['pid']) && !isset($_GET['sid'])){
-                // PID with NO SID means it's a section
-                $db->exec("DELETE FROM content WHERE sid = $deleteUID;");
-            }
-            elseif(!isset($_GET['pid']) && !isset($_GET['sid'])){
-                // NO PID with NO SID means it's a page
-                $db->exec("DELETE FROM content WHERE pid = $deleteUID;");
-                $db->exec("DELETE FROM sections WHERE pid = $deleteUID;");
-            }
-
-            $_SESSION['sessionalert'] = "itemdeleted";
-
-            header("Location: ".$_SERVER['REQUEST_URI']);
-            exit();
-
+        //create budget UID whitelist
+        $budgetuids = $db->query("SELECT uid FROM budgets WHERE owner = '$dashboarduser'");
+        $shareduids = $db->query("SELECT budgetuid FROM shares WHERE shareduser = '$dashboarduser'");
+        $whitelistarray = array();
+        $shareduidarray = array();
+        foreach($budgetuids as $budgetuid){
+            $whitelistarray[] = $budgetuid['uid'];
         }
-        */
+        foreach($shareduids as $shareduid){
+            $whitelistarray[] = $shareduid['budgetuid'];
+            $shareduidarray[] = $shareduid['budgetuid'];
+        }
+
+        $_SESSION['whitelist'] = $whitelistarray;
+
+        $whitelistarray = implode(",", $shareduidarray);
+        $shareduidarray = implode(",", $shareduidarray);
 
         //generate content from query db
-        //$budgetupdates = $db->query("SELECT * FROM budgets WHERE owner = '$dashboarduser' ORDER BY uid ASC");
         //for now lets update ALL budgets on load... until I can find a more focused technique
-        $budgetupdates = $db->query("SELECT * FROM budgets WHERE autorefill = 1");
+        $budgetupdates = $db->query("SELECT * FROM budgets WHERE autorefill = 1 AND uid IN ($whitelistarray)");
 
         //update any auto refills first
         foreach($budgetupdates as $budget){
@@ -184,15 +175,9 @@
 
         //generate budgets for list
         $budgets = $db->query("SELECT * FROM budgets WHERE owner = '$dashboarduser' ORDER BY uid ASC");
+        $sharedbudgets = $db->query("SELECT * FROM budgets WHERE uid IN ($shareduidarray)");
 
         //$numberofshares = $db->query("SELECT COUNT(*) FROM shares WHERE shareduser = '$dashboarduser'")->fetchColumn();
-        $shareduids = $db->query("SELECT budgetuid FROM shares WHERE shareduser = '$dashboarduser'");
-        $shareduidarray = array();
-        foreach($shareduids as $shareduid){
-            $shareduidarray[] = $shareduid['budgetuid'];
-        }
-        $shareduidarray = implode(",", $shareduidarray);
-        $sharedbudgets = $db->query("SELECT * FROM budgets WHERE uid IN ($shareduidarray)");
 
         // $in = join(',', array_fill(0, count($shareduidarray), '?'));
         // $sharedbudgets = $db->prepare();

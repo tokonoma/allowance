@@ -16,6 +16,7 @@
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         //generate content from query db
+        //WHITELIST CHECK HERE
         $budgetuid = $_GET['budget'];
         $budgettablename = "budget".$budgetuid;
 
