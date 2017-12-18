@@ -24,6 +24,7 @@
     
     <!--icons-->
     <link rel="apple-touch-icon" href="assets/images/allowance-icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <!--<link href="/favicon.ico" rel="icon">-->
 </head>
 
