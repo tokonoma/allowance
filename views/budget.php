@@ -9,7 +9,7 @@
 
                 <?php
                     //let's get all those variables we need
-                    $thisbudgetuid = $budget['name'];
+                    $thisbudgetuid = $budget['uid'];
                     $thisbudgetname = $budget['name'];
                     $thisbudgetbalance = $budget['balance'];
                     $thisprintbalance = number_format(($thisbudgetbalance/100), 2, '.', ',');
@@ -20,6 +20,7 @@
                     $thisrefillon = $budget['refillon'];
                     $thisnextrefill = $budget['nextrefill'];
                     $thisbudgetshares = $budget['shares'];
+                    $thisbudgetowner = $budget['owner'];
                 ?>
                 <?php if($thisautorefill == 1): ?>
                 <h6>This budget will automatically refill on <strong><?php echo date("l\, F jS Y", strtotime($thisnextrefill)); ?></strong></h6>
@@ -50,9 +51,13 @@
                                             ?>
                                         </span>
                                     <?php endif; ?>
-                                    <?php if($thisbudgetshares > 0): ?>
+                                    <?php if(($thisbudgetshares > 0) && ($origin != "shared")): ?>
                                         <span class="badge shares-badge">
                                             <i class="fa fa-user-plus" aria-hidden="true"></i><?php echo $thisbudgetshares?>
+                                        </span>
+                                    <?php elseif($origin == "shared"): ?>
+                                        <span class="badge shares-badge">
+                                            <i class="fa fa-user-plus" aria-hidden="true"></i> <?php echo $thisbudgetowner; ?>
                                         </span>
                                     <?php endif; ?>
                                 </div>
