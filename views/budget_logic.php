@@ -15,10 +15,25 @@
         $db = new PDO($dsn);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        //generate content from query db
         //WHITELIST CHECK HERE
-        $budgetuid = $_GET['budget'];
-        $budgettablename = "budget".$budgetuid;
+        $owneduids = $db->query("SELECT uid FROM budgets WHERE owner = '$dashboarduser'");
+        $shareduids = $db->query("SELECT budgetuid FROM shares WHERE shareduser = '$dashboarduser'");
+        $whitelistarray = array();
+        foreach($owneduids as $owneduid){
+            $whitelistarray[] = $owneduid['uid'];
+        }
+        foreach($shareduids as $shareduid){
+            $whitelistarray[] = $shareduid['budgetuid'];
+        }
+
+        if(in_array($_GET['budget'], $whitelistarray)){
+            $budgetuid = $_GET['budget'];
+            $budgettablename = "budget".$budgetuid;  
+        }
+        else{
+            header("Location: ".$baseurl."?mode=404");
+            exit();
+        }
 
         //budget actions
         if(isset($_POST['budgetaction'])){
@@ -170,15 +185,9 @@
 
         }
 
+        //maybe change this to be processed above via whitelist because the functions get called before this... technically you could post something to a budget page and it would get processed...
         if($origin == "shared"){
-            $thisshare = $db->query("SELECT COUNT(*) FROM shares WHERE budgetuid = $budgetuid AND shareduser = '$dashboarduser'")->fetchColumn();
-
-            if($thisshare > 0){
-                $thisbudget = $db->query("SELECT * FROM budgets WHERE uid = $budgetuid");
-            }
-            else{
-                echo "You don't have access to this budget";
-            }
+            $thisbudget = $db->query("SELECT * FROM budgets WHERE uid = $budgetuid");
         }
         else{
             $thisbudget = $db->query("SELECT * FROM budgets WHERE owner = '$dashboarduser' AND uid = $budgetuid");

@@ -119,25 +119,22 @@
         }
 
         //create budget UID whitelist
-        $budgetuids = $db->query("SELECT uid FROM budgets WHERE owner = '$dashboarduser'");
+        $owneduids = $db->query("SELECT uid FROM budgets WHERE owner = '$dashboarduser'");
         $shareduids = $db->query("SELECT budgetuid FROM shares WHERE shareduser = '$dashboarduser'");
         $whitelistarray = array();
         $shareduidarray = array();
-        foreach($budgetuids as $budgetuid){
-            $whitelistarray[] = $budgetuid['uid'];
+        foreach($owneduids as $owneduid){
+            $whitelistarray[] = $owneduid['uid'];
         }
         foreach($shareduids as $shareduid){
             $whitelistarray[] = $shareduid['budgetuid'];
             $shareduidarray[] = $shareduid['budgetuid'];
         }
 
-        $_SESSION['whitelist'] = $whitelistarray;
-
         $whitelistarray = implode(",", $shareduidarray);
         $shareduidarray = implode(",", $shareduidarray);
 
-        //generate content from query db
-        //for now lets update ALL budgets on load... until I can find a more focused technique
+        //update users budgets both owned and shared
         $budgetupdates = $db->query("SELECT * FROM budgets WHERE autorefill = 1 AND uid IN ($whitelistarray)");
 
         //update any auto refills first

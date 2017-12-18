@@ -133,7 +133,13 @@ else{
             case 'settings':
                 include('views/user_settings.php');
                 break;
+            case '404':
+                include('views/404.php');
+                break;
         }
+    }
+    elseif(isset($_GET['404'])){
+        include('views/404.php');
     }
     else{
         include('views/budgets_dashboard.php');
