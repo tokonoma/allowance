@@ -131,7 +131,7 @@
             $shareduidarray[] = $shareduid['budgetuid'];
         }
 
-        $whitelistarray = implode(",", $shareduidarray);
+        $whitelistarray = implode(",", $whitelistarray);
         $shareduidarray = implode(",", $shareduidarray);
 
         //update users budgets both owned and shared

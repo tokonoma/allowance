@@ -2,6 +2,12 @@
 date_default_timezone_set('America/New_York');
 session_name('allowance');
 session_start();
+
+// Extend cookie life time by an amount of your liking
+$cookieLifetime = 7 * 24 * 60 * 60; // A week in seconds
+setcookie(session_name(),session_id(),time()+$cookieLifetime);
+
+//system includes
 include('system/config.php');
 include('system/db_connect.php');
 
