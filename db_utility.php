@@ -21,29 +21,17 @@ try{
 
     //delete tool
     //$deleteid = [val];
-    //$db->exec("DELETE FROM [table] WHERE [col] = [val]");
+    //$db->exec("DELETE FROM tablname WHERE colname = value");
 
     //table create tool
     // $db->exec("CREATE TABLE IF NOT EXISTS users (email TEXT PRIMARY KEY, password TEXT, fname TEXT, lname TEXT)");
 
-    // $db->exec("CREATE TABLE IF NOT EXISTS budgets (uid INTEGER PRIMARY KEY, name TEXT, balance INTEGER, autorefill BOOLEAN, refillamount INTEGER, refillfrequency TEXT, refillon TEXT, nextrefill INTEGER, owner TEXT, shares INTEGER)");
-
-    //$db->exec("CREATE TABLE IF NOT EXISTS budget2 (uid INTEGER PRIMARY KEY, name TEXT, budgetuid INTEGER, balance INTEGER, modifyamount INTEGER, transactiondate TEXT, user TEXT)");
-
-    //$db->exec("CREATE TABLE IF NOT EXISTS shares (uid INTEGER PRIMARY KEY, budgetuid INTEGER, owner TEXT, shareduser TEXT)");
-
     //add row tool
-    // $input_email = "t.reeder03@gmail.com";
-    // $input_password = "temppass";
+    // $input_email = "email@email.com";
+    // $input_password = "password";
     // $password_store = password_hash($input_password, PASSWORD_BCRYPT);
-    // $input_fname = "Tim";
-    // $input_lname = "Reeder";
-
-    // $input_email = "melanie.s.reeder@gmail.com";
-    // $input_password = "temppass";
-    // $password_store = password_hash($input_password, PASSWORD_BCRYPT);
-    // $input_fname = "Melanie";
-    // $input_lname = "Reeder";
+    // $input_fname = "Firsty";
+    // $input_lname = "Lasterson";
 
     //FYI $checkpass = password_verify($inputpass, $storedpass) yields t or f for pw check
 
@@ -51,65 +39,20 @@ try{
     // $insertarray = array($input_email, $password_store, $input_fname, $input_lname);
     // $insert->execute($insertarray); 
 
-    // $input_budgetname = "Test Budget";
-    // $input_balance = 200;
-    // $input_autorefill = 1;
-    // $input_refillamount = 500w;
-    // $input_refillfreq = "weekly";
-    // $input_refillon = "friday";
-    // $input_nextrefill = 20171208;
-    // $input_owner = "t.reeder03@gmail.com";
-    // $input_shares = 0;
-
-
-    // $insert = $db->prepare("INSERT INTO budgets (name, balance, autorefill, refillamount, refillfrequency, refillon, nextrefill, owner, shares) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    // $insertarray = array($input_budgetname, $input_balance, $input_autorefill, $input_refillamount, $input_refillfreq, $input_refillon, $input_nextrefill, $input_owner, $input_shares);
-    // $insert->execute($insertarray);
-
-    // $input_transname = "First Transaction";
-    // $input_budgetuid = "2";
-    // $input_balance = "100";
-    // $input_modifyamount = "100";
-    // $input_trandate = "20171127";
-    // $input_user = "t.reeder03@gmail.com";
-
-    // $insert = $db->prepare("INSERT INTO budget2 (name, budgetuid, balance, modifyamount, transactiondate, user) VALUES (?, ?, ?, ?, ?, ?)");
-    // $insertarray = array($input_transname, $input_budgetuid, $input_balance, $input_modifyamount, $input_trandate, $input_user);
-    // $insert->execute($insertarray);
-
-    // $input_budgetuid = "1";
-    // $input_owner = "melanie.s.reeder@gmail.com";
-    // $input_shareduser = "t.reeder03@gmail.com";
-
-    // $insert = $db->prepare("INSERT INTO shares (budgetuid, owner, shareduser) VALUES ( ?, ?, ?)");
-    // $insertarray = array($input_budgetuid, $input_owner, $input_shareduser);
-    // $insert->execute($insertarray);
-
     //update row tool
-    // $update = $db->prepare("UPDATE [table] SET title = :titleinput, body = :bodyinput WHERE uid = $uid");
-    // $update->bindParam(':titleinput', $titleinput, PDO::PARAM_STR);
-    // $update->bindParam(':bodyinput', $bodyinput, PDO::PARAM_STR);
-    // $update->execute();
-
-    // $input_number = 0;
-    // $update = $db->prepare("UPDATE budgets SET shares = :numberbind WHERE uid = 5");
-    // $update->bindParam(':numberbind', $input_number, PDO::PARAM_STR);
+    // $update = $db->prepare("UPDATE tablename SET colname = :inputbind, anothercol = :secondbind WHERE uid = $uid");
+    // $update->bindParam(':inputbind', $newinput, PDO::PARAM_STR);
+    // $update->bindParam(':secondbind', $secondinput, PDO::PARAM_STR);
     // $update->execute();
 
     //add a column
-    //$db->exec("ALTER TABLE users ADD COLUMN stayloggedin BOOLEAN");
-
-    //then...
-    // $input_new_column_value = 0;
-    // $update = $db->prepare("UPDATE users SET stayloggedin = :newcolbind WHERE lname = 'Reeder'");
-    // $update->bindParam(':newcolbind', $input_new_column_value, PDO::PARAM_STR);
-    // $update->execute();
+    //$db->exec("ALTER TABLE tablename ADD COLUMN colname TEXT");
 
     //table delete tool
-    //$db->exec("DROP TABLE tablename");
+    $db->exec("DROP TABLE budget6");
 
     //row delete tool
-    //$db->exec("DELETE FROM shares WHERE uid = 1");
+    //$db->exec("DELETE FROM budgets WHERE autorefill = 0");
 
 
     //queries
