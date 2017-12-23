@@ -10,12 +10,10 @@ try{
     $password_store = password_hash($input_password, PASSWORD_BCRYPT);
     $input_fname = $_POST['newuserfirstname'];
     $input_lname = $_POST['newuserlastname'];
-    $input_admin = $_POST['newuseradmin'];
-    //factor this in?
     $stayloggedin = 0;
 
-    $insert = $db->prepare("INSERT INTO users (email, password, fname, lname, admin) VALUES (?, ?, ?, ?, ?)");
-    $insertarray = array($input_email, $password_store, $input_fname, $input_lname, $input_admin);
+    $insert = $db->prepare("INSERT INTO users (email, password, fname, lname, stayloggedin) VALUES (?, ?, ?, ?, ?)");
+    $insertarray = array($input_email, $password_store, $input_fname, $input_lname, $stayloggedin);
     $insert->execute($insertarray);
 
     // close the database connection
@@ -34,7 +32,7 @@ catch(PDOException $e){
 if(!empty($_SESSION['firstuser'])){
     $_SESSION['firstname'] = $input_fname;
     $_SESSION['email'] = $input_email;
-    $_SESSION['admin'] = true;
+    //$_SESSION['admin'] = true;
 
     $_SESSION['expire'] = time()+60*360;
     unset($_SESSION['firstuser']);

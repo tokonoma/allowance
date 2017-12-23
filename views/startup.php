@@ -32,7 +32,7 @@
                                 <label for="newuserlastname">Last Name</label>
                                 <input type="text" name="newuserlastname" class="form-control" id="newuserlastname" placeholder="Last Name">
                             </div>
-                            <input type="hidden" name="newuseradmin" value="1">
+                            
                             <input type="hidden" name="action" value="createuser">
                             <button id="js-pw-check" type="button" class="btn btn-primary pull-right">
                                 Create User

@@ -49,10 +49,10 @@ try{
     //$db->exec("ALTER TABLE tablename ADD COLUMN colname TEXT");
 
     //table delete tool
-    $db->exec("DROP TABLE budget6");
+    //$db->exec("DROP TABLE tablename");
 
     //row delete tool
-    //$db->exec("DELETE FROM budgets WHERE autorefill = 0");
+    //$db->exec("DELETE FROM users WHERE fname = 'name'");
 
 
     //queries
