@@ -9,18 +9,23 @@
 
         <div class="col-sm-8">
 
+            <!-- HEADER BAR -->
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
-                    <div class="navbar-header">
-                        <span class="navbar-brand">User Settings</span>
+                    <div class="navbar-header pull-left">
+                        <span class="navbar-brand">
+                            User Settings
+                        </span>
                     </div>
-                    <div class="navbar-collapse collapse">
-                        <ul class="nav navbar-nav navbar-right">
+                    <div class="navbar-header pull-right">
+                        <ul class="nav navbar-nav navbar-right navbar-right-button-end">
                             <li>
-                                <button type="button" class="btn allw-success navbar-btn save-settings-btn">Save Changes</button>
+                                <button type="button" class="btn allw-success navbar-btn save-settings-btn">
+                                    Save Changes
+                                </button>
                             </li>
                         </ul>
-                    </div><!--/.nav-collapse -->
+                    </div>
                 </div>
             </nav>
 
