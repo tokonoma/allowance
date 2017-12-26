@@ -149,7 +149,7 @@
                         <tr>
                             <th>
                                 <span class="hidden-sm hidden-xs">Date</span>
-                                <span class="hidden-md hidden-lg"><i class="fa fa-camera-retro"></i></span>
+                                <span class="hidden-md hidden-lg"><i class="fa fa-calendar"></i></span>
                             </th>
                             <th>
                                 <span class="hidden-sm hidden-xs">Description</span>
