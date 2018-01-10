@@ -29,6 +29,7 @@ if(in_array($_SERVER['REMOTE_ADDR'], $localips)){
 }
 else{
 	$dbrelativepath = $cleanurizero."system/data/database.sqlite";
+
 }
 
 //sqlite DB
