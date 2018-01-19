@@ -8,7 +8,6 @@ $cookieLifetime = 7 * 24 * 60 * 60; // A week in seconds
 setcookie(session_name(),session_id(),time()+$cookieLifetime);
 
 //system includes
-include('system/config.php');
 include('system/db_connect.php');
 
 //looking for baseurl definition? it's in db_connect.php
